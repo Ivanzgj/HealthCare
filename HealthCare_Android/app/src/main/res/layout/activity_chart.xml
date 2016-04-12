@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_toolbar"
+        android:id="@+id/chart_toolbar"/>
+
+    <!-- slide tabbar -->
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/slide_tabbar_height"
+        android:id="@+id/slide_tabbar_rel"
+        android:layout_below="@id/chart_toolbar"
+        android:background="@color/chart_gray">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/textColorSecondaryPressed"
+            android:layout_alignParentBottom="true"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:id="@+id/slide_tabbar_slide_view"
+            android:background="@drawable/slide_tabbar_slideview"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/slide_tabbar_tv1"
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/textsize_normal"
+                android:gravity="center"
+                android:text="@string/slide_tabbar_chart1"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/slide_tabbar_tv2"
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/textsize_normal"
+                android:gravity="center"
+                android:text="@string/slide_tabbar_chart2"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/slide_tabbar_tv3"
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/textsize_normal"
+                android:gravity="center"
+                android:text="@string/slide_tabbar_chart3"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/chart_detail_rel"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/chart_blood_pressure"
+            android:textSize="@dimen/textsize_normal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/chart_detail_blood_tv"
+            android:textSize="@dimen/textsize_normal"
+            android:text="100/80"/>
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/chart_detail_blood_tv"
+            android:layout_marginTop="5dp"
+            android:id="@+id/chart_detail_divider1"
+            android:background="@drawable/vertical_line"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/chart_detail_divider1"
+            android:text="@string/chart_beep"
+            android:textSize="@dimen/textsize_normal"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/chart_detail_divider1"
+            android:id="@+id/chart_detail_beep_tv"
+            android:textSize="@dimen/textsize_normal"
+            android:layout_marginTop="5dp"
+            android:text="50"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/chart_detail_beep_tv"
+            android:layout_marginTop="5dp"
+            android:id="@+id/chart_detail_divider2"
+            android:background="@drawable/vertical_line"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/chart_detail_divider2"
+            android:text="@string/chart_assess"
+            android:textSize="@dimen/textsize_normal"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/chart_detail_divider2"
+            android:id="@+id/chart_detail_assess_tv"
+            android:textSize="@dimen/textsize_normal"
+            android:layout_marginTop="5dp"
+            android:text="10"/>
+
+    </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/chart_viewpager"
+        android:layout_below="@id/slide_tabbar_rel"
+        android:layout_above="@id/chart_detail_rel"
+        android:layout_marginBottom="20dp"/>
+
+</RelativeLayout>

@@ -1,0 +1,21 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.ivan.healthcare.healthcare_android.viewcontrollers.Tabbar
+        android:id="@+id/multipager_tabbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/WHTabbarHeight"
+        android:layout_alignParentBottom="true">
+        
+    </com.ivan.healthcare.healthcare_android.viewcontrollers.Tabbar>
+    
+    <com.ivan.healthcare.healthcare_android.viewcontrollers.CustomViewPager
+        android:id="@+id/multipager_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/multipager_tabbar">
+        
+    </com.ivan.healthcare.healthcare_android.viewcontrollers.CustomViewPager>
+    
+</RelativeLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_toolbar"
+        android:id="@+id/crop_toolbar"/>
+
+    <com.theartofdev.edmodo.cropper.CropImageView
+        android:id="@+id/crop_image_cropper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cropScaleType="centerInside"
+        app:cropGuidelines="on"
+        app:cropShape="oval"/>
+
+</LinearLayout>

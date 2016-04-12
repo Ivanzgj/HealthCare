@@ -1,0 +1,93 @@
+<resources>
+    <string name="app_name">HealthCare_Android</string>
+    <string name="action_settings">Settings</string>
+    <string name="cancel">取消</string>
+    <string name="stop">停止</string>
+    <string name="ok">确定</string>
+    <string name="tips">提示</string>
+    <string name="submit">提交</string>
+    <string name="close">关闭</string>
+    <string name="disconnect">断开连接</string>
+
+    <string name="main_measure_title">测量</string>
+    <string name="main_data_title">数据</string>
+    <string name="main_profile_title">设置</string>
+
+    <!-- 测量页面 -->
+    <string name="open_bt_btn">open bluetooth</string>
+    <string name="close_bt_btn">close bluetooth</string>
+    <string name="bt_finding">正在匹配连接设备</string>
+    <string name="discovery_bt_btn">discovery</string>
+    <string name="beep_unit">BPM</string>
+    <string name="measure_text">点击开始测量</string>
+    <string name="measure_ing_text">测量进行中</string>
+    <string name="measure_blood_high_pressure">血压/上压</string>
+    <string name="measure_blood_low_pressure">血压/下压</string>
+
+    <!-- 日历页面 -->
+    <string name="calendar_section_text">&#160;&#160;&#160;健康提示</string>
+
+    <!-- slide tabbar -->
+    <string name="slide_tabbar_chart1">本次测量</string>
+    <string name="slide_tabbar_chart2">今日记录</string>
+    <string name="slide_tabbar_chart3">今日状态</string>
+
+    <!-- chart page ctrl -->
+    <string name="chart_page_ctrl_up">向上翻页</string>
+    <string name="chart_page_ctrl_down">向下翻页</string>
+
+    <!-- chart -->
+    <string name="chart_title">数据图表</string>
+    <string name="chart_blood_pressure">血压（上/下压）</string>
+    <string name="chart_beep">心率</string>
+    <string name="chart_assess">健康指数</string>
+
+    <!-- profile -->
+    <string name="profile_avatar_imageview">个人头像</string>
+    <string name="profile_person_indicater">点此进入个人信息</string>
+    <string name="profile_timer_tv">定时提醒</string>
+    <string name="profile_timer_indicater">点此进入闹钟设置</string>
+    <string name="profile_upload_tv">数据同步</string>
+    <string name="profile_upload_indicater">点此进入数据同步设置</string>
+    <string name="profile_reset_tv">重置数据</string>
+    <string name="profile_reset_indicater">点此进入数据重置设置</string>
+    <string name="profile_title">设置</string>
+
+    <!-- personal activity -->
+    <string name="personal_title">个人资料</string>
+    <string name="zero">0</string>
+    <string name="personal_info_today_times">今日测量次数</string>
+    <string name="personal_info_total_times">历史测量次数</string>
+    <string name="personal_info_health_assess">综合健康评分</string>
+    <string name="personal_info_uid_hint">uid</string>
+    <string name="personal_info_name_hint">姓名</string>
+    <string name="personal_info_sex_hint">性别</string>
+    <string name="personal_info_birth_hint">生日</string>
+    <string name="personal_info_age_hint">年龄</string>
+    <string name="personal_info_constellation_hint">星座</string>
+    <string name="personal_info_intro_hint">介绍</string>
+    <string name="personal_info_email_hint">邮件地址</string>
+    <string name="personal_info_location_hint">住址</string>
+    <string name="personal_save">保存</string>
+    <string name="personal_logout">注销账号</string>
+    <string name="personal_change_pwd">修改密码</string>
+    <string name="personal_reset_message">重置数据将会将本地和服务器上的所有个人数据清空，包括您的历史测量数据，个人信息，以及云端上的所有医疗研究基础数据（如果有的话）。是否确定重置数据？</string>
+    <string name="personal_sex_male">男</string>
+    <string name="personal_sex_female">女</string>
+    <string name="personal_sex_alien">外星人</string>
+
+    <!-- alarm activity -->
+    <string name="alarm_title">闹钟设置</string>
+    <string name="alarm_add">添加</string>
+
+    <!-- backup activity -->
+    <string name="backup_backup">上传数据</string>
+    <string name="backup_sync">同步数据</string>
+    <string name="backup_clear">清空本地缓存</string>
+    <string name="backup_title">数据同步</string>
+
+    <!-- crop activity -->
+    <string name="crop_title">头像裁剪</string>
+    <string name="crop_save">保存</string>
+
+</resources>

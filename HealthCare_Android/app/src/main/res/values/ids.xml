@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- chart -->
+    <item name="chartYLabel" type="id"/>
+    <item name="chartScrollView" type="id"/>
+    <item name="tabbarLine" type="id"/>
+    <item name="chart" type="id"/>
+
+    <!-- calendar -->
+    <item name="calendar_topView" type="id"/>
+</resources>

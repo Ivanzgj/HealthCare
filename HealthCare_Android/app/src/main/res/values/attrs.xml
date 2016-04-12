@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 图例属性 -->
+    <declare-styleable name="LegendView">
+        <attr name="type" format="enum">
+            <enum name="type_line" value="0"/>
+            <enum name="type_rect" value="1"/>
+            <enum name="type_default" value="2"/>
+        </attr>
+        <attr name="paintColor" format="color"/>
+        <attr name="text" format="string"/>
+    </declare-styleable>
+
+    <!-- calendar -->
+    <declare-styleable name="CalendarView">
+        <attr name="calenderHeight" format="dimension"/>
+    </declare-styleable>
+
+</resources>

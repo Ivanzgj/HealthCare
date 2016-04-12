@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer-array name="google_colors">
+        <item>@color/red</item>
+        <item>@color/blue</item>
+        <item>@color/yellow</item>
+        <item>@color/green</item>
+    </integer-array>
+
+    <string-array name="sex_array">
+        <item>@string/personal_sex_male</item>
+        <item>@string/personal_sex_female</item>
+        <item>@string/personal_sex_alien</item>
+    </string-array>
+
+</resources>

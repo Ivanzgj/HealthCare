@@ -1,0 +1,57 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="android:windowBackground">@color/pureWindowBackground</item>
+        <item name="android:textColorPrimary">@color/pureWindowBackground</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
+        <item name="android:dialogTheme">@style/AppTheme.DeviceDefault.Dialog</item>
+        <item name="android:textSelectHandleRight">@mipmap/ic_text_select_handle_right</item>
+        <item name="android:textSelectHandleLeft">@mipmap/ic_text_select_handle_left</item>
+        <item name="android:textSelectHandle">@mipmap/ic_text_select_handle_middle</item>
+        <item name="android:editTextColor">@color/textColorSecondary</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+
+
+    <!-- toolbar -->
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:foreground">@color/pureWindowBackground</item>
+        <item name="android:textColorPrimary">@color/pureWindowBackground</item>
+        <item name="android:textColorTertiary">@color/pureWindowBackground</item>
+        <item name="android:textColorSecondary">@color/pureWindowBackground</item>
+    </style>
+
+    <!-- toolbar title -->
+    <style name="ToolbarTextAppearance" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/textsize_second_title</item>
+    </style>
+
+    <!-- dialog theme -->
+    <style name="DialogWindowTitle">
+        <item name="android:textSize">@dimen/textsize_appbar</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="DialogWindowTitle.DeviceDefault">
+        <item name="android:maxLines">1</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:textAppearance">@style/DialogWindowTitle</item>
+    </style>
+
+    <style name="AppTheme.DeviceDefault.Dialog" parent="@android:style/Theme.DeviceDefault.Light.Dialog" >
+        <item name="android:windowTitleStyle">@style/DialogWindowTitle.DeviceDefault</item>
+        <item name="android:windowBackground">@color/pureWindowBackground</item>
+    </style>
+
+</resources>

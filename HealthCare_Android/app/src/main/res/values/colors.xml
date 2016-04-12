@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00BCD4</color>
+    <color name="colorPrimaryDark">#0097A7</color>
+    <color name="colorPrimaryLight">#B2EBF2</color>
+    <color name="colorAccent">#03A9F4</color>
+    <color name="onTouchColor">#8800BCD4</color>
+
+    <color name="pureWindowBackground">#FFFFFF</color>
+
+    <color name="textColorPrimary">#212121</color>
+    <color name="textColorPrimaryPressed">#7F7D7D</color>
+
+    <color name="textColorSecondary">#727272</color>
+    <color name="textColorSecondaryPressed">#BFBCBC</color>
+
+    <!-- 主色 -->
+    <color name="default_main_color_shallow">#00CCE4</color>
+    <color name="default_main_color">#00BCD4</color>
+    <color name="default_main_color_deep">#009CB4</color>
+
+    <!-- tabbar -->
+    <color name="WHTabbarLineColor">@color/divider_color</color>
+
+    <!-- chart -->
+    <color name="chart_line">#B6B6B6</color>
+    <color name="chart_grid">#F6F7F7</color>
+    <color name="chart_gray">#E8E8E8</color>
+    <color name="chart_tab_gray">#EFEFF4</color>
+
+    <color name="night_chart_line">#E6E6E6</color>
+    <color name="night_chart_grid1">#A6A7A7</color>
+    <color name="night_chart_grid2">#B6B7B7</color>
+    <color name="night_chart_gray">#6D6D6D</color>
+    <color name="night_chart_tab_gray">#EFEFF4</color>
+    
+    <color name="chart_cyan">#00BCD4</color>
+    <color name="chart_green">#8BC34A</color>
+    <color name="chart_amber">#FFC107</color>
+
+    <!-- calendar -->
+    <color name="night_calendar_background">#6D6D6D</color>
+    <color name="night_topView_background">#6D6D6D</color>
+    <color name="night_weekDay_textColor">#EFEFEF</color>
+    <color name="night_day_textColor">#EFEFEF</color>
+    <color name="night_textColorSecondary">#AFAFAF</color>
+
+    <!-- divider -->
+    <color name="divider_color">#B6B6B6</color>
+    <color name="divider_color_shallow">#F6F7F7</color>
+
+    <!-- personal activity -->
+    <color name="red">#FFC93437</color>
+    <color name="blue">#FF375BF1</color>
+    <color name="yellow">#FFF7D23E</color>
+    <color name="green">#FF34A350</color>
+
+</resources>

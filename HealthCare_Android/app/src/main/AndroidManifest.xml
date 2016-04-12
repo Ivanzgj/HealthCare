@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ivan.healthcare.healthcare_android" >
+
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+
+    <application
+        android:name=".AppContext"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme" >
+
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="keyboard|locale|fontScale|keyboardHidden|layoutDirection"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.ChartActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".ui.PersonalInfoActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".ui.AlarmActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".ui.BackupActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".ui.CropImageActivity"
+            android:screenOrientation="portrait"/>
+
+    </application>
+
+</manifest>

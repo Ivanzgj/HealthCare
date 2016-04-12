@@ -1,0 +1,80 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="divider_fab_margin">8dp</dimen>
+
+    <dimen name="textsize_little">12sp</dimen>
+    <dimen name="textsize_normal">14sp</dimen>
+    <dimen name="textsize_second_title">16sp</dimen>
+    <dimen name="textsize_appbar">20sp</dimen>
+    <dimen name="textsize_first_title">24sp</dimen>
+    <dimen name="textsize_huge">34sp</dimen>
+
+    <dimen name="appbar_min_height">56dp</dimen>
+    
+    <dimen name="single_line_list_item_height">48dp</dimen>
+
+    <dimen name="l_dialog_content">4dp</dimen>
+    <dimen name="p_dialog_content_bottom">8dp</dimen>
+
+
+
+    <dimen name="WHTabbarHeight">48dp</dimen>
+    <dimen name="WHTabbarLineHeight">1px</dimen>
+
+    <dimen name="round_write_rectangle_corner_radius">8dp</dimen>
+
+    <dimen name="AIToast_textsize">13dp</dimen>
+
+    <!-- calendar -->
+    <dimen name="calendar_day_view_minHeight">33dp</dimen>
+    <dimen name="calendar_day_view_minWidth">50dp</dimen>
+    <dimen name="calendar_today_view_width">22dp</dimen>
+    <dimen name="calendar_today_view_height">22dp</dimen>
+    <dimen name="calendar_weekday_view_minHeight">30dp</dimen>
+    <dimen name="calendar_weekday_view_minWidth">50dp</dimen>
+
+    <!-- measure fragment -->
+    <dimen name="measure_beep_textview_textsize">64sp</dimen>
+    <dimen name="measure_beep_textview_margin_left">120dp</dimen>
+    <dimen name="measure_beep_unit_textsize">22sp</dimen>
+    <dimen name="measure_chart_height">80dp</dimen>
+    <dimen name="measure_blood_tv_width">30dp</dimen>
+
+    <!-- slide tabbar -->
+    <dimen name="slide_tabbar_height">45dp</dimen>
+    <dimen name="page_ctrl_width">35dp</dimen>
+
+    <!-- profile -->
+    <dimen name="profile_person_item_height">80dp</dimen>
+    <dimen name="profile_person_avatar_height">64dp</dimen>
+    <dimen name="profile_section_height">12dp</dimen>
+    <dimen name="profile_line_section_height">1dp</dimen>
+    <dimen name="profile_item_height">@dimen/single_line_list_item_height</dimen>
+    <dimen name="profile_avatar_gradient_radius">34dp</dimen>
+    <dimen name="profile_indicator_size">24dp</dimen>
+
+    <!-- personal activity -->
+    <dimen name="personal_avatar_size">90dp</dimen>
+    <dimen name="personal_avatar_margin_left">50dp</dimen>
+    <dimen name="personal_user_name_margin_left">165dp</dimen>
+    <dimen name="personal_padding">16dp</dimen>
+    <dimen name="personal_padding_small">10dp</dimen>
+    <dimen name="personal_info_field_height">26dp</dimen>
+    <dimen name="personal_info_intro_height">85dp</dimen>
+    <dimen name="personal_logout_button_height">35dp</dimen>
+    
+    <!-- chart -->
+
+    <!-- alarm activity -->
+    <dimen name="alarm_list_item_height">60dp</dimen>
+
+    <!-- backup activity -->
+    <dimen name="backup_item_height">@dimen/single_line_list_item_height</dimen>
+
+    <!-- crop activity -->
+    <dimen name="crop_image_size">80dp</dimen>
+
+</resources>
