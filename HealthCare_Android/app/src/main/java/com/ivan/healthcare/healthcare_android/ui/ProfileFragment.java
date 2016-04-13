@@ -36,6 +36,7 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
 
     private ImageView mAvatarImageView;
     private TextView mUserNameTextView;
+    private ImageView mPersonalInfoIndicator;
 
     private View rootView;
 
@@ -65,6 +66,7 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
         mLoginCell = (RippleView) rootView.findViewById(R.id.profile_login_rel);
         mAvatarImageView = (ImageView) rootView.findViewById(R.id.profile_avatar_imageview);
         mUserNameTextView = (TextView) rootView.findViewById(R.id.profile_person_name);
+        mPersonalInfoIndicator = (ImageView) rootView.findViewById(R.id.profile_personal_indicator);
 
         mPersonCell.setOnRippleCompleteListener(this);
         mTimerCell.setOnRippleCompleteListener(this);
@@ -80,6 +82,8 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
         if (User.uid == -1) {
             mAvatarImageView.setImageResource(R.drawable.default_avatar);
             mLoginCell.setVisibility(View.VISIBLE);
+            mPersonalInfoIndicator.setVisibility(View.GONE);
+            mPersonCell.setEnabled(false);
             return;
         }
 
@@ -96,7 +100,9 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
             mAvatarImageView.setImageResource(R.drawable.default_avatar);
         }
 
+        mPersonalInfoIndicator.setVisibility(View.VISIBLE);
         mLoginCell.setVisibility(View.GONE);
+        mPersonCell.setEnabled(false);
     }
 
     private void jumpToPersonal() {

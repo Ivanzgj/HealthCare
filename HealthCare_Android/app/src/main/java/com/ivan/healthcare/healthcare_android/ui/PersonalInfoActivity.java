@@ -29,6 +29,7 @@ import com.andexert.library.RippleView;
 import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.R;
+import com.ivan.healthcare.healthcare_android.local.User;
 import com.ivan.healthcare.healthcare_android.util.Compat;
 import com.ivan.healthcare.healthcare_android.util.DialogBuilder;
 
@@ -170,6 +171,16 @@ public class PersonalInfoActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void refreshContents() {
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(User.userName);
+        }
+
+        if (User.uid == -1) {
+            mAvatarImageView.setImageResource(R.drawable.default_avatar);
+            return;
+        }
+
         String home = getFilesDir().getAbsolutePath();
         File avatarFile = new File(home + Configurations.AVATAR_FILE_PATH);
         if (avatarFile.exists()) {
