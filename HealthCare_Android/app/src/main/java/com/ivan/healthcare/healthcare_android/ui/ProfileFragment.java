@@ -16,7 +16,6 @@ import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.local.User;
 import com.ivan.healthcare.healthcare_android.util.DialogBuilder;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -102,7 +101,7 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
 
         mPersonalInfoIndicator.setVisibility(View.VISIBLE);
         mLoginCell.setVisibility(View.GONE);
-        mPersonCell.setEnabled(false);
+        mPersonCell.setEnabled(true);
     }
 
     private void jumpToPersonal() {
@@ -156,7 +155,8 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
         } else if (mResetCell.equals(rippleView)) {
             reset();
         } else if (mLoginCell.equals(rippleView)) {
-
+            User.edit().setUid(10001).setUserName("User_10001").commit();
+            refreshContents();
         }
     }
 }

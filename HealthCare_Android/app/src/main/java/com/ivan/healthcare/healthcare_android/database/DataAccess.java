@@ -82,6 +82,23 @@ public class DataAccess {
                             .add("measure_today_times", User.todayMeasureTimes)
                             .where("uid").equal(String.valueOf(User.uid))
                             .update();
+        if (result == 0) {
+            result = AppContext.getDB().query()
+                                .table(Configurations.USER_TABLE)
+                                .add("uid", String.valueOf(User.uid))
+                                .add("username", User.userName)
+                                .add("age", User.age)
+                                .add("sex", User.getSexInt())
+                                .add("birth", User.birthday)
+                                .add("constellation", User.getConstellationInt())
+                                .add("email", User.email)
+                                .add("address", User.address)
+                                .add("introduction", User.introduction)
+                                .add("measure_total_times", User.totalMeasureTimes)
+                                .add("measure_total_assessment", User.totalMeasureAssessment)
+                                .add("measure_today_times", User.todayMeasureTimes)
+                                .insert();
+        }
         return result >= 1;
     }
 

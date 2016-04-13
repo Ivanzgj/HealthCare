@@ -57,18 +57,35 @@ public class AppContext extends Application {
 		} catch (PackageManager.NameNotFoundException e) {
 			throw new AndroidRuntimeException("The application context is not initialized!");
 		}
+
 		File dbFile = instance.getDatabasePath(Configurations.DATABASE_NAME);
+		String dbFilePath = dbFile.getAbsolutePath();
+		String DATABASES_DIR = dbFilePath.substring(0, dbFilePath.length() - Configurations.DATABASE_NAME.length() - 1);
+		File dir = new File(DATABASES_DIR);
+		if (!dir.exists()) {
+			try {
+				if (!dir.mkdir()) {
+					throw new AndroidRuntimeException("The database can not be copied to the /data directory!");
+				}
+			} catch (Exception e) {
+				throw new AndroidRuntimeException("The database can not be copied to the /data directory!");
+			}
+		}
 		try {
 			if (!dbFile.exists()) {
-				InputStream is = instance.getResources().openRawResource(R.raw.healthcare_android); //欲导入的数据库
-				FileOutputStream fos = new FileOutputStream(dbFile);
-				byte[] buffer = new byte[1024];
-				int count;
-				while ((count = is.read(buffer)) > 0) {
-					fos.write(buffer, 0, count);
+				if (dbFile.createNewFile()) {
+					InputStream is = instance.getResources().openRawResource(R.raw.healthcare_android); //欲导入的数据库
+					FileOutputStream fos = new FileOutputStream(dbFile);
+					byte[] buffer = new byte[1024];
+					int count;
+					while ((count = is.read(buffer)) > 0) {
+						fos.write(buffer, 0, count);
+					}
+					fos.close();
+					is.close();
+				} else {
+					throw new AndroidRuntimeException("The database can not be copied to the /data directory!");
 				}
-				fos.close();
-				is.close();
 			}
 		} catch (IOException e) {
 			throw new AndroidRuntimeException("The database can not be copied to the /data directory!");

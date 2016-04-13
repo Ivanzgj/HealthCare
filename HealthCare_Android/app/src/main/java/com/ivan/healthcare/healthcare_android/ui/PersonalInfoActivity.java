@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -52,9 +51,7 @@ public class PersonalInfoActivity extends AppCompatActivity implements View.OnCl
     private View rootView;
     private AppBarLayout mAppbar;
     private CollapsingToolbarLayout mToolbarLayout;
-    private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private NestedScrollView mainScrollView;
     private CircleImageView mAvatarImageView;
     private TextView mTodayTimesTextView;
     private TextView mTotalTimesTextView;
@@ -102,7 +99,7 @@ public class PersonalInfoActivity extends AppCompatActivity implements View.OnCl
         rootView = View.inflate(this, R.layout.activity_personalinfo, null);
         mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.personal_PtrFrameLayout);
 
-        mToolbar = (Toolbar) mSwipeRefreshLayout.findViewById(R.id.personal_toolbar);
+        Toolbar mToolbar = (Toolbar) mSwipeRefreshLayout.findViewById(R.id.personal_toolbar);
         mToolbarLayout = (CollapsingToolbarLayout) mSwipeRefreshLayout.findViewById(R.id.personal_collapsing_toolbar);
         mToolbarLayout.setTitle("Ivan");
         setSupportActionBar(mToolbar);
@@ -130,7 +127,6 @@ public class PersonalInfoActivity extends AppCompatActivity implements View.OnCl
             }
         };
 
-        mainScrollView = (NestedScrollView) mSwipeRefreshLayout.findViewById(R.id.personal_info_scrollview);
         mAvatarImageView = (CircleImageView) mSwipeRefreshLayout.findViewById(R.id.personal_info_avatar_imageview);
         mAvatarImageView.setOnClickListener(this);
         mTodayTimesTextView = (TextView) mSwipeRefreshLayout.findViewById(R.id.personal_info_today_times);
@@ -172,9 +168,7 @@ public class PersonalInfoActivity extends AppCompatActivity implements View.OnCl
 
     private void refreshContents() {
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(User.userName);
-        }
+        mToolbarLayout.setTitle(User.userName);
 
         if (User.uid == -1) {
             mAvatarImageView.setImageResource(R.drawable.default_avatar);
@@ -193,6 +187,21 @@ public class PersonalInfoActivity extends AppCompatActivity implements View.OnCl
         } else {
             mAvatarImageView.setImageResource(R.drawable.default_avatar);
         }
+
+        mTodayTimesTextView.setText(String.valueOf(User.todayMeasureTimes));
+        mTotalTimesTextView.setText(String.valueOf(User.totalMeasureTimes));
+        mAssessTextView.setText(String.valueOf(User.totalMeasureAssessment));
+        mUidTextView.setText(String.valueOf(User.uid));
+        mNameEdit.setText(User.userName);
+        mBirthTextView.setText(User.birthday);
+        if (User.sex == User.UserSex.USER_MALE) mSexTextView.setText(getResources().getString(R.string.personal_sex_male));
+        else if (User.sex == User.UserSex.USER_FEMALE) mSexTextView.setText(getResources().getString(R.string.personal_sex_female));
+        else if (User.sex == User.UserSex.USER_ALIEN) mSexTextView.setText(getResources().getString(R.string.personal_sex_alien));
+        mConstellationTextView.setText(User.getConstellationString());
+        if (User.age >= 0)  mAgeTextView.setText(String.valueOf(User.age));
+        mEmailEdit.setText(User.email);
+        mLocationEdit.setText(User.address);
+        mIntroEdit.setText(User.introduction);
     }
 
     @Override

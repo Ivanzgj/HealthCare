@@ -8,14 +8,14 @@ import com.ivan.healthcare.healthcare_android.database.DataAccess;
  */
 public class User {
 
-    public static enum UserSex {
+    public enum UserSex {
         USER_MALE,
         USER_FEMALE,
         USER_ALIEN,
         Undefine
     }
 
-    public static enum Constellation {
+    public enum Constellation {
         Capricorn,      //摩羯座
         Aquarius,       //水瓶座
         Pisces,         //双鱼座
@@ -62,10 +62,13 @@ public class User {
             totalMeasureAssessment = 0;
         } else {
             DataAccess.initUserInfo();
+            if (userName == null) {
+                userName = DEFAULT_USER_NAME_PREFIX + uid;
+            }
         }
     }
 
-    public Editor edit() {
+    public static Editor edit() {
         return new Editor();
     }
 
@@ -110,6 +113,37 @@ public class User {
                 return 12;
             default:
                 return -1;
+        }
+    }
+
+    public static String getConstellationString() {
+        switch (constellation) {
+            case Capricorn:
+                return "摩羯座";
+            case Aquarius:
+                return "水瓶座";
+            case Pisces:
+                return "双鱼座";
+            case Aries:
+                return "白羊座";
+            case Taurus:
+                return "金牛座";
+            case Gemini:
+                return "双子座";
+            case Cancer:
+                return "巨蟹座";
+            case Leo:
+                return "狮子座";
+            case Virgo:
+                return "处女座";
+            case Libra:
+                return "天秤座";
+            case Scorpio:
+                return "天蝎座";
+            case Sagittarius:
+                return "射手座";
+            default:
+                return "";
         }
     }
 
@@ -290,7 +324,11 @@ public class User {
             if (todayMeasureTimesChanged)       User.todayMeasureTimes = this.todayMeasureTimes;
             if (totalMeasureTimesChanged)       User.totalMeasureTimes = this.totalMeasureTimes;
             if (totalMeasureAssessmentChanged)  User.totalMeasureAssessment = this.totalMeasureAssessment;
-            return DataAccess.updateUserInfo();
+            if (!DataAccess.updateUserInfo()) {
+                initUserInfo();
+                return false;
+            }
+            return true;
         }
     }
 }
