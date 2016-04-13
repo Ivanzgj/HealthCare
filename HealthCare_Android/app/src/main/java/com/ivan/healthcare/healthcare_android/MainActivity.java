@@ -3,6 +3,8 @@ package com.ivan.healthcare.healthcare_android;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+
+import com.ivan.healthcare.healthcare_android.local.User;
 import com.ivan.healthcare.healthcare_android.ui.MeasureFragment;
 import com.ivan.healthcare.healthcare_android.ui.CalendarFragment;
 import com.ivan.healthcare.healthcare_android.ui.ProfileFragment;
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         tabViewController = new TabViewController(this, fragmentArrayList, iconArrayList, titles);
         tabViewController.setScrollable(true);
         setContentView(tabViewController);
+
+        User.initUserInfo();
     }
 
     @Override

@@ -20,7 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.MainActivity;
-import com.ivan.healthcare.healthcare_android.Preference;
+import com.ivan.healthcare.healthcare_android.database.Preference;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.bluetooth.BluetoothCommUtil;
 import com.ivan.healthcare.healthcare_android.chart.SimpleChart;

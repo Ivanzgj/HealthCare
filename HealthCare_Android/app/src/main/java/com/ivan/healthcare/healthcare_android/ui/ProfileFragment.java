@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.andexert.library.RippleView;
 import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.R;
+import com.ivan.healthcare.healthcare_android.local.User;
 import com.ivan.healthcare.healthcare_android.util.DialogBuilder;
 
 import java.io.File;
@@ -31,6 +32,7 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
     private RippleView mTimerCell;
     private RippleView mSyncCell;
     private RippleView mResetCell;
+    private RippleView mLoginCell;
 
     private ImageView mAvatarImageView;
     private TextView mUserNameTextView;
@@ -60,6 +62,7 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
         mTimerCell = (RippleView) rootView.findViewById(R.id.profile_timer_rel);
         mSyncCell = (RippleView) rootView.findViewById(R.id.profile_upload_rel);
         mResetCell = (RippleView) rootView.findViewById(R.id.profile_reset_rel);
+        mLoginCell = (RippleView) rootView.findViewById(R.id.profile_login_rel);
         mAvatarImageView = (ImageView) rootView.findViewById(R.id.profile_avatar_imageview);
         mUserNameTextView = (TextView) rootView.findViewById(R.id.profile_person_name);
 
@@ -67,9 +70,19 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
         mTimerCell.setOnRippleCompleteListener(this);
         mSyncCell.setOnRippleCompleteListener(this);
         mResetCell.setOnRippleCompleteListener(this);
+        mLoginCell.setOnRippleCompleteListener(this);
     }
 
     private void refreshContents() {
+
+        mUserNameTextView.setText(User.userName);
+
+        if (User.uid == -1) {
+            mAvatarImageView.setImageResource(R.drawable.default_avatar);
+            mLoginCell.setVisibility(View.VISIBLE);
+            return;
+        }
+
         String home = getActivity().getFilesDir().getAbsolutePath();
         File avatarFile = new File(home + Configurations.AVATAR_FILE_PATH);
         if (avatarFile.exists()) {
@@ -82,6 +95,8 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
         } else {
             mAvatarImageView.setImageResource(R.drawable.default_avatar);
         }
+
+        mLoginCell.setVisibility(View.GONE);
     }
 
     private void jumpToPersonal() {
@@ -134,6 +149,8 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
             jumpToSync();
         } else if (mResetCell.equals(rippleView)) {
             reset();
+        } else if (mLoginCell.equals(rippleView)) {
+
         }
     }
 }

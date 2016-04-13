@@ -297,6 +297,7 @@ public class QueryBuilder {
 
 		Cursor cursor = db.rawQuery(execString.toString(), null);
 		int columns = cursor.getColumnCount();
+
 		List<Result> rl = new ArrayList<>();
 		while (cursor.moveToNext()) {
 			for (int i=0;i<columns;i++) {
@@ -352,8 +353,9 @@ public class QueryBuilder {
 
 		Cursor cursor = db.rawQuery(execString.toString(), null);
 		int columns = cursor.getColumnCount();
-		Result r = new Result();
+
 		if (cursor.moveToNext()) {
+			Result r = new Result();
 			for (int i=0;i<columns;i++) {
 				switch (cursor.getType(i)) {
 					case Cursor.FIELD_TYPE_INTEGER:
@@ -369,9 +371,12 @@ public class QueryBuilder {
 						break;
 				}
 			}
+			cursor.close();
+			return r;
+		} else {
+			cursor.close();
+			return null;
 		}
-		cursor.close();
-		return r;
 	}
 	
 	/**

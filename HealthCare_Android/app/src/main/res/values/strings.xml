@@ -52,6 +52,7 @@
     <string name="profile_reset_tv">重置数据</string>
     <string name="profile_reset_indicater">点此进入数据重置设置</string>
     <string name="profile_title">设置</string>
+    <string name="profile_login">登陆</string>
 
     <!-- personal activity -->
     <string name="personal_title">个人资料</string>

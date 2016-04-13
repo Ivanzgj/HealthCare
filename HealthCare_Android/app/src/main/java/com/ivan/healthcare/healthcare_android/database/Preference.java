@@ -1,7 +1,9 @@
-package com.ivan.healthcare.healthcare_android;
+package com.ivan.healthcare.healthcare_android.database;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.ivan.healthcare.healthcare_android.Configurations;
 
 import java.util.HashMap;
 import java.util.Map;

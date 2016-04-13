@@ -15,6 +15,9 @@ public class Configurations {
      * 数据库名
      */
     public final static String DATABASE_NAME = "healthcare_android.db";
+    public final static String USER_TABLE = "user_tb";
+    public final static String MEASURE_TABLE = "measure_tb";
+    public final static String ALARM_TABLE = "alarm_tb";
     /**
      * 网络请求基址
      */

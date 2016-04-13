@@ -4,10 +4,9 @@ import android.app.Application;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.AndroidRuntimeException;
-
 import com.ivan.healthcare.healthcare_android.database.Database;
 import com.ivan.healthcare.healthcare_android.database.DatabaseOpenHelper;
-
+import com.ivan.healthcare.healthcare_android.database.Preference;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -80,4 +79,5 @@ public class AppContext extends Application {
 		}
 		return DB;
 	}
+
 }

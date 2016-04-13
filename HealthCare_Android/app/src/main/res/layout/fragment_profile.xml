@@ -52,7 +52,7 @@
                 android:layout_width="@dimen/profile_indicator_size"
                 android:layout_height="@dimen/profile_indicator_size"
                 android:layout_centerVertical="true"
-                android:id="@+id/profile_indicator1"
+                android:id="@+id/profile_personal_indicator"
                 android:contentDescription="@string/profile_person_indicater"
                 android:src="@mipmap/navigation_next_item"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
@@ -67,8 +67,8 @@
                 android:layout_toEndOf="@id/profile_avatar_imageview"
                 android:layout_marginLeft="30dp"
                 android:layout_marginStart="30dp"
-                android:layout_toLeftOf="@id/profile_indicator1"
-                android:layout_toStartOf="@id/profile_indicator1"
+                android:layout_toLeftOf="@id/profile_personal_indicator"
+                android:layout_toStartOf="@id/profile_personal_indicator"
                 android:id="@+id/profile_person_name"
                 android:textSize="@dimen/textsize_first_title"
                 android:gravity="center_vertical"
@@ -81,7 +81,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/profile_section_height"
-        android:background="@color/divider_color"/>
+        android:background="@color/divider_color_shallow"/>
 
     <com.andexert.library.RippleView
         android:layout_width="wrap_content"
@@ -127,7 +127,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/profile_section_height"
-        android:background="@color/divider_color"/>
+        android:background="@color/divider_color_shallow"/>
 
     <com.andexert.library.RippleView
         android:layout_width="wrap_content"
@@ -178,37 +178,51 @@
         <!--android:id="@+id/profile_section3"/>-->
 
     <com.andexert.library.RippleView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:rv_color="@color/colorPrimary"
         app:rv_rippleDuration="80"
         android:id="@+id/profile_reset_rel">
 
-        <RelativeLayout
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/profile_item_height">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:textSize="@dimen/textsize_second_title"
-                android:gravity="center_vertical"
-                android:text="@string/profile_reset_tv"/>
-
-        </RelativeLayout>
+            android:layout_height="@dimen/profile_item_height"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/textsize_second_title"
+            android:gravity="center_vertical"
+            android:text="@string/profile_reset_tv"/>
 
     </com.andexert.library.RippleView>
 
-    <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/profile_line_section_height"-->
-        <!--android:background="@color/textColorSecondary"-->
-        <!--android:layout_below="@id/profile_reset_rel"-->
-        <!--android:id="@+id/profile_section4"/>-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/profile_section_height"
+        android:background="@color/divider_color_shallow"/>
+
+    <com.andexert.library.RippleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rv_color="@color/colorPrimary"
+        app:rv_rippleDuration="80"
+        android:id="@+id/profile_login_rel">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/profile_item_height"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/textsize_appbar"
+            android:gravity="center"
+            android:text="@string/profile_login"/>
+
+    </com.andexert.library.RippleView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/profile_line_section_height"
+        android:background="@color/divider_color_shallow"/>
 
 </LinearLayout>
