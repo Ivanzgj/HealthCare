@@ -17,6 +17,7 @@ import android.widget.TimePicker;
 import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.customobj.Time;
+import com.ivan.healthcare.healthcare_android.local.Alarm;
 import com.ivan.healthcare.healthcare_android.util.Compat;
 import com.ivan.healthcare.healthcare_android.view.AlarmView;
 import java.util.ArrayList;
@@ -30,8 +31,6 @@ public class AlarmActivity extends AppCompatActivity {
     private static final int ADD_ALARM_ITEM_ID = 0x31;
 
     private CoordinatorLayout mCoordinatorLayout;
-    private Toolbar mToolbar;
-    private ListView mListView;
     private BaseAdapter mAlarmAdapter;
     private ArrayList<Time> mAlarmArrayList;
 
@@ -70,14 +69,14 @@ public class AlarmActivity extends AppCompatActivity {
         View rootView = View.inflate(this, R.layout.activity_alarm, null);
 
         mCoordinatorLayout = (CoordinatorLayout) rootView.findViewById(R.id.alarm_CoordinatorLayout);
-        mToolbar = (Toolbar) rootView.findViewById(R.id.alarm_toolbar);
+        Toolbar mToolbar = (Toolbar) rootView.findViewById(R.id.alarm_toolbar);
         mToolbar.setTitle(R.string.alarm_title);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        mListView = (ListView) rootView.findViewById(R.id.alarm_listView);
+        ListView mListView = (ListView) rootView.findViewById(R.id.alarm_listView);
         mAlarmAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
@@ -120,31 +119,37 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     private void refreshAlarms() {
-        if (mAlarmArrayList == null) {
-            mAlarmArrayList = new ArrayList<>();
-        } else {
-            mAlarmArrayList.clear();
-        }
-
-        mAlarmArrayList.add(new Time(9, 30, 0, true));
-        mAlarmArrayList.add(new Time(10, 30, 1, false));
-        mAlarmArrayList.add(new Time(11, 10, 2, true));
+        mAlarmArrayList = Alarm.readAlarms(true);
     }
 
     private void addAlarm() {
-
-    }
-
-    private void changeAlarm(final int position) {
-        Time time = mAlarmArrayList.get(position);
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                Time t = mAlarmArrayList.get(position);
-                t.setHour(hourOfDay);
-                t.setMinute(minute);
+                Time alarm = new Time(0, 0, Alarm.getMaxAlarmId(false) + 1, true);
+                alarm.setHour(hourOfDay);
+                alarm.setMinute(minute);
+                if (Alarm.addAlarm(alarm)) {
+                    mAlarmArrayList.add(alarm);
+                    mAlarmAdapter.notifyDataSetChanged();
+                    Snackbar.make(mCoordinatorLayout, alarm + "", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        }, 8, 0, true);
+        timePickerDialog.show();
+        Compat.fixDialogStyle(timePickerDialog);
+    }
+
+    private void changeAlarm(int position) {
+        final Time time = mAlarmArrayList.get(position);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                time.setHour(hourOfDay);
+                time.setMinute(minute);
+                Alarm.updateAlarm(time);
                 mAlarmAdapter.notifyDataSetChanged();
-                Snackbar.make(mCoordinatorLayout, t + "", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(mCoordinatorLayout, time + "", Snackbar.LENGTH_SHORT).show();
             }
         }, time.getHour(), time.getMinute(), true);
         timePickerDialog.show();

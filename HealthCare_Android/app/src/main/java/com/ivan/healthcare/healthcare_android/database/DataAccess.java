@@ -2,7 +2,9 @@ package com.ivan.healthcare.healthcare_android.database;
 
 import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.Configurations;
+import com.ivan.healthcare.healthcare_android.customobj.Time;
 import com.ivan.healthcare.healthcare_android.local.User;
+import java.util.ArrayList;
 
 /**
  * 数据库操作方法类
@@ -99,7 +101,46 @@ public class DataAccess {
                                 .add("measure_today_times", User.todayMeasureTimes)
                                 .insert();
         }
-        return result >= 1;
+        return result > 0;
+    }
+
+    /**
+     * 获取闹钟列表
+     */
+    public static ArrayList<Time> getAlarmList() {
+        ArrayList<Result> resultArrayList = AppContext.getDB().query().table(Configurations.ALARM_TABLE)
+                                                        .field("hour").field("minute").field("alarm_id").field("enable")
+                                                        .list();
+        ArrayList<Time> alarmList = new ArrayList<>();
+        int id = 0;
+        for (Result r : resultArrayList) {
+            Time alarm = new Time(r.getInt("hour"), r.getInt("minute"), r.getInt("alarm_id"), r.getInt("enable") != 0);
+            alarmList.add(alarm);
+        }
+        return alarmList;
+    }
+
+    /**
+     * 更新/添加闹钟
+     * @param alarm
+     * @return
+     */
+    public static boolean updateAlarm(Time alarm) {
+        int result = AppContext.getDB().query().table(Configurations.ALARM_TABLE)
+                                        .add("hour", alarm.getHour())
+                                        .add("minute", alarm.getMinute())
+                                        .add("enable", alarm.isOn() ? 1 : 0)
+                                        .where("alarm_id").equal(alarm.getId())
+                                        .update();
+        if (result == 0) {
+            result = AppContext.getDB().query().table(Configurations.ALARM_TABLE)
+                                    .add("hour", alarm.getHour())
+                                    .add("minute", alarm.getMinute())
+                                    .add("alarm_id", alarm.getId())
+                                    .add("enable", alarm.isOn()?1:0)
+                                    .insert();
+        }
+        return result > 0;
     }
 
 }

@@ -6,7 +6,8 @@ import android.content.pm.PackageManager;
 import android.util.AndroidRuntimeException;
 import com.ivan.healthcare.healthcare_android.database.Database;
 import com.ivan.healthcare.healthcare_android.database.DatabaseOpenHelper;
-import com.ivan.healthcare.healthcare_android.database.Preference;
+import com.ivan.healthcare.healthcare_android.local.Preference;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

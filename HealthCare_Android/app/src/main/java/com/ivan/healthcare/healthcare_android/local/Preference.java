@@ -1,4 +1,4 @@
-package com.ivan.healthcare.healthcare_android.database;
+package com.ivan.healthcare.healthcare_android.local;
 
 import android.content.Context;
 import android.content.SharedPreferences;

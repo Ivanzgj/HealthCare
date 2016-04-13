@@ -268,7 +268,7 @@ public class QueryBuilder {
 	 * @return 结果列表
 	 * @see #first()
 	 */
-	public List<Result> list() {
+	public ArrayList<Result> list() {
 		execString.append("select ");
 		String[] fields = fieldsString.toString().split(",");
 		for (String f : fields) {
@@ -298,10 +298,10 @@ public class QueryBuilder {
 		Cursor cursor = db.rawQuery(execString.toString(), null);
 		int columns = cursor.getColumnCount();
 
-		List<Result> rl = new ArrayList<>();
+		ArrayList<Result> rl = new ArrayList<>();
 		while (cursor.moveToNext()) {
+			Result r = new Result();
 			for (int i=0;i<columns;i++) {
-				Result r = new Result();
 				switch (cursor.getType(i)) {
 					case Cursor.FIELD_TYPE_INTEGER:
 						r.put(cursor.getColumnName(i), cursor.getInt(i));
@@ -315,8 +315,8 @@ public class QueryBuilder {
 					default:
 						break;
 				}
-				rl.add(r);
 			}
+			rl.add(r);
 		}
 		cursor.close();
 		return rl;
