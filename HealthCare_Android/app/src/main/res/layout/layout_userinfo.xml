@@ -97,7 +97,6 @@
                                 android:layout_height="wrap_content"
                                 android:id="@+id/personal_info_today_times"
                                 android:layout_centerHorizontal="true"
-                                android:text="1"
                                 android:textSize="@dimen/textsize_second_title"
                                 android:textColor="@color/textColorSecondary"/>
 
@@ -123,7 +122,6 @@
                                 android:layout_height="wrap_content"
                                 android:id="@+id/personal_info_total_times"
                                 android:layout_centerHorizontal="true"
-                                android:text="1"
                                 android:textSize="@dimen/textsize_second_title"
                                 android:textColor="@color/textColorSecondary"/>
 
@@ -149,7 +147,6 @@
                                 android:layout_height="wrap_content"
                                 android:id="@+id/personal_info_health_assess"
                                 android:layout_centerHorizontal="true"
-                                android:text="1"
                                 android:textSize="@dimen/textsize_second_title"
                                 android:textColor="@color/textColorSecondary"/>
 

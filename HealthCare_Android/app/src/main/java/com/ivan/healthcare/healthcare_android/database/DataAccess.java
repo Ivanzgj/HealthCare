@@ -3,6 +3,7 @@ package com.ivan.healthcare.healthcare_android.database;
 import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.customobj.Time;
+import com.ivan.healthcare.healthcare_android.local.Constellation;
 import com.ivan.healthcare.healthcare_android.local.User;
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ public class DataAccess {
                             .field("uid")
                             .first();
         if (result == null) {
-            return -1;
+            return User.UID_UNDEFINE;
         } else {
             return Integer.valueOf(result.getString("uid"));
         }
@@ -56,6 +57,7 @@ public class DataAccess {
             User.setConstellationInt(result.getInt("constellation"));
             User.email = result.getString("email");
             User.address = result.getString("address");
+            User.introduction = result.getString("introduction");
             User.todayMeasureTimes = result.getInt("measure_today_times");
             User.totalMeasureTimes = result.getInt("measure_total_times");
             User.totalMeasureAssessment = result.getInt("measure_total_assessment");
@@ -75,7 +77,7 @@ public class DataAccess {
                             .add("age", User.age)
                             .add("sex", User.getSexInt())
                             .add("birth", User.birthday)
-                            .add("constellation", User.getConstellationInt())
+                            .add("constellation", Constellation.getConstellationInt(User.constellation))
                             .add("email", User.email)
                             .add("address", User.address)
                             .add("introduction", User.introduction)
@@ -92,7 +94,7 @@ public class DataAccess {
                                 .add("age", User.age)
                                 .add("sex", User.getSexInt())
                                 .add("birth", User.birthday)
-                                .add("constellation", User.getConstellationInt())
+                                .add("constellation", Constellation.getConstellationInt(User.constellation))
                                 .add("email", User.email)
                                 .add("address", User.address)
                                 .add("introduction", User.introduction)
@@ -112,7 +114,6 @@ public class DataAccess {
                                                         .field("hour").field("minute").field("alarm_id").field("enable")
                                                         .list();
         ArrayList<Time> alarmList = new ArrayList<>();
-        int id = 0;
         for (Result r : resultArrayList) {
             Time alarm = new Time(r.getInt("hour"), r.getInt("minute"), r.getInt("alarm_id"), r.getInt("enable") != 0);
             alarmList.add(alarm);
@@ -122,8 +123,6 @@ public class DataAccess {
 
     /**
      * 更新/添加闹钟
-     * @param alarm
-     * @return
      */
     public static boolean updateAlarm(Time alarm) {
         int result = AppContext.getDB().query().table(Configurations.ALARM_TABLE)

@@ -9,7 +9,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -23,20 +22,21 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.andexert.library.RippleView;
 import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.R;
+import com.ivan.healthcare.healthcare_android.local.Constellation;
 import com.ivan.healthcare.healthcare_android.local.User;
 import com.ivan.healthcare.healthcare_android.util.Compat;
 import com.ivan.healthcare.healthcare_android.util.DialogBuilder;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
+import java.util.Calendar;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -68,6 +68,7 @@ public class PersonalInfoActivity extends AppCompatActivity implements View.OnCl
     private RippleView mLogoutView;
     private RippleView mChangePwdView;
     private View clickMask;
+    private RelativeLayout mLogoutRel;
 
     private MenuItem uploadMenuItem;
     private final static int UPLOAD_MENU_ITEM_ID = 0x01;
@@ -161,6 +162,8 @@ public class PersonalInfoActivity extends AppCompatActivity implements View.OnCl
         clickMask.setOnClickListener(this);
         clickMask.setVisibility(View.INVISIBLE);
 
+        mLogoutRel = (RelativeLayout) mSwipeRefreshLayout.findViewById(R.id.personal_info_logout_rel);
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         setContentView(rootView);
@@ -169,11 +172,6 @@ public class PersonalInfoActivity extends AppCompatActivity implements View.OnCl
     private void refreshContents() {
 
         mToolbarLayout.setTitle(User.userName);
-
-        if (User.uid == -1) {
-            mAvatarImageView.setImageResource(R.drawable.default_avatar);
-            return;
-        }
 
         String home = getFilesDir().getAbsolutePath();
         File avatarFile = new File(home + Configurations.AVATAR_FILE_PATH);
@@ -194,14 +192,22 @@ public class PersonalInfoActivity extends AppCompatActivity implements View.OnCl
         mUidTextView.setText(String.valueOf(User.uid));
         mNameEdit.setText(User.userName);
         mBirthTextView.setText(User.birthday);
+        mSexTextView.setTag(User.sex);
         if (User.sex == User.UserSex.USER_MALE) mSexTextView.setText(getResources().getString(R.string.personal_sex_male));
         else if (User.sex == User.UserSex.USER_FEMALE) mSexTextView.setText(getResources().getString(R.string.personal_sex_female));
         else if (User.sex == User.UserSex.USER_ALIEN) mSexTextView.setText(getResources().getString(R.string.personal_sex_alien));
-        mConstellationTextView.setText(User.getConstellationString());
+        mConstellationTextView.setTag(User.constellation);
+        mConstellationTextView.setText(Constellation.getConstellationString(User.constellation));
         if (User.age >= 0)  mAgeTextView.setText(String.valueOf(User.age));
         mEmailEdit.setText(User.email);
         mLocationEdit.setText(User.address);
         mIntroEdit.setText(User.introduction);
+
+        if (User.uid == -1) {
+            mLogoutRel.setVisibility(View.GONE);
+        } else {
+            mLogoutRel.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -254,19 +260,38 @@ public class PersonalInfoActivity extends AppCompatActivity implements View.OnCl
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Snackbar.make(rootView, array[position], Snackbar.LENGTH_SHORT).show();
+                    mSexTextView.setText(array[position]);
+                    if (position == 0)          mSexTextView.setTag(User.UserSex.USER_MALE);
+                    else if (position == 1)     mSexTextView.setTag(User.UserSex.USER_FEMALE);
+                    else if (position == 2)     mSexTextView.setTag(User.UserSex.USER_ALIEN);
                     dialog.dismiss();
                 }
             });
 
         } else if (mBirthTextView.equals(v)) {
 
+            final Calendar cal = Calendar.getInstance();
             DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    Snackbar.make(mSwipeRefreshLayout, year+"-"+monthOfYear+"-"+dayOfMonth, Snackbar.LENGTH_SHORT).show();
+
+                    String date = year+"-"+(monthOfYear+1)+"-"+dayOfMonth;
+                    mBirthTextView.setText(date);
+                    int age = cal.get(Calendar.YEAR) - year;
+                    if (cal.get(Calendar.MONTH) < monthOfYear) {
+                        age -= 1;
+                    } else if (cal.get(Calendar.MONTH) == monthOfYear) {
+                        if (cal.get(Calendar.DAY_OF_MONTH) < dayOfMonth) {
+                            age -= 1;
+                        }
+                    }
+                    mAgeTextView.setText(String.valueOf(age));
+                    Constellation.ConstellationEnum constellation = Constellation.getConstellation(monthOfYear + 1, dayOfMonth);
+                    mConstellationTextView.setTag(constellation);
+                    mConstellationTextView.setText(Constellation.getConstellationString(constellation));
+
                 }
-            }, 2016, 4, 11);
+            }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
             datePickerDialog.show();
             Compat.fixDialogStyle(datePickerDialog);
 
@@ -278,7 +303,16 @@ public class PersonalInfoActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void upload() {
-
+        User.edit()
+                .setUserName(mNameEdit.getText().toString())
+                .setAge(Integer.valueOf(mAgeTextView.getText().toString()))
+                .setBirthday(mBirthTextView.getText().toString())
+                .setSex((User.UserSex) mSexTextView.getTag())
+                .setConstellation((Constellation.ConstellationEnum) mConstellationTextView.getTag())
+                .setEmail(mEmailEdit.getText().toString())
+                .setAddress(mLocationEdit.getText().toString())
+                .setIntroduction(mIntroEdit.getText().toString())
+                .commit();
     }
 
     private void logout() {

@@ -15,21 +15,7 @@ public class User {
         Undefine
     }
 
-    public enum Constellation {
-        Capricorn,      //摩羯座
-        Aquarius,       //水瓶座
-        Pisces,         //双鱼座
-        Aries,          //白羊座
-        Taurus,         //金牛座
-        Gemini,         //双子座
-        Cancer,         //巨蟹座
-        Leo,            //狮子座
-        Virgo,          //处女座
-        Libra,          //天秤座
-        Scorpio,        //天蝎座
-        Sagittarius,    //射手座
-        Undefine        //未定义
-    }
+    public static final int UID_UNDEFINE = 1002;
 
     private static final String DEFAULT_USER_NAME_PREFIX = "User_";
 
@@ -38,7 +24,7 @@ public class User {
     public static int age;
     public static UserSex sex;
     public static String birthday;
-    public static Constellation constellation;
+    public static Constellation.ConstellationEnum constellation;
     public static String email;
     public static String address;
     public static String introduction;
@@ -48,11 +34,11 @@ public class User {
 
     public static void initUserInfo() {
         uid = DataAccess.getUid();
-        if (uid == -1) {
+        if (uid == UID_UNDEFINE) {
             userName = DEFAULT_USER_NAME_PREFIX + uid;
             age = -1;
             sex = UserSex.Undefine;
-            constellation = Constellation.Undefine;
+            constellation = Constellation.ConstellationEnum.Undefine;
             birthday = "";
             email = "";
             address = "";
@@ -85,68 +71,6 @@ public class User {
         }
     }
 
-    public static int getConstellationInt() {
-        switch (constellation) {
-            case Capricorn:
-                return 1;
-            case Aquarius:
-                return 2;
-            case Pisces:
-                return 3;
-            case Aries:
-                return 4;
-            case Taurus:
-                return 5;
-            case Gemini:
-                return 6;
-            case Cancer:
-                return 7;
-            case Leo:
-                return 8;
-            case Virgo:
-                return 9;
-            case Libra:
-                return 10;
-            case Scorpio:
-                return 11;
-            case Sagittarius:
-                return 12;
-            default:
-                return -1;
-        }
-    }
-
-    public static String getConstellationString() {
-        switch (constellation) {
-            case Capricorn:
-                return "摩羯座";
-            case Aquarius:
-                return "水瓶座";
-            case Pisces:
-                return "双鱼座";
-            case Aries:
-                return "白羊座";
-            case Taurus:
-                return "金牛座";
-            case Gemini:
-                return "双子座";
-            case Cancer:
-                return "巨蟹座";
-            case Leo:
-                return "狮子座";
-            case Virgo:
-                return "处女座";
-            case Libra:
-                return "天秤座";
-            case Scorpio:
-                return "天蝎座";
-            case Sagittarius:
-                return "射手座";
-            default:
-                return "";
-        }
-    }
-
     public static void setSexInt(int sexInt) {
         switch (sexInt) {
             case 0:
@@ -165,47 +89,7 @@ public class User {
     }
 
     public static void setConstellationInt(int constellationInt) {
-        switch (constellationInt) {
-            case 1:
-                constellation = Constellation.Capricorn;
-                break;
-            case 2:
-                constellation = Constellation.Aquarius;
-                break;
-            case 3:
-                constellation = Constellation.Pisces;
-                break;
-            case 4:
-                constellation = Constellation.Aries;
-                break;
-            case 5:
-                constellation = Constellation.Taurus;
-                break;
-            case 6:
-                constellation = Constellation.Gemini;
-                break;
-            case 7:
-                constellation = Constellation.Cancer;
-                break;
-            case 8:
-                constellation = Constellation.Leo;
-                break;
-            case 9:
-                constellation = Constellation.Virgo;
-                break;
-            case 10:
-                constellation = Constellation.Libra;
-                break;
-            case 11:
-                constellation = Constellation.Scorpio;
-                break;
-            case 12:
-                constellation = Constellation.Sagittarius;
-                break;
-            default:
-                constellation = Constellation.Undefine;
-                break;
-        }
+        constellation = Constellation.getConstellationEnum(constellationInt);
     }
 
     /**
@@ -218,7 +102,7 @@ public class User {
         private int age;
         private UserSex sex;
         private String birthday;
-        private Constellation constellation;
+        private Constellation.ConstellationEnum constellation;
         private String email;
         private String address;
         private String introduction;
@@ -269,7 +153,7 @@ public class User {
             return this;
         }
 
-        public Editor setConstellation(Constellation constellation) {
+        public Editor setConstellation(Constellation.ConstellationEnum constellation) {
             this.constellation = constellation;
             constellationChanged = true;
             return this;
