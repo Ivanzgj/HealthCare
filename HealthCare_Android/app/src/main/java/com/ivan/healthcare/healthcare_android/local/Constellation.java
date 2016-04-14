@@ -6,7 +6,7 @@ package com.ivan.healthcare.healthcare_android.local;
  */
 public class Constellation {
 
-    public static enum ConstellationEnum {
+    public enum ConstellationEnum {
         Capricorn,      //摩羯座
         Aquarius,       //水瓶座
         Pisces,         //双鱼座

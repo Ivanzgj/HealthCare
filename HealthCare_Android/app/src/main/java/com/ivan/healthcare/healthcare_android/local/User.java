@@ -35,6 +35,7 @@ public class User {
     public static void initUserInfo() {
         uid = DataAccess.getUid();
         if (uid == UID_UNDEFINE) {
+            uid = -1;
             userName = DEFAULT_USER_NAME_PREFIX + uid;
             age = -1;
             sex = UserSex.Undefine;
@@ -48,7 +49,7 @@ public class User {
             totalMeasureAssessment = 0;
         } else {
             DataAccess.initUserInfo();
-            if (userName == null) {
+            if (userName == null || userName.length() == 0) {
                 userName = DEFAULT_USER_NAME_PREFIX + uid;
             }
         }

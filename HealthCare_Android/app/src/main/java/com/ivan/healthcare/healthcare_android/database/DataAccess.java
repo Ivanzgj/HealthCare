@@ -5,7 +5,10 @@ import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.customobj.Time;
 import com.ivan.healthcare.healthcare_android.local.Constellation;
 import com.ivan.healthcare.healthcare_android.local.User;
+import com.ivan.healthcare.healthcare_android.util.Utils;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * 数据库操作方法类
@@ -13,6 +16,18 @@ import java.util.ArrayList;
  */
 
 public class DataAccess {
+
+    /**
+     * 测量数据，包括心率数据，血压（上/下压），心率大小，综合评价
+     */
+    public static class MeasuredDataUnit {
+        public String date;
+        public ArrayList<Float> data;
+        public int pressureHigh;
+        public int pressureLow;
+        public int beepRate;
+        public int assessment;
+    }
 
     /**
      * 获取当前用户的uid
@@ -140,6 +155,87 @@ public class DataAccess {
                                     .insert();
         }
         return result > 0;
+    }
+
+    /**
+     * 获取指定时间的测量数据，月份从1开始
+     * @return {@link com.ivan.healthcare.healthcare_android.database.DataAccess.MeasuredDataUnit}
+     */
+    public static MeasuredDataUnit getMeasuredData(int year, int month, int dayOfMonth, int hour, int minute) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month - 1, dayOfMonth);
+        String dateString = Utils.getDateString(cal.getTime());
+        Result result = AppContext.getDB().query().table(Configurations.MEASURE_TABLE)
+                                            .field("beep_data")
+                                            .field("press_high")
+                                            .field("press_low")
+                                            .field("beep_rate")
+                                            .field("assessment")
+                                            .where("date").equal(dateString)
+                                            .where("hour").equal(hour)
+                                            .where("minute").equal(minute)
+                                            .first();
+        if (result == null) {
+            return null;
+        } else {
+            MeasuredDataUnit dataUnit = new MeasuredDataUnit();
+            dataUnit.date = dateString;
+
+            ArrayList<Float> dataList = new ArrayList<>();
+            String data = result.getString("beep_data");
+            String[] datas = data.split("|");
+            for (String d : datas) {
+                dataList.add(Float.valueOf(d));
+            }
+            dataUnit.data = dataList;
+
+            dataUnit.pressureHigh = result.getInt("press_high");
+            dataUnit.pressureLow = result.getInt("press_low");
+            dataUnit.beepRate = result.getInt("beep_rate");
+            dataUnit.assessment = result.getInt("assessment");
+
+            return dataUnit;
+        }
+    }
+
+    /**
+     * 获取指定时间的测量数据，月份从1开始
+     * @return {@link com.ivan.healthcare.healthcare_android.database.DataAccess.MeasuredDataUnit}
+     */
+    public static MeasuredDataUnit getLatestMeasuredData() {
+        Result result = AppContext.getDB().query().table(Configurations.MEASURE_TABLE)
+                                        .field("date")
+                                        .field("hour")
+                                        .field("minute")
+                                        .field("beep_data")
+                                        .field("press_high")
+                                        .field("press_low")
+                                        .field("beep_rate")
+                                        .field("assessment")
+                                        .order("date, hour, minute DESC")
+                                        .limit(1)
+                                        .first();
+        if (result == null) {
+            return null;
+        } else {
+            MeasuredDataUnit dataUnit = new MeasuredDataUnit();
+            dataUnit.date = result.getString("date");
+
+            ArrayList<Float> dataList = new ArrayList<>();
+            String data = result.getString("beep_data");
+            String[] datas = data.split("|");
+            for (String d : datas) {
+                dataList.add(Float.valueOf(d));
+            }
+            dataUnit.data = dataList;
+
+            dataUnit.pressureHigh = result.getInt("press_high");
+            dataUnit.pressureLow = result.getInt("press_low");
+            dataUnit.beepRate = result.getInt("beep_rate");
+            dataUnit.assessment = result.getInt("assessment");
+
+            return dataUnit;
+        }
     }
 
 }

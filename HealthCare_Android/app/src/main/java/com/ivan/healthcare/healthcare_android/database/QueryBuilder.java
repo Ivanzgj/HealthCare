@@ -282,15 +282,15 @@ public class QueryBuilder {
 			execString.append(" ");
 			execString.append(whereString);
 		}
-		if (limit!=0) {
-			execString.append(" limit ");
-			execString.append(limit);
-		}
 		if (groupString!=null) {
 			execString.append(" ").append("group by ").append(groupString);
 		}
 		if (orderString!=null) {
 			execString.append(" ").append("order by ").append(orderString);
+		}
+		if (limit!=0) {
+			execString.append(" limit ");
+			execString.append(limit);
 		}
 
 		L.d(SQL_TAG, execString.toString());
@@ -341,13 +341,13 @@ public class QueryBuilder {
 			execString.append(" ");
 			execString.append(whereString);
 		}
-		execString.append(" limit 1");
 		if (groupString!=null) {
 			execString.append(" ").append("group by ").append(groupString);
 		}
 		if (orderString!=null) {
 			execString.append(" ").append("order by ").append(orderString);
 		}
+		execString.append(" limit 1");
 
 		L.d(SQL_TAG, execString.toString());
 

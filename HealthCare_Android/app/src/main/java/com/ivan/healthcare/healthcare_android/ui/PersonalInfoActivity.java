@@ -305,7 +305,7 @@ public class PersonalInfoActivity extends AppCompatActivity implements View.OnCl
     private void upload() {
         User.edit()
                 .setUserName(mNameEdit.getText().toString())
-                .setAge(Integer.valueOf(mAgeTextView.getText().toString()))
+                .setAge(mAgeTextView.getText().length()==0?0:Integer.valueOf(mAgeTextView.getText().toString()))
                 .setBirthday(mBirthTextView.getText().toString())
                 .setSex((User.UserSex) mSexTextView.getTag())
                 .setConstellation((Constellation.ConstellationEnum) mConstellationTextView.getTag())

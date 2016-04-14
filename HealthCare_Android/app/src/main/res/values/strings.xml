@@ -28,7 +28,7 @@
     <string name="calendar_section_text">&#160;&#160;&#160;健康提示</string>
 
     <!-- slide tabbar -->
-    <string name="slide_tabbar_chart1">本次测量</string>
+    <string name="slide_tabbar_chart1">最近测量</string>
     <string name="slide_tabbar_chart2">今日记录</string>
     <string name="slide_tabbar_chart3">今日状态</string>
 
@@ -41,6 +41,8 @@
     <string name="chart_blood_pressure">血压（上/下压）</string>
     <string name="chart_beep">心率</string>
     <string name="chart_assess">健康指数</string>
+    <string name="chart_latest_measure_data_legend">最近一次测量的数据：</string>
+    <string name="chart_no_data">没有对应数据</string>
 
     <!-- profile -->
     <string name="profile_avatar_imageview">个人头像</string>

@@ -7,17 +7,17 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.chart.LineChart;
 import com.ivan.healthcare.healthcare_android.chart.provider.LineChartAdapter;
+import com.ivan.healthcare.healthcare_android.database.DataAccess;
 import com.ivan.healthcare.healthcare_android.util.Compat;
 import java.util.ArrayList;
 
@@ -30,7 +30,6 @@ public class ChartActivity extends AppCompatActivity implements ViewPager.OnPage
     public static final String CHART_DATE = "CHART_DATE";
     private static final int SLIDE_MARGIN = AppContext.dp2px(10);
 
-    private Toolbar mToolbar;
     private ViewPager mViewPager;
     private PagerAdapter mAdapter;
     private View slideView;
@@ -49,6 +48,14 @@ public class ChartActivity extends AppCompatActivity implements ViewPager.OnPage
     private float tabItemWidth = 0;
     private boolean alreadySet = false;
 
+    private LineChart latestDataChart;
+    private LineChart todayDataChart;
+    private LineChart todayStatusChart;
+
+    private TextView mMask1;
+    private TextView mMask2;
+    private TextView mMask3;
+
     /**
      * 查看数据的日期
      */
@@ -57,15 +64,14 @@ public class ChartActivity extends AppCompatActivity implements ViewPager.OnPage
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View rootView = inflater.inflate(R.layout.activity_chart, null, false);
+        View rootView = View.inflate(this, R.layout.activity_chart, null);
         initView(rootView);
         setContentView(rootView);
     }
 
     private void initView(View rootView) {
 
-        mToolbar = (Toolbar) rootView.findViewById(R.id.chart_toolbar);
+        Toolbar mToolbar = (Toolbar) rootView.findViewById(R.id.chart_toolbar);
         mToolbar.setTitle(R.string.chart_title);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
@@ -111,9 +117,9 @@ public class ChartActivity extends AppCompatActivity implements ViewPager.OnPage
         Intent intent = getIntent();
         mDate = intent.getStringExtra(CHART_DATE);
 
-        final LineChart chart1 = buildChart();
-        final LineChart chart2 = buildChart();
-        final LineChart chart3 = buildChart();
+        latestDataChart = buildLatestDataChart();
+        todayDataChart = buildChart();
+        todayStatusChart = buildChart();
 
         mAdapter = new PagerAdapter() {
             @Override
@@ -124,25 +130,61 @@ public class ChartActivity extends AppCompatActivity implements ViewPager.OnPage
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
                 if (position == 0) {
-                    container.addView(chart1);
-                    return chart1;
+                    if (latestDataChart != null) {
+                        container.addView(latestDataChart);
+                        return latestDataChart;
+                    } else {
+                        if (mMask1 == null) {
+                            mMask1 = makeMask();
+                        }
+                        container.addView(mMask1);
+                        return mMask1;
+                    }
                 } else if (position == 1) {
-                    container.addView(chart2);
-                    return chart2;
+                    if (todayDataChart != null) {
+                        container.addView(todayDataChart);
+                        return todayDataChart;
+                    } else {
+                        if (mMask2 == null) {
+                            mMask2 = makeMask();
+                        }
+                        container.addView(mMask2);
+                        return mMask2;
+                    }
                 } else {
-                    container.addView(chart3);
-                    return chart3;
+                    if (todayStatusChart != null) {
+                        container.addView(todayStatusChart);
+                        return todayStatusChart;
+                    } else {
+                        if (mMask3 == null) {
+                            mMask3 = makeMask();
+                        }
+                        container.addView(mMask3);
+                        return mMask3;
+                    }
                 }
             }
 
             @Override
             public void destroyItem(ViewGroup container, int position, Object object) {
                 if (position == 0) {
-                    container.removeView(chart1);
+                    if (latestDataChart != null) {
+                        container.removeView(latestDataChart);
+                    } else {
+                        container.removeView(mMask1);
+                    }
                 } else if (position == 1) {
-                    container.removeView(chart2);
+                    if (todayDataChart != null) {
+                        container.removeView(todayDataChart);
+                    } else {
+                        container.removeView(mMask2);
+                    }
                 } else {
-                    container.removeView(chart3);
+                    if (todayStatusChart != null) {
+                        container.removeView(todayStatusChart);
+                    } else {
+                        container.removeView(mMask3);
+                    }
                 }
             }
 
@@ -153,13 +195,14 @@ public class ChartActivity extends AppCompatActivity implements ViewPager.OnPage
         };
 
         mViewPager.setAdapter(mAdapter);
+    }
 
-        chart1.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                chart1.animateX(0, 3000);
-            }
-        }, 2000);
+    private TextView makeMask() {
+        TextView mask = new TextView(this);
+        mask.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        mask.setGravity(Gravity.CENTER);
+        mask.setText(R.string.chart_no_data);
+        return mask;
     }
 
     @Override
@@ -172,6 +215,69 @@ public class ChartActivity extends AppCompatActivity implements ViewPager.OnPage
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * 构建最近一次测量的数据折线图
+     */
+    private LineChart buildLatestDataChart() {
+        final DataAccess.MeasuredDataUnit dataUnit = DataAccess.getLatestMeasuredData();
+        if (dataUnit == null) {
+            return null;
+        }
+
+        mBeepTextView.setText(String.valueOf(dataUnit.beepRate));
+        mBloodTextView.setText(String.valueOf(dataUnit.pressureHigh + "/" + dataUnit.pressureLow));
+        mAssessTextView.setText(String.valueOf(dataUnit.assessment));
+
+        final ArrayList<Float> data = dataUnit.data;
+
+        LineChartAdapter adapter = new LineChartAdapter() {
+            @Override
+            public int getLineCount() {
+                return 1;
+            }
+
+            @Override
+            public ArrayList<Float> getLineData(int index) {
+                return data;
+            }
+
+            @Override
+            public int getLineColor(int index) {
+                return R.color.chart_cyan;
+            }
+
+            @Override
+            public int getXLabelsCount() {
+                return data.size();
+            }
+
+            @Override
+            public String getXLabel(int position) {
+                return String.valueOf(position);
+            }
+
+            @Override
+            public int getLegendCount() {
+                return 1;
+            }
+
+            @Override
+            public String getLegend(int position) {
+                return getResources().getString(R.string.chart_latest_measure_data_legend) + dataUnit.date;
+            }
+
+            @Override
+            public int getLegendColorId(int position) {
+                return R.color.chart_cyan;
+            }
+        };
+        LineChart chart = new LineChart(this);
+        chart.setAdapter(adapter);
+        chart.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        return chart;
     }
 
     // for test

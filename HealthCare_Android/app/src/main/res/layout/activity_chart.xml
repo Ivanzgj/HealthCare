@@ -89,8 +89,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:id="@+id/chart_detail_blood_tv"
-            android:textSize="@dimen/textsize_normal"
-            android:text="100/80"/>
+            android:textSize="@dimen/textsize_normal"/>
         
         <View
             android:layout_width="match_parent"
@@ -116,8 +115,7 @@
             android:layout_below="@id/chart_detail_divider1"
             android:id="@+id/chart_detail_beep_tv"
             android:textSize="@dimen/textsize_normal"
-            android:layout_marginTop="5dp"
-            android:text="50"/>
+            android:layout_marginTop="5dp"/>
 
         <View
             android:layout_width="match_parent"
@@ -143,8 +141,7 @@
             android:layout_below="@id/chart_detail_divider2"
             android:id="@+id/chart_detail_assess_tv"
             android:textSize="@dimen/textsize_normal"
-            android:layout_marginTop="5dp"
-            android:text="10"/>
+            android:layout_marginTop="5dp"/>
 
     </RelativeLayout>
 
