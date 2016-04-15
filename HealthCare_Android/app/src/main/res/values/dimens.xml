@@ -54,7 +54,7 @@
     <dimen name="profile_line_section_height">1dp</dimen>
     <dimen name="profile_item_height">@dimen/single_line_list_item_height</dimen>
     <dimen name="profile_avatar_gradient_radius">34dp</dimen>
-    <dimen name="profile_indicator_size">24dp</dimen>
+    <dimen name="profile_indicator_size">18dp</dimen>
 
     <!-- personal activity -->
     <dimen name="personal_avatar_size">90dp</dimen>
