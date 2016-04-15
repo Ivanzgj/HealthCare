@@ -191,6 +191,9 @@ public class MeasureFragment extends Fragment implements View.OnClickListener {
     public void onDestroy() {
         super.onDestroy();
         unregisterReceiver();
+        if (mService != null) {
+            mService.stop();
+        }
         closeBluetooth();
     }
 

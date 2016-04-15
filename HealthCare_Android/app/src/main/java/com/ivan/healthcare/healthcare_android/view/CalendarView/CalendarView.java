@@ -316,9 +316,17 @@ public class CalendarView extends RelativeLayout implements View.OnClickListener
     /**
      * 获得指定位置的日期
      */
-    public String getDay(int position) {
+    public String getDate(int position) {
         Day d = (Day) mAdapter.getItem(position);
         return d.getDate();
+    }
+
+    /**
+     * 获得指定位置的日期
+     */
+    public Day getDay(int position) {
+        Day d = (Day) mAdapter.getItem(position);
+        return d;
     }
 
     /**

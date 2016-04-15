@@ -9,7 +9,7 @@ import java.util.Date;
  * 管理“天”这一元素
  * Created by Ivan on 16/2/5.
  */
-class Day {
+public class Day {
     protected int year;
     protected int month;  // 0~11
     protected int day;
@@ -26,5 +26,17 @@ class Day {
         Date date = cal.getTime();
         SimpleDateFormat format = new SimpleDateFormat("yyMMddHHmmss");
         return format.format(date).substring(0,8);
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public int getDay() {
+        return day;
     }
 }

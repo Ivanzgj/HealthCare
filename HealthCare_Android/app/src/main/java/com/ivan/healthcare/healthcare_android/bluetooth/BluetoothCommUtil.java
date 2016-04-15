@@ -285,11 +285,7 @@ public class BluetoothCommUtil {
      * @return 是否写入成功
      */
     public boolean write(byte[] msg) {
-        if (trasfferThread != null) {
-            return trasfferThread.write(msg);
-        } else {
-            return false;
-        }
+        return trasfferThread != null && trasfferThread.write(msg);
     }
 
     private void connectionFailed() {

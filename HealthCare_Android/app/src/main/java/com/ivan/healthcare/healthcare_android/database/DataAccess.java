@@ -158,43 +158,38 @@ public class DataAccess {
     }
 
     /**
-     * 获取指定时间的测量数据，月份从1开始
+     * 获取指定日期的所有测量数据，月份从1开始
      * @return {@link com.ivan.healthcare.healthcare_android.database.DataAccess.MeasuredDataUnit}
      */
-    public static MeasuredDataUnit getMeasuredData(int year, int month, int dayOfMonth, int hour, int minute) {
+    public static ArrayList<MeasuredDataUnit> getMeasuredData(int year, int month, int dayOfMonth) {
         Calendar cal = Calendar.getInstance();
         cal.set(year, month - 1, dayOfMonth);
         String dateString = Utils.getDateString(cal.getTime());
-        Result result = AppContext.getDB().query().table(Configurations.MEASURE_TABLE)
-                                            .field("beep_data")
+        ArrayList<Result> resultList = AppContext.getDB().query().table(Configurations.MEASURE_TABLE)
                                             .field("press_high")
                                             .field("press_low")
                                             .field("beep_rate")
-                                            .field("assessment")
+                                            .field("hour")
+                                            .field("minute")
                                             .where("date").equal(dateString)
-                                            .where("hour").equal(hour)
-                                            .where("minute").equal(minute)
-                                            .first();
-        if (result == null) {
+                                            .list();
+        if (resultList == null || resultList.size() == 0) {
             return null;
         } else {
-            MeasuredDataUnit dataUnit = new MeasuredDataUnit();
-            dataUnit.date = dateString;
+            ArrayList<MeasuredDataUnit> dataList = new ArrayList<>();
 
-            ArrayList<Float> dataList = new ArrayList<>();
-            String data = result.getString("beep_data");
-            String[] datas = data.split("|");
-            for (String d : datas) {
-                dataList.add(Float.valueOf(d));
+            for (Result result : resultList) {
+                MeasuredDataUnit dataUnit = new MeasuredDataUnit();
+                dataUnit.date = dateString+"-"+result.getInt("hour")+":"+result.getInt("minute");
+
+                dataUnit.pressureHigh = result.getInt("press_high");
+                dataUnit.pressureLow = result.getInt("press_low");
+                dataUnit.beepRate = result.getInt("beep_rate");
+
+                dataList.add(dataUnit);
             }
-            dataUnit.data = dataList;
 
-            dataUnit.pressureHigh = result.getInt("press_high");
-            dataUnit.pressureLow = result.getInt("press_low");
-            dataUnit.beepRate = result.getInt("beep_rate");
-            dataUnit.assessment = result.getInt("assessment");
-
-            return dataUnit;
+            return dataList;
         }
     }
 
@@ -235,6 +230,31 @@ public class DataAccess {
             dataUnit.assessment = result.getInt("assessment");
 
             return dataUnit;
+        }
+    }
+
+    /**
+     * 获取指定日期的所有测量评估值，月份从1开始
+     * @return {@link com.ivan.healthcare.healthcare_android.database.DataAccess.MeasuredDataUnit}
+     */
+    public static ArrayList<Float> getMeasuredAssessment(int year, int month, int dayOfMonth) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month - 1, dayOfMonth);
+        String dateString = Utils.getDateString(cal.getTime());
+        ArrayList<Result> resultList = AppContext.getDB().query().table(Configurations.MEASURE_TABLE)
+                                                        .field("assessment")
+                                                        .where("date").equal(dateString)
+                                                        .list();
+        if (resultList == null || resultList.size() == 0) {
+            return null;
+        } else {
+            ArrayList<Float> dataList = new ArrayList<>();
+
+            for (Result result : resultList) {
+                dataList.add((float) result.getInt("assessment"));
+            }
+
+            return dataList;
         }
     }
 

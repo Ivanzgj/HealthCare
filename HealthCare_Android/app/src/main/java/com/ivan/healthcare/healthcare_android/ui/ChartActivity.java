@@ -16,10 +16,16 @@ import android.widget.TextView;
 import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.chart.LineChart;
+import com.ivan.healthcare.healthcare_android.chart.StackedColumnChart;
+import com.ivan.healthcare.healthcare_android.chart.provider.ColumnChartAdapter;
 import com.ivan.healthcare.healthcare_android.chart.provider.LineChartAdapter;
 import com.ivan.healthcare.healthcare_android.database.DataAccess;
 import com.ivan.healthcare.healthcare_android.util.Compat;
+import com.ivan.healthcare.healthcare_android.util.Utils;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * 显示各种图表的activity
@@ -27,11 +33,13 @@ import java.util.ArrayList;
  */
 public class ChartActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
-    public static final String CHART_DATE = "CHART_DATE";
+    public static final String CHART_YEAR = "CHART_YEAR";
+    public static final String CHART_MONTH = "CHART_MONTH";
+    public static final String CHART_DAYOFMONTH = "CHART_DAYOFMONTH";
+
     private static final int SLIDE_MARGIN = AppContext.dp2px(10);
 
     private ViewPager mViewPager;
-    private PagerAdapter mAdapter;
     private View slideView;
     private RelativeLayout tabbar;
     private TextView mBloodTextView;
@@ -50,7 +58,7 @@ public class ChartActivity extends AppCompatActivity implements ViewPager.OnPage
 
     private LineChart latestDataChart;
     private LineChart todayDataChart;
-    private LineChart todayStatusChart;
+    private StackedColumnChart todayStatusChart;
 
     private TextView mMask1;
     private TextView mMask2;
@@ -59,7 +67,9 @@ public class ChartActivity extends AppCompatActivity implements ViewPager.OnPage
     /**
      * 查看数据的日期
      */
-    private String mDate;
+    private int year;
+    private int month;
+    private int dayOfMonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +81,15 @@ public class ChartActivity extends AppCompatActivity implements ViewPager.OnPage
 
     private void initView(View rootView) {
 
+        Intent intent = getIntent();
+        year = intent.getIntExtra(CHART_YEAR, 0);
+        month = intent.getIntExtra(CHART_MONTH, 0);
+        dayOfMonth = intent.getIntExtra(CHART_DAYOFMONTH, 0);
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, dayOfMonth);
         Toolbar mToolbar = (Toolbar) rootView.findViewById(R.id.chart_toolbar);
-        mToolbar.setTitle(R.string.chart_title);
+        mToolbar.setTitle(Utils.getDateString(cal.getTime(), "yyyy年MM月dd日"));
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -114,14 +131,11 @@ public class ChartActivity extends AppCompatActivity implements ViewPager.OnPage
         mViewPager = (ViewPager) rootView.findViewById(R.id.chart_viewpager);
         mViewPager.addOnPageChangeListener(this);
 
-        Intent intent = getIntent();
-        mDate = intent.getStringExtra(CHART_DATE);
-
         latestDataChart = buildLatestDataChart();
-        todayDataChart = buildChart();
-        todayStatusChart = buildChart();
+        todayDataChart = buildTodayDataChart();
+        todayStatusChart = buildTodayAssessmentChart();
 
-        mAdapter = new PagerAdapter() {
+        PagerAdapter mAdapter = new PagerAdapter() {
             @Override
             public int getCount() {
                 return 3;
@@ -280,17 +294,26 @@ public class ChartActivity extends AppCompatActivity implements ViewPager.OnPage
         return chart;
     }
 
-    // for test
-    private LineChart buildChart() {
-        final ArrayList<Float> data1 = new ArrayList<>();
-        final ArrayList<Float> data2 = new ArrayList<>();
-        final ArrayList<Float> data3 = new ArrayList<>();
-        for (int i=0;i<20;i++) {
-            if (i % 2 == 0) data1.add((float) 10);
-            else            data1.add((float) 100);
-            data2.add(data1.get(i)*2);
-            data3.add(data1.get(i)*3);
+    /**
+     * 构造今日测量数据折线图
+     */
+    private LineChart buildTodayDataChart() {
+
+        ArrayList<DataAccess.MeasuredDataUnit> dataList = DataAccess.getMeasuredData(year, month, dayOfMonth);
+        if (dataList == null) {
+            return null;
         }
+
+        final ArrayList<Float> pressHighData = new ArrayList<>();
+        final ArrayList<Float> pressLowData = new ArrayList<>();
+        final ArrayList<Float> beepRateData = new ArrayList<>();
+
+        for (DataAccess.MeasuredDataUnit dataUnit : dataList) {
+            pressHighData.add((float) dataUnit.pressureHigh);
+            pressLowData.add((float) dataUnit.pressureLow);
+            beepRateData.add((float) dataUnit.beepRate);
+        }
+
         LineChartAdapter adapter = new LineChartAdapter() {
             @Override
             public int getLineCount() {
@@ -299,9 +322,9 @@ public class ChartActivity extends AppCompatActivity implements ViewPager.OnPage
 
             @Override
             public ArrayList<Float> getLineData(int index) {
-                if (index == 0) return data1;
-                if (index == 1) return data2;
-                return data3;
+                if (index == 0) return pressHighData;
+                if (index == 1) return pressLowData;
+                return beepRateData;
             }
 
             @Override
@@ -313,7 +336,7 @@ public class ChartActivity extends AppCompatActivity implements ViewPager.OnPage
 
             @Override
             public int getXLabelsCount() {
-                return data1.size();
+                return pressHighData.size();
             }
 
             @Override
@@ -328,7 +351,9 @@ public class ChartActivity extends AppCompatActivity implements ViewPager.OnPage
 
             @Override
             public String getLegend(int position) {
-                return "test";
+                if (position == 0) return getResources().getString(R.string.chart_today_pressure_high_legend);
+                if (position == 1) return getResources().getString(R.string.chart_today_pressure_low_legend);
+                return getResources().getString(R.string.chart_today_beep_rate_legend);
             }
 
             @Override
@@ -339,6 +364,63 @@ public class ChartActivity extends AppCompatActivity implements ViewPager.OnPage
             }
         };
         LineChart chart = new LineChart(this);
+        chart.setAdapter(adapter);
+        chart.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        return chart;
+    }
+
+    /**
+     * 构建今日测量评估的柱状图
+     */
+    private StackedColumnChart buildTodayAssessmentChart() {
+        final ArrayList<Float> data = DataAccess.getMeasuredAssessment(year, month, dayOfMonth);
+        if (data == null) {
+            return null;
+        }
+
+        ColumnChartAdapter adapter = new ColumnChartAdapter() {
+            @Override
+            public int getColumnCount() {
+                return 1;
+            }
+
+            @Override
+            public ArrayList<Float> getColumnData(int index) {
+                return data;
+            }
+
+            @Override
+            public int getColumnColor(int index) {
+                return R.color.chart_cyan;
+            }
+
+            @Override
+            public int getXLabelsCount() {
+                return data.size();
+            }
+
+            @Override
+            public String getXLabel(int position) {
+                return String.valueOf(position);
+            }
+
+            @Override
+            public int getLegendCount() {
+                return 1;
+            }
+
+            @Override
+            public String getLegend(int position) {
+                return "test";
+            }
+
+            @Override
+            public int getLegendColorId(int position) {
+                return R.color.chart_cyan;
+            }
+        };
+        StackedColumnChart chart = new StackedColumnChart(this);
         chart.setAdapter(adapter);
         chart.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
@@ -386,14 +468,6 @@ public class ChartActivity extends AppCompatActivity implements ViewPager.OnPage
         } else if (tab3.equals(v)) {
             mViewPager.setCurrentItem(2);
         }
-    }
-
-    private void pageUp() {
-
-    }
-
-    private void pageDown() {
-
     }
 
     private void setGradualColor(int tab, float percent) {

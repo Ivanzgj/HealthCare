@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.view.CalendarView.CalendarTheme;
 import com.ivan.healthcare.healthcare_android.view.CalendarView.CalendarView;
+import com.ivan.healthcare.healthcare_android.view.CalendarView.Day;
 
 /**
  * 显示数据的图表fragemnt
@@ -49,7 +50,10 @@ public class CalendarFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), ChartActivity.class);
-                intent.putExtra(ChartActivity.CHART_DATE, mCalendarView.getDay(position));
+                Day day = mCalendarView.getDay(position);
+                intent.putExtra(ChartActivity.CHART_YEAR, day.getYear());
+                intent.putExtra(ChartActivity.CHART_MONTH, day.getMonth());
+                intent.putExtra(ChartActivity.CHART_DAYOFMONTH, day.getDay());
                 startActivity(intent);
             }
         });

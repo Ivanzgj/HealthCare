@@ -18,4 +18,9 @@ public class Utils {
         return formater.format(date).substring(0, 8);
     }
 
+    public static String getDateString(Date date, String pattern) {
+        DateFormat formater = new SimpleDateFormat(pattern, Locale.CHINA);
+        return formater.format(date).substring(0, 8);
+    }
+
 }

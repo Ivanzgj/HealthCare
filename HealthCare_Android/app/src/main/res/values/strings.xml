@@ -43,6 +43,9 @@
     <string name="chart_assess">健康指数</string>
     <string name="chart_latest_measure_data_legend">最近一次测量的数据：</string>
     <string name="chart_no_data">没有对应数据</string>
+    <string name="chart_today_pressure_high_legend">今日测量血压上压数据</string>
+    <string name="chart_today_pressure_low_legend">今日测量血压下压数据</string>
+    <string name="chart_today_beep_rate_legend">今日测量心率数据</string>
 
     <!-- profile -->
     <string name="profile_avatar_imageview">个人头像</string>
