@@ -2,7 +2,6 @@ package com.ivan.healthcare.healthcare_android.local;
 
 import com.ivan.healthcare.healthcare_android.customobj.Time;
 import com.ivan.healthcare.healthcare_android.database.DataAccess;
-
 import java.util.ArrayList;
 
 /**
@@ -62,4 +61,5 @@ public class Alarm {
         }
         return false;
     }
+
 }

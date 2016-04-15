@@ -50,6 +50,8 @@
             android:name=".ui.CropImageActivity"
             android:screenOrientation="portrait"/>
 
+        <receiver android:name=".local.NotifyReciever"/>
+
     </application>
 
 </manifest>

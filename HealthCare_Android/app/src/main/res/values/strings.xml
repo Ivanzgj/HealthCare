@@ -86,6 +86,8 @@
     <string name="alarm_title">闹钟设置</string>
     <string name="alarm_add">添加</string>
     <string name="alarm_delete_message">确定删除该闹钟？</string>
+    <string name="alarm_notify_title">@string/app_name</string>
+    <string name="alarm_notify_message">主人快过来！是时候测一下你的血压啦~~~</string>
 
     <!-- backup activity -->
     <string name="backup_backup">上传数据</string>

@@ -1,5 +1,7 @@
 package com.ivan.healthcare.healthcare_android.customobj;
 
+import java.util.Calendar;
+
 /**
  * 闹钟时间类
  * Created by Ivan on 16/4/9.
@@ -54,5 +56,12 @@ public class Time {
     @Override
     public String toString() {
         return hour + " : " + minute;
+    }
+
+    public long getTime() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.MINUTE, minute);
+        return cal.getTimeInMillis();
     }
 }

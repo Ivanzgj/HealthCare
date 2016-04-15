@@ -3,7 +3,6 @@ package com.ivan.healthcare.healthcare_android.ui;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -14,12 +13,12 @@ import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.customobj.Time;
 import com.ivan.healthcare.healthcare_android.local.Alarm;
 import com.ivan.healthcare.healthcare_android.util.Compat;
+import com.ivan.healthcare.healthcare_android.util.NotifyUtil;
 import com.ivan.healthcare.healthcare_android.view.AlarmView;
 import java.util.ArrayList;
 
@@ -130,6 +129,9 @@ public class AlarmActivity extends AppCompatActivity {
         mAlarmArrayList = Alarm.readAlarms(true);
     }
 
+    /**
+     * 添加闹钟
+     */
     private void addAlarm() {
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
@@ -139,7 +141,7 @@ public class AlarmActivity extends AppCompatActivity {
                 alarm.setMinute(minute);
                 if (Alarm.addAlarm(alarm)) {
                     mAlarmAdapter.notifyDataSetChanged();
-                    Snackbar.make(mCoordinatorLayout, alarm + "", Snackbar.LENGTH_SHORT).show();
+                    NotifyUtil.openAlarmNotification(AlarmActivity.this, alarm);
                 }
             }
         }, 8, 0, true);
@@ -147,33 +149,49 @@ public class AlarmActivity extends AppCompatActivity {
         Compat.fixDialogStyle(timePickerDialog);
     }
 
+    /**
+     * 修改闹钟
+     */
     private void changeAlarm(int position) {
         final Time time = mAlarmArrayList.get(position);
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                NotifyUtil.closeAlarmNotification(AlarmActivity.this, time);
                 time.setHour(hourOfDay);
                 time.setMinute(minute);
                 time.setOn(true);
+                NotifyUtil.openAlarmNotification(AlarmActivity.this, time);
                 Alarm.updateAlarm(time);
                 mAlarmAdapter.notifyDataSetChanged();
-                Snackbar.make(mCoordinatorLayout, time + "", Snackbar.LENGTH_SHORT).show();
             }
         }, time.getHour(), time.getMinute(), true);
         timePickerDialog.show();
         Compat.fixDialogStyle(timePickerDialog);
     }
 
+    /**
+     * 开关闹钟
+     */
     private void switchAlarm(int position, boolean isOn) {
         Time time = mAlarmArrayList.get(position);
         time.setOn(isOn);
         Alarm.updateAlarm(time);
-        Toast.makeText(this, time.toString(), Toast.LENGTH_SHORT).show();
+        if (isOn) {
+            NotifyUtil.openAlarmNotification(AlarmActivity.this, time);
+        } else {
+            NotifyUtil.closeAlarmNotification(AlarmActivity.this, time);
+        }
     }
 
+    /**
+     * 删除闹钟
+     */
     private void deleteAlarm(int position) {
-        if (Alarm.deleteAlarm(mAlarmArrayList.get(position))) {
+        Time time = mAlarmArrayList.get(position);
+        if (Alarm.deleteAlarm(time)) {
             mAlarmAdapter.notifyDataSetChanged();
+            NotifyUtil.closeAlarmNotification(AlarmActivity.this, time);
         }
     }
 }
