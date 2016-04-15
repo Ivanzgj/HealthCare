@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/backup_backup_item"
-        app:rv_color="@color/colorPrimary"
+        app:rv_color="@color/onTouchColor"
         app:rv_rippleDuration="80">
 
         <TextView
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/backup_sync_item"
-        app:rv_color="@color/colorPrimary"
+        app:rv_color="@color/onTouchColor"
         app:rv_rippleDuration="80">
 
         <TextView
@@ -64,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/backup_clear_item"
-        app:rv_color="@color/colorPrimary"
+        app:rv_color="@color/onTouchColor"
         app:rv_rippleDuration="80">
 
         <TextView

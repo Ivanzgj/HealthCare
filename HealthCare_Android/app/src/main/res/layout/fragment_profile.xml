@@ -26,7 +26,7 @@
     <com.andexert.library.RippleView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:rv_color="@color/colorPrimary"
+        app:rv_color="@color/onTouchColor"
         app:rv_rippleDuration="80"
         android:id="@+id/profile_person_rel">
 
@@ -86,7 +86,7 @@
     <com.andexert.library.RippleView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:rv_color="@color/colorPrimary"
+        app:rv_color="@color/onTouchColor"
         app:rv_rippleDuration="80"
         android:id="@+id/profile_timer_rel">
 
@@ -132,7 +132,7 @@
     <com.andexert.library.RippleView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:rv_color="@color/colorPrimary"
+        app:rv_color="@color/onTouchColor"
         app:rv_rippleDuration="80"
         android:id="@+id/profile_upload_rel">
 
@@ -180,7 +180,7 @@
     <com.andexert.library.RippleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:rv_color="@color/colorPrimary"
+        app:rv_color="@color/onTouchColor"
         app:rv_rippleDuration="80"
         android:id="@+id/profile_reset_rel">
 
@@ -206,7 +206,7 @@
     <com.andexert.library.RippleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:rv_color="@color/colorPrimary"
+        app:rv_color="@color/onTouchColor"
         app:rv_rippleDuration="80"
         android:id="@+id/profile_login_rel">
 

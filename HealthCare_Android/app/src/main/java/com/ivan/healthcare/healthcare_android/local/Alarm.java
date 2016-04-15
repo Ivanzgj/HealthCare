@@ -54,4 +54,12 @@ public class Alarm {
         }
         return false;
     }
+
+    public static boolean deleteAlarm(Time alarm) {
+        if (DataAccess.deleteAlarm(alarm)) {
+            alarmArrayList.remove(alarm);
+            return true;
+        }
+        return false;
+    }
 }

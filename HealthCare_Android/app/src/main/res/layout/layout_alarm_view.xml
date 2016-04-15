@@ -24,7 +24,7 @@
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_toLeftOf="@id/alarm_switch"
         android:layout_toStartOf="@id/alarm_switch"
-        app:rv_color="@color/colorPrimary"
+        app:rv_color="@color/onTouchColor"
         app:rv_rippleDuration="80">
 
         <TextView

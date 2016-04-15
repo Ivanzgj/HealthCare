@@ -588,7 +588,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/personal_change_pwd_tv"
-                        app:rv_color="@color/colorPrimary"
+                        app:rv_color="@color/onTouchColor"
                         app:rv_framerate="24"
                         app:rv_rippleDuration="80">
 
@@ -614,7 +614,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/personal_logout_tv"
                         android:layout_below="@id/personal_line5"
-                        app:rv_color="@color/colorPrimary"
+                        app:rv_color="@color/onTouchColor"
                         app:rv_framerate="24"
                         app:rv_rippleDuration="80">
 

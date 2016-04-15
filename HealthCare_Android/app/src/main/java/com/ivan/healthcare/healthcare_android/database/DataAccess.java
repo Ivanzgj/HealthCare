@@ -118,7 +118,7 @@ public class DataAccess {
                                 .add("measure_today_times", User.todayMeasureTimes)
                                 .insert();
         }
-        return result > 0;
+        return result != 0;
     }
 
     /**
@@ -154,7 +154,17 @@ public class DataAccess {
                                     .add("enable", alarm.isOn()?1:0)
                                     .insert();
         }
-        return result > 0;
+        return result != 0;
+    }
+
+    /**
+     * 删除指定闹钟
+     */
+    public static boolean deleteAlarm(Time alarm) {
+        int result = AppContext.getDB().query().table(Configurations.ALARM_TABLE)
+                .where("alarm_id").equal(alarm.getId())
+                .delete();
+        return result != 0;
     }
 
     /**

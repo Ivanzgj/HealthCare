@@ -14,6 +14,7 @@ import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.customobj.Time;
@@ -103,7 +104,14 @@ public class AlarmActivity extends AppCompatActivity {
                     alarmView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, AppContext.dp2px(60)));
                 }
                 alarmView.setTime(mAlarmArrayList.get(position));
+
                 final int pos = position;
+                alarmView.setOnAlarmSwitchListener(new AlarmView.OnAlarmSwitchListener() {
+                    @Override
+                    public void onSwitch(Time time, boolean on) {
+                        switchAlarm(pos, on);
+                    }
+                });
                 alarmView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -130,7 +138,6 @@ public class AlarmActivity extends AppCompatActivity {
                 alarm.setHour(hourOfDay);
                 alarm.setMinute(minute);
                 if (Alarm.addAlarm(alarm)) {
-                    mAlarmArrayList.add(alarm);
                     mAlarmAdapter.notifyDataSetChanged();
                     Snackbar.make(mCoordinatorLayout, alarm + "", Snackbar.LENGTH_SHORT).show();
                 }
@@ -147,6 +154,7 @@ public class AlarmActivity extends AppCompatActivity {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 time.setHour(hourOfDay);
                 time.setMinute(minute);
+                time.setOn(true);
                 Alarm.updateAlarm(time);
                 mAlarmAdapter.notifyDataSetChanged();
                 Snackbar.make(mCoordinatorLayout, time + "", Snackbar.LENGTH_SHORT).show();
@@ -154,5 +162,18 @@ public class AlarmActivity extends AppCompatActivity {
         }, time.getHour(), time.getMinute(), true);
         timePickerDialog.show();
         Compat.fixDialogStyle(timePickerDialog);
+    }
+
+    private void switchAlarm(int position, boolean isOn) {
+        Time time = mAlarmArrayList.get(position);
+        time.setOn(isOn);
+        Alarm.updateAlarm(time);
+        Toast.makeText(this, time.toString(), Toast.LENGTH_SHORT).show();
+    }
+
+    private void deleteAlarm(int position) {
+        if (Alarm.deleteAlarm(mAlarmArrayList.get(position))) {
+            mAlarmAdapter.notifyDataSetChanged();
+        }
     }
 }

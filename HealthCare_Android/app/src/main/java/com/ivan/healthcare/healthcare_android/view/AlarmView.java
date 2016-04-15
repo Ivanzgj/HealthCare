@@ -3,6 +3,7 @@ package com.ivan.healthcare.healthcare_android.view;
 import android.content.Context;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.andexert.library.RippleView;
@@ -20,6 +21,8 @@ public class AlarmView extends RelativeLayout {
     private SwitchCompat mSwitch;
     private RippleView mRippleView;
 
+    private OnAlarmSwitchListener onAlarmSwitchListener;
+
     public AlarmView(Context context) {
         super(context);
         initView();
@@ -30,6 +33,13 @@ public class AlarmView extends RelativeLayout {
         mTimeTextView = (TextView) rootView.findViewById(R.id.alarm_time_textview);
         mSwitch = (SwitchCompat) rootView.findViewById(R.id.alarm_switch);
         mRippleView = (RippleView) rootView.findViewById(R.id.alarm_ripple_view);
+
+        mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (onAlarmSwitchListener != null)  onAlarmSwitchListener.onSwitch(mTime, isChecked);
+            }
+        });
     }
 
     public Time getTime() {
@@ -52,11 +62,14 @@ public class AlarmView extends RelativeLayout {
 
     @Override
     public void setOnClickListener(final OnClickListener l) {
-        mRippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-            @Override
-            public void onComplete(RippleView rippleView) {
-                l.onClick(rippleView);
-            }
-        });
+        mRippleView.setOnClickListener(l);
+    }
+
+    public void setOnAlarmSwitchListener(OnAlarmSwitchListener l) {
+        this.onAlarmSwitchListener = l;
+    }
+
+    public interface OnAlarmSwitchListener {
+        void onSwitch(Time time, boolean on);
     }
 }
