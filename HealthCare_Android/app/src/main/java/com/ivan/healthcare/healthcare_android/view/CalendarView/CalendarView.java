@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.ivan.healthcare.healthcare_android.R;
-import com.ivan.healthcare.healthcare_android.log.L;
+import com.ivan.healthcare.healthcare_android.util.L;
 import java.util.Calendar;
 import java.util.Locale;
 

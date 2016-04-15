@@ -6,12 +6,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import com.ivan.healthcare.healthcare_android.MainActivity;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.customobj.Time;
-import com.ivan.healthcare.healthcare_android.local.NotifyReciever;
+import com.ivan.healthcare.healthcare_android.reciever.NotifyReciever;
 
 /**
  * 通知工具类

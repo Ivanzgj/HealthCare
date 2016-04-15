@@ -1,4 +1,4 @@
-package com.ivan.healthcare.healthcare_android.log;
+package com.ivan.healthcare.healthcare_android.util;
 
 import android.util.Log;
 import com.ivan.healthcare.healthcare_android.Configurations;

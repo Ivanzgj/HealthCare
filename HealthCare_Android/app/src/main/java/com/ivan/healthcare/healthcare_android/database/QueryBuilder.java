@@ -2,13 +2,12 @@ package com.ivan.healthcare.healthcare_android.database;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
-import com.ivan.healthcare.healthcare_android.log.L;
+import com.ivan.healthcare.healthcare_android.util.L;
 
 /**
  * sql查询语句构造器类

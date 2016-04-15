@@ -1,4 +1,4 @@
-package com.ivan.healthcare.healthcare_android.local;
+package com.ivan.healthcare.healthcare_android.reciever;
 
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private TabViewController tabViewController;
+
     private MeasureFragment bluetoothCommFragment;
     private CalendarFragment chartFragment;
     private ProfileFragment profileFragment;
