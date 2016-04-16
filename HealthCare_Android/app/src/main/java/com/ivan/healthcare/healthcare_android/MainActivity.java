@@ -1,8 +1,12 @@
 package com.ivan.healthcare.healthcare_android;
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.ivan.healthcare.healthcare_android.local.User;
 import com.ivan.healthcare.healthcare_android.measure.MeasureFragment;
@@ -14,6 +18,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Toolbar mToolbar;
     private TabViewController tabViewController;
 
     private MeasureFragment bluetoothCommFragment;
@@ -24,6 +29,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        initView();
+
+        User.initUserInfo();
+    }
+
+    private void initView() {
         bluetoothCommFragment = new MeasureFragment();
         chartFragment = new CalendarFragment();
         profileFragment = new ProfileFragment();
@@ -45,9 +56,18 @@ public class MainActivity extends AppCompatActivity {
         titles.add(getResources().getString(R.string.main_profile_title));
         tabViewController = new TabViewController(this, fragmentArrayList, iconArrayList, titles);
         tabViewController.setScrollable(true);
-        setContentView(tabViewController);
 
-        User.initUserInfo();
+        LinearLayout rootView = new LinearLayout(this);
+        rootView.setOrientation(LinearLayout.VERTICAL);
+        rootView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+        mToolbar = (Toolbar) View.inflate(this, R.layout.layout_toolbar, null);
+        mToolbar.setTitle(R.string.app_name);
+
+        rootView.addView(mToolbar);
+        rootView.addView(tabViewController);
+
+        setContentView(rootView);
     }
 
     @Override

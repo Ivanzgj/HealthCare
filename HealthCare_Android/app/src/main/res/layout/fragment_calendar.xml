@@ -20,19 +20,12 @@
         android:text="@string/calendar_section_text"
         android:textColor="@color/pureWindowBackground"
         android:textSize="@dimen/textsize_normal"
-        android:background="@color/textColorSecondaryPressed"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_below="@id/suggest_section_textview"
-        android:id="@+id/suggest_section_bottom_line"
         android:background="@color/divider_color"/>
 
     <WebView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/suggest_section_bottom_line"
+        android:layout_below="@id/suggest_section_textview"
         android:id="@+id/suggestwebview"/>
 
 </RelativeLayout>

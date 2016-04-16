@@ -50,10 +50,10 @@ public class CircleProgressView extends View {
         int radius;
         if (width > height) {
             radius = height;
-            rect.set(width/2-radius*0.4f, radius*0.1f, width/2+radius*0.4f, radius*0.9f);
+            rect.set(width/2-radius*0.45f, radius*0.05f, width/2+radius*0.45f, radius*0.95f);
         } else {
             radius = width;
-            rect.set(radius*0.1f, height/2-radius*0.4f, radius*0.9f, height/2+radius*0.9f);
+            rect.set(radius*0.05f, height/2-radius*0.45f, radius*0.95f, height/2+radius*0.95f);
         }
     }
 

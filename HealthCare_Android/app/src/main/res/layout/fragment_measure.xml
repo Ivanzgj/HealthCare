@@ -67,12 +67,28 @@
 
 
 
+    <!-- 测量数据曲线图 -->
+    <com.ivan.healthcare.healthcare_android.view.chart.LineChart
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/measure_chart_height"
+        android:id="@+id/measure_chart"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@id/measure_detial_rel"/>
+
+
+
 
     <!-- 测量进度条及其数据 -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
         android:id="@+id/measure_pr_rel"
+        android:layout_above="@id/measure_chart"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin">
 
@@ -130,21 +146,6 @@
 
     </RelativeLayout>
 
-
-
-
-    <!-- 测量数据曲线图 -->
-    <com.ivan.healthcare.healthcare_android.view.chart.LineChart
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/measure_chart"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="10dp"
-        android:layout_above="@id/measure_detial_rel"
-        android:layout_below="@id/measure_pr_rel"/>
 
 
 

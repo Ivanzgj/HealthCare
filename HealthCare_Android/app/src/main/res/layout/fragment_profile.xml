@@ -6,23 +6,6 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/appbar_min_height"
-        android:gravity="center"
-        android:text="@string/profile_title"
-        android:id="@+id/profile_title"
-        android:textSize="@dimen/textsize_second_title"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/pureWindowBackground"/>
-
-    <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/profile_line_section_height"-->
-        <!--android:background="@color/textColorSecondaryPressed"-->
-        <!--android:layout_below="@id/profile_title"-->
-        <!--android:id="@+id/profile_section0"/>-->
-
     <com.andexert.library.RippleView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,8 +15,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/profile_person_item_height"
-            android:layout_below="@id/profile_title">
+            android:layout_height="@dimen/profile_person_item_height">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
