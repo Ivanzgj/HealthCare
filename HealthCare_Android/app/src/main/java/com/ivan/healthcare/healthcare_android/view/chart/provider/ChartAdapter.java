@@ -48,4 +48,8 @@ public abstract class ChartAdapter {
         }
     }
 
+    public boolean drawXLabels() {
+        return true;
+    }
+
 }

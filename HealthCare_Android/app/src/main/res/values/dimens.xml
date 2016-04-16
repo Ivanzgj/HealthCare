@@ -38,9 +38,13 @@
 
     <!-- measure fragment -->
     <dimen name="measure_beep_textview_textsize">64sp</dimen>
-    <dimen name="measure_beep_textview_margin_left">120dp</dimen>
+    <dimen name="measure_beep_textview_padding_right">50dp</dimen>
+    <dimen name="measure_beep_textview_padding_bottom">60dp</dimen>
+    <dimen name="measure_btn_margin_top">60dp</dimen>
+    <dimen name="measure_beep_unit_textview_padding_bottom">70dp</dimen>
+    <dimen name="measure_beep_textview_margin_left">-35dp</dimen>
     <dimen name="measure_beep_unit_textsize">22sp</dimen>
-    <dimen name="measure_chart_height">80dp</dimen>
+    <dimen name="measure_chart_height">112dp</dimen>
     <dimen name="measure_blood_tv_width">30dp</dimen>
     <dimen name="measure_start_btn_width">120dp</dimen>
     <dimen name="measure_start_btn_height">35dp</dimen>

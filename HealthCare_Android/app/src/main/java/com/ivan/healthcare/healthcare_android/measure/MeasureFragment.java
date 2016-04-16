@@ -22,13 +22,13 @@ import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.MainActivity;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.bluetooth.BluetoothCommUtil;
-import com.ivan.healthcare.healthcare_android.view.chart.SimpleChart;
+import com.ivan.healthcare.healthcare_android.view.chart.LineChart;
 import com.ivan.healthcare.healthcare_android.local.Preference;
 import com.ivan.healthcare.healthcare_android.util.L;
-import com.ivan.healthcare.healthcare_android.util.Compat;
 import com.ivan.healthcare.healthcare_android.view.CircleProgressView;
+import com.ivan.healthcare.healthcare_android.view.chart.SimpleChart;
+import com.ivan.healthcare.healthcare_android.view.chart.provider.LineChartAdapter;
 import com.ivan.healthcare.healthcare_android.view.material.ButtonFlat;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Set;
@@ -51,7 +51,7 @@ public class MeasureFragment extends Fragment implements View.OnClickListener {
     /**
      * 测量曲线图
      */
-    private SimpleChart measureChart;
+    private LineChart measureChart;
     /**
      * 显示心率的textview
      */
@@ -233,8 +233,14 @@ public class MeasureFragment extends Fragment implements View.OnClickListener {
             }
         }, 2000);
 
-        measureChart = (SimpleChart) rootView.findViewById(R.id.measure_chart);
+        measureChart = (LineChart) rootView.findViewById(R.id.measure_chart);
+
+        // test
+        final ArrayList<Float> data = new ArrayList<>();
+        data.add(100.f);data.add(50.f);data.add(110.f);data.add(55.f);data.add(102.f);
+        data.add(53.f);data.add(100.f);data.add(55.f);data.add(110.f);data.add(54.f);
         measureChart.setAdapter(new SimpleChart.SimpleChartAdapter() {
+
             @Override
             public int getLineCount() {
                 return 1;
@@ -242,20 +248,17 @@ public class MeasureFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public ArrayList<Float> getLineData(int index) {
-                ArrayList<Float> data = new ArrayList<>();
-                data.add(100.f);data.add(50.f);data.add(110.f);data.add(55.f);data.add(102.f);
-                data.add(53.f);data.add(100.f);data.add(55.f);data.add(110.f);data.add(54.f);
                 return data;
             }
 
             @Override
             public int getLineColor(int index) {
-                return Compat.getColor(context, R.color.default_main_color);
+                return R.color.chart_cyan;
             }
 
         });
 
-        measureBtn = (ButtonFlat) rootView.findViewById(R.id.beep_measure_textview);
+        measureBtn = (ButtonFlat) rootView.findViewById(R.id.beep_measure_btn);
         measureBtn.setOnClickListener(this);
 
         beepTextView = (TextView) rootView.findViewById(R.id.beep_textview);

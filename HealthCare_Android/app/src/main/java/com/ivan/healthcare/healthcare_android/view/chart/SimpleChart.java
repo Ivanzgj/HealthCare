@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.ivan.healthcare.healthcare_android.AppContext;
+import com.ivan.healthcare.healthcare_android.util.Compat;
 import com.ivan.healthcare.healthcare_android.view.chart.provider.LineChartAdapter;
 
 import java.util.ArrayList;
@@ -70,7 +71,7 @@ public class SimpleChart extends View {
         for (int i=0;i<mAdapter.getLineCount();i++) {
             ArrayList<Float> data = mAdapter.getLineData(i);
             for (int j=0;j<data.size()-1;j++) {
-                paint.setColor(mAdapter.getLineColor(j));
+                paint.setColor(Compat.getColor(getContext(), mAdapter.getLineColor(j)));
                 float y1 = data.get(j);
                 float y2 = data.get(j+1);
                 float startX = j*xStepWidth;
@@ -114,7 +115,7 @@ public class SimpleChart extends View {
     public static abstract class SimpleChartAdapter extends LineChartAdapter {
         @Override
         public int getXLabelsCount() {
-            return 0;
+            return getLineData(0).size();
         }
 
         @Override
@@ -122,6 +123,10 @@ public class SimpleChart extends View {
             return null;
         }
 
+        @Override
+        public boolean drawXLabels() {
+            return false;
+        }
 
         public int getLegendCount() {
             return 0;

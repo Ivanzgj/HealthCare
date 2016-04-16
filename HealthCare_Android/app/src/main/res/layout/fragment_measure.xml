@@ -4,72 +4,15 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- 测量进度条及其数据 -->
-    <com.ivan.healthcare.healthcare_android.view.CircleProgressView
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginBottom="10dp"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/measure_view"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/beep_textview"
-        android:layout_marginLeft="@dimen/measure_beep_textview_margin_left"
-        android:layout_marginStart="@dimen/measure_beep_textview_margin_left"
-        android:layout_marginTop="80dp"
-        android:textSize="@dimen/measure_beep_textview_textsize"
-        android:textColor="@color/textColorPrimary"
-        android:text="64"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/beep_unit_textview"
-        android:layout_alignBottom="@id/beep_textview"
-        android:layout_toRightOf="@id/beep_textview"
-        android:layout_toEndOf="@id/beep_textview"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginBottom="13dp"
-        android:textSize="@dimen/measure_beep_unit_textsize"
-        android:text="@string/beep_unit"/>
-
-    <com.ivan.healthcare.healthcare_android.view.material.ButtonFlat
-        app:ripple_color="@color/colorPrimaryLight"
-        android:layout_width="@dimen/measure_start_btn_width"
-        android:layout_height="@dimen/measure_start_btn_height"
-        android:id="@+id/beep_measure_textview"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/beep_textview"
-        android:layout_marginTop="23dp"
-        android:textSize="@dimen/textsize_second_title"
-        android:textColor="@color/colorPrimary"
-        android:text="@string/measure_text"/>
-
-
-
-    <!-- 测量数据曲线图 -->
-    <com.ivan.healthcare.healthcare_android.view.chart.SimpleChart
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/measure_chart_height"
-        android:id="@+id/measure_chart"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_below="@id/measure_view"/>
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:id="@+id/measure_detial_rel"
         android:orientation="vertical"
-        android:layout_marginBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -91,8 +34,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:textSize="@dimen/textsize_normal"
-                android:layout_marginRight="10dp"
-                android:layout_marginEnd="10dp"
+                android:gravity="end"
                 android:text="120"/>
 
         </RelativeLayout>
@@ -116,19 +58,94 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:textSize="@dimen/textsize_normal"
-                android:layout_marginRight="10dp"
-                android:layout_marginEnd="10dp"
+                android:gravity="end"
                 android:text="80"/>
 
         </RelativeLayout>
 
     </LinearLayout>
 
-    <!--<Button-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/post_btn"-->
-        <!--android:layout_below="@id/measure_chart"-->
-        <!--android:text="测试网络"/>-->
+
+
+
+    <!-- 测量进度条及其数据 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:id="@+id/measure_pr_rel"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin">
+
+        <com.ivan.healthcare.healthcare_android.view.CircleProgressView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:id="@+id/measure_view"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/beep_textview"
+            android:layout_centerInParent="true"
+            android:paddingRight="@dimen/measure_beep_textview_padding_right"
+            android:paddingEnd="@dimen/measure_beep_textview_padding_right"
+            android:paddingLeft="0dp"
+            android:paddingStart="0dp"
+            android:paddingBottom="@dimen/measure_beep_textview_padding_bottom"
+            android:textSize="@dimen/measure_beep_textview_textsize"
+            android:textColor="@color/textColorPrimary"
+            android:text="64"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/beep_unit_textview"
+            android:layout_centerHorizontal="true"
+            android:layout_alignBottom="@id/beep_textview"
+            android:paddingBottom="@dimen/measure_beep_unit_textview_padding_bottom"
+            android:gravity="bottom"
+            android:layout_toRightOf="@id/beep_textview"
+            android:layout_toEndOf="@id/beep_textview"
+            android:layout_marginLeft="@dimen/measure_beep_textview_margin_left"
+            android:layout_marginStart="@dimen/measure_beep_textview_margin_left"
+            android:textSize="@dimen/measure_beep_unit_textsize"
+            android:text="@string/beep_unit"/>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingTop="@dimen/measure_btn_margin_top">
+
+            <com.ivan.healthcare.healthcare_android.view.material.ButtonFlat
+                app:ripple_color="@color/colorPrimaryLight"
+                android:layout_width="@dimen/measure_start_btn_width"
+                android:layout_height="@dimen/measure_start_btn_height"
+                android:id="@+id/beep_measure_btn"
+                android:textSize="@dimen/textsize_second_title"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/measure_text"/>
+
+        </FrameLayout>
+
+    </RelativeLayout>
+
+
+
+
+    <!-- 测量数据曲线图 -->
+    <com.ivan.healthcare.healthcare_android.view.chart.LineChart
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/measure_chart"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@id/measure_detial_rel"
+        android:layout_below="@id/measure_pr_rel"/>
+
+
 
 </RelativeLayout>

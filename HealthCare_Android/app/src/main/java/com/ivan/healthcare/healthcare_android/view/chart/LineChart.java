@@ -126,7 +126,7 @@ public class LineChart extends Chart {
 	 */
 	private void setLineDataSet(){
 
-		if (mAdapter.getLegendCount() == 0) {
+		if (mAdapter.getLineCount() == 0) {
 			return;
 		}
 

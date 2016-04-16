@@ -55,7 +55,6 @@ public abstract class Chart extends View {
     protected ValueAnimator valueAnimator;
 
     private final int X_LABEL_TEXT_SIZE = AppContext.dp2px(11);
-    private final int Y_LABEL_TEXT_SIZE = AppContext.dp2px(13);
     private final int X_LABEL_LINE_SPACE = AppContext.dp2px(2);
 
     public final int MODE_LINE_CHART = 0x31;
@@ -84,7 +83,7 @@ public abstract class Chart extends View {
     /**
      * 图表上页距
      */
-    private final int topMargin = AppContext.dp2px(20);
+    private final int topMargin = AppContext.dp2px(10);
     /**
      * 高亮标签边距
      */
@@ -258,7 +257,7 @@ public abstract class Chart extends View {
         // 图例占据的空间高度
         allLegendsHeight = LEGEND_HEIGHT * mAdapter.getLegendCount();
         // 图表高度
-        chartHeight = viewHeight - xLabelHeight - topMargin - xLabelMargin/2 - allLegendsHeight;
+        chartHeight = viewHeight - (mAdapter.drawXLabels()?(xLabelHeight):0) - topMargin - allLegendsHeight - xLabelMargin/2;
         // 列高
         rectHeight = chartHeight;
         // 行宽
@@ -442,8 +441,6 @@ public abstract class Chart extends View {
 
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(theme.chartBGColor);
-//        canvas.drawRect(yLabelWidth, 0, viewWidth, topMargin, paint);
-//        canvas.drawRect(yLabelWidth, topMargin + chartHeight, viewWidth, topMargin + chartHeight + xLabelHeight + xLabelMargin, paint);
         canvas.drawRect(yLabelWidth, 0, viewWidth, topMargin + chartHeight + xLabelHeight + xLabelMargin, paint);
 
         canvas.save();
@@ -451,55 +448,45 @@ public abstract class Chart extends View {
 
         paint.setTextAlign(Paint.Align.CENTER);
 
-        // 画垂直方向的rectangle
-//        paint.setStyle(Paint.Style.FILL);
-//        for (int i=0;i<xGridLineCount;i++){
-//            if (i%2==0) paint.setColor(theme.deepGridColor);
-//            else 		paint.setColor(theme.shallowGridColor);
-//            canvas.drawRect(i*rectWidth, topMargin, (i+1)*rectWidth, rectHeight+topMargin, paint);
-//        }
-//        paint.setStyle(Paint.Style.STROKE);
 
-        // 画垂直方向的gridLine和x轴label
-        paint.setTextSize(X_LABEL_TEXT_SIZE);
-        paint.setTypeface(Typeface.DEFAULT_BOLD);
-        for (int i=0;i<=xGridLineCount;i++){
-//            paint.setColor(theme.gridLineColor);
-//            paint.setStyle(Paint.Style.STROKE);
-//            paint.setStrokeWidth(1);
-//            canvas.drawLine(i*rectWidth, topMargin, i*rectWidth, rectHeight+topMargin, paint);
-            if (i<xGridLineCount) {
-                paint.setColor(theme.xLabelTextColor);
-                paint.setStyle(Paint.Style.FILL);
-//                String xLabel = xLabels.get(i);
-                String xLabel = mAdapter.getXLabel(i);
-                String[] labels = xLabel.split(",");	// 分割行
+        // 画x轴label
+        if (mAdapter.drawXLabels()) {
+            paint.setTextSize(X_LABEL_TEXT_SIZE);
+//        paint.setTypeface(Typeface.DEFAULT_BOLD);
+            for (int i = 0; i <= xGridLineCount; i++) {
 
-                // 画xlabel标签
-                if (xLabel.equals("今,天")) {
-                    // 今天加上绿色背景
-                    paint.setColor(theme.todayXLabelBGColor);
-                    Compat.drawRoundRect(i * rectWidth + rectWidth / 2 - X_LABEL_TEXT_SIZE / 2 - highlightMargin,
-                            rectHeight + topMargin + xLabelMargin - X_LABEL_TEXT_SIZE - highlightMargin,
-                            i * rectWidth + rectWidth / 2 + X_LABEL_TEXT_SIZE / 2 + highlightMargin,
-                            rectHeight + topMargin + xLabelMargin + X_LABEL_TEXT_SIZE * labels.length - X_LABEL_TEXT_SIZE * 0.7f + X_LABEL_LINE_SPACE * (labels.length - 1) + highlightMargin,
-                            circleRadius, circleRadius, canvas, paint);
-
-                    paint.setColor(theme.todayXLabelTextColor);
-                    for (int k=0;k<labels.length;k++) {
-                        canvas.drawText(labels[k],
-                                i*rectWidth+rectWidth/2,
-                                rectHeight+xLabelMargin+topMargin+(X_LABEL_TEXT_SIZE+X_LABEL_LINE_SPACE)*k,
-                                paint);
-                    }
+                if (i < xGridLineCount) {
                     paint.setColor(theme.xLabelTextColor);
-                }
-                else {
-                    for (int k=0;k<labels.length;k++) {
-                        canvas.drawText(labels[k],
-                                i*rectWidth+rectWidth/2,
-                                rectHeight+xLabelMargin+topMargin+(X_LABEL_TEXT_SIZE+X_LABEL_LINE_SPACE)*k,
-                                paint);
+                    paint.setStyle(Paint.Style.FILL);
+//                String xLabel = xLabels.get(i);
+                    String xLabel = mAdapter.getXLabel(i);
+                    String[] labels = xLabel.split(",");    // 分割行
+
+                    // 画xlabel标签
+                    if (xLabel.equals("今,天")) {
+                        // 今天加上绿色背景
+                        paint.setColor(theme.todayXLabelBGColor);
+                        Compat.drawRoundRect(i * rectWidth + rectWidth / 2 - X_LABEL_TEXT_SIZE / 2 - highlightMargin,
+                                rectHeight + topMargin + xLabelMargin - X_LABEL_TEXT_SIZE - highlightMargin,
+                                i * rectWidth + rectWidth / 2 + X_LABEL_TEXT_SIZE / 2 + highlightMargin,
+                                rectHeight + topMargin + xLabelMargin + X_LABEL_TEXT_SIZE * labels.length - X_LABEL_TEXT_SIZE * 0.7f + X_LABEL_LINE_SPACE * (labels.length - 1) + highlightMargin,
+                                circleRadius, circleRadius, canvas, paint);
+
+                        paint.setColor(theme.todayXLabelTextColor);
+                        for (int k = 0; k < labels.length; k++) {
+                            canvas.drawText(labels[k],
+                                    i * rectWidth + rectWidth / 2,
+                                    rectHeight + xLabelMargin + topMargin + (X_LABEL_TEXT_SIZE + X_LABEL_LINE_SPACE) * k,
+                                    paint);
+                        }
+                        paint.setColor(theme.xLabelTextColor);
+                    } else {
+                        for (int k = 0; k < labels.length; k++) {
+                            canvas.drawText(labels[k],
+                                    i * rectWidth + rectWidth / 2,
+                                    rectHeight + xLabelMargin + topMargin + (X_LABEL_TEXT_SIZE + X_LABEL_LINE_SPACE) * k,
+                                    paint);
+                        }
                     }
                 }
             }
@@ -531,8 +518,8 @@ public abstract class Chart extends View {
         paint.setColor(theme.yLabelTextColor);
         paint.setTextAlign(Paint.Align.RIGHT);
         paint.setStrokeWidth(2);
-        paint.setTextSize(Y_LABEL_TEXT_SIZE);
-        paint.setTypeface(Typeface.DEFAULT_BOLD);
+        paint.setTextSize((float) (ylineSep * 0.8));
+//        paint.setTypeface(Typeface.DEFAULT_BOLD);
 
         Paint.FontMetricsInt fontMetrics = paint.getFontMetricsInt();
         int offset = (-fontMetrics.bottom - fontMetrics.top)/2;
