@@ -138,9 +138,7 @@ public class ParallelColumnChart extends StackedColumnChart {
         if (selfAdaptive) {
             setYStep(10);
             yStep = 10;
-            if (maxY <= 100) maxY = 100;
-            else if (maxY > 100 && maxY <= 1000) maxY = (int) (Math.ceil((float)maxY/100.f)*100);
-            else if (maxY > 1000 && maxY < 10000) maxY = (int) (Math.ceil((float)maxY/1000.f)*1000);
+            maxY = (int) (maxY * 1.1);
             ArrayList<Float> yLabels = new ArrayList<>();
             for (int i=0;i<=yStep;i++){
                 yLabels.add((float) (i*maxY/yStep));

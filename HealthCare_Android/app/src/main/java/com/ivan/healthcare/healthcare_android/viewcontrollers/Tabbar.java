@@ -127,8 +127,8 @@ class Tabbar extends RelativeLayout implements View.OnClickListener, ViewPager.O
 			params.weight = 1;
 			iconsLayout.addView(rel, params);
 
-			iconImageView.setTag(i);
-			iconImageView.setOnClickListener(Tabbar.this);
+			rel.setTag(i);
+			rel.setOnClickListener(Tabbar.this);
 
 			iconImageViewList.add(iconImageView);
 			titleTextViewList.add(title);
@@ -137,7 +137,7 @@ class Tabbar extends RelativeLayout implements View.OnClickListener, ViewPager.O
 
 	@Override
 	public void onClick(View v) {
-		if (v instanceof ImageView) {
+		if (v instanceof RelativeLayout) {
 			try {
 				Integer index = (Integer) v.getTag();
 				viewPager.setCurrentItem(index, false);

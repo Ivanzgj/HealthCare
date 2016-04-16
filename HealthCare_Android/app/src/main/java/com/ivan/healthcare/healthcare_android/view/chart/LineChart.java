@@ -145,9 +145,7 @@ public class LineChart extends Chart {
 		if (selfAdaptive) {
 			setYStep(10);
 			yStep = 10;
-			if (maxY <= 100) maxY = 100;
-			else if (maxY > 100 && maxY <= 1000) maxY = (int) (Math.ceil((float)maxY/100.f)*100);
-			else if (maxY > 1000 && maxY < 10000) maxY = (int) (Math.ceil((float)maxY/1000.f)*1000);
+			maxY = (int) (maxY * 1.1);
 			minY = (int) (minY * 0.9);
 			this.minY = minY;
 			ArrayList<Float> yLabels = new ArrayList<>();
