@@ -584,13 +584,22 @@
                     android:layout_marginTop="8dp"
                     android:paddingBottom="5dp">
 
-                    <TextView
+                    <com.andexert.library.RippleView
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/personal_logout_button_height"
+                        android:layout_height="wrap_content"
                         android:id="@+id/personal_change_pwd_tv"
-                        android:text="@string/personal_change_pwd"
-                        android:textSize="@dimen/textsize_second_title"
-                        android:gravity="center"/>
+                        app:rv_color="@color/onTouchColor"
+                        app:rv_framerate="24"
+                        app:rv_rippleDuration="80">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/personal_logout_button_height"
+                            android:text="@string/personal_change_pwd"
+                            android:textSize="@dimen/textsize_second_title"
+                            android:gravity="center"/>
+
+                    </com.andexert.library.RippleView>
 
                     <View
                         android:layout_width="200dp"
@@ -600,15 +609,24 @@
                         android:layout_below="@id/personal_change_pwd_tv"
                         android:background="@color/divider_color"/>
 
-                    <TextView
+                    <com.andexert.library.RippleView
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/personal_logout_button_height"
+                        android:layout_height="wrap_content"
                         android:id="@+id/personal_logout_tv"
                         android:layout_below="@id/personal_line5"
-                        android:text="@string/personal_logout"
-                        android:textSize="@dimen/textsize_second_title"
-                        android:gravity="center"
-                        android:textColor="@color/red"/>
+                        app:rv_color="@color/onTouchColor"
+                        app:rv_framerate="24"
+                        app:rv_rippleDuration="80">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/personal_logout_button_height"
+                            android:text="@string/personal_logout"
+                            android:textSize="@dimen/textsize_second_title"
+                            android:gravity="center"
+                            android:textColor="@color/red"/>
+
+                    </com.andexert.library.RippleView>
 
                 </RelativeLayout>
 

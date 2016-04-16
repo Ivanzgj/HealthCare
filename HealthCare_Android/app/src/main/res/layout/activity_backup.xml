@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -7,15 +8,23 @@
     <include layout="@layout/layout_toolbar"
         android:id="@+id/backup_toolbar"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/backup_item_height"
+    <com.andexert.library.RippleView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/backup_backup_item"
-        android:textSize="@dimen/textsize_second_title"
-        android:gravity="center_vertical"
-        android:text="@string/backup_backup"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"/>
+        app:rv_color="@color/onTouchColor"
+        app:rv_rippleDuration="80">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/backup_item_height"
+            android:textSize="@dimen/textsize_second_title"
+            android:gravity="center_vertical"
+            android:text="@string/backup_backup"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"/>
+
+    </com.andexert.library.RippleView>
 
     <View
         android:layout_width="match_parent"
@@ -25,15 +34,23 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/backup_item_height"
+    <com.andexert.library.RippleView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/backup_sync_item"
-        android:textSize="@dimen/textsize_second_title"
-        android:gravity="center_vertical"
-        android:text="@string/backup_sync"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"/>
+        app:rv_color="@color/onTouchColor"
+        app:rv_rippleDuration="80">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/backup_item_height"
+            android:textSize="@dimen/textsize_second_title"
+            android:gravity="center_vertical"
+            android:text="@string/backup_sync"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"/>
+
+    </com.andexert.library.RippleView>
 
     <View
         android:layout_width="match_parent"
@@ -43,14 +60,22 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/backup_item_height"
+    <com.andexert.library.RippleView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/backup_clear_item"
-        android:textSize="@dimen/textsize_second_title"
-        android:gravity="center_vertical"
-        android:text="@string/backup_clear"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"/>
+        app:rv_color="@color/onTouchColor"
+        app:rv_rippleDuration="80">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/backup_item_height"
+            android:textSize="@dimen/textsize_second_title"
+            android:gravity="center_vertical"
+            android:text="@string/backup_clear"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"/>
+
+    </com.andexert.library.RippleView>
 
 </LinearLayout>

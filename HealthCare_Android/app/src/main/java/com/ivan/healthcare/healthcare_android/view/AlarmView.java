@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.andexert.library.RippleView;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.customobj.Time;
 
@@ -18,6 +19,7 @@ public class AlarmView extends RelativeLayout {
     private Time mTime;
     private TextView mTimeTextView;
     private SwitchCompat mSwitch;
+    private RippleView mRippleView;
 
     private OnAlarmSwitchListener onAlarmSwitchListener;
 
@@ -30,6 +32,7 @@ public class AlarmView extends RelativeLayout {
         View rootView = View.inflate(getContext(), R.layout.layout_alarm_view, this);
         mTimeTextView = (TextView) rootView.findViewById(R.id.alarm_time_textview);
         mSwitch = (SwitchCompat) rootView.findViewById(R.id.alarm_switch);
+        mRippleView = (RippleView) rootView.findViewById(R.id.alarm_ripple_view);
 
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -59,7 +62,7 @@ public class AlarmView extends RelativeLayout {
 
     @Override
     public void setOnClickListener(final OnClickListener l) {
-        mTimeTextView.setOnClickListener(l);
+        mRippleView.setOnClickListener(l);
     }
 
     public void setOnAlarmSwitchListener(OnAlarmSwitchListener l) {
