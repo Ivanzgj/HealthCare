@@ -28,7 +28,7 @@ class DayView extends RelativeLayout {
         super(context);
         this.context = context;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rootView = inflater.inflate(R.layout.view_dayview, this);
+        View rootView = inflater.inflate(R.layout.layout_dayview, this);
         textView = (TextView) rootView.findViewById(R.id.dayView_day_textview);
         backgroundView = (FrameLayout) rootView.findViewById(R.id.dayView_selector);
         backgroundView.setVisibility(View.INVISIBLE);

@@ -1,17 +1,17 @@
-package com.ivan.healthcare.healthcare_android.ui;
+package com.ivan.healthcare.healthcare_android.settings;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.R;
+import com.ivan.healthcare.healthcare_android.ui.BaseActivity;
 import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -22,7 +22,7 @@ import java.io.IOException;
  * 裁剪图片的页面
  * Created by Ivan on 16/4/12.
  */
-public class CropImageActivity extends AppCompatActivity {
+public class CropImageActivity extends BaseActivity {
 
     private static final int SAVE_CROP_RESULT_ID = 0x31;
     private static final int CANCEL_CROP_RESULT_ID = 0x32;

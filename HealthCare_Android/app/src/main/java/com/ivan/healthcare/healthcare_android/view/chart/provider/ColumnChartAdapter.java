@@ -1,4 +1,4 @@
-package com.ivan.healthcare.healthcare_android.chart.provider;
+package com.ivan.healthcare.healthcare_android.view.chart.provider;
 
 import java.util.ArrayList;
 

@@ -50,7 +50,7 @@
 
 
     <!-- 测量数据曲线图 -->
-    <com.ivan.healthcare.healthcare_android.chart.SimpleChart
+    <com.ivan.healthcare.healthcare_android.view.chart.SimpleChart
         android:layout_width="match_parent"
         android:layout_height="@dimen/measure_chart_height"
         android:id="@+id/measure_chart"

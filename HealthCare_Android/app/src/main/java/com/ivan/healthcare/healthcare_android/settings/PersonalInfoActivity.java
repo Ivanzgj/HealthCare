@@ -1,4 +1,4 @@
-package com.ivan.healthcare.healthcare_android.ui;
+package com.ivan.healthcare.healthcare_android.settings;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +29,7 @@ import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.local.Constellation;
 import com.ivan.healthcare.healthcare_android.local.User;
+import com.ivan.healthcare.healthcare_android.ui.BaseActivity;
 import com.ivan.healthcare.healthcare_android.util.Compat;
 import com.ivan.healthcare.healthcare_android.util.DialogBuilder;
 import java.io.File;
@@ -43,7 +43,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * 个人资料页面
  * Created by Ivan on 16/4/7.
  */
-public class PersonalInfoActivity extends AppCompatActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, SwipeRefreshLayout.OnRefreshListener, RippleView.OnRippleCompleteListener {
+public class PersonalInfoActivity extends BaseActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, SwipeRefreshLayout.OnRefreshListener, RippleView.OnRippleCompleteListener {
 
     private static final int REQUEST_GALLERY_PICK = 0x31;
     private static final int REQUEST_IMAGE_CROP = 0x32;
