@@ -23,152 +23,126 @@
         <!--android:layout_below="@id/profile_title"-->
         <!--android:id="@+id/profile_section0"/>-->
 
-    <com.andexert.library.RippleView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:rv_color="@color/onTouchColor"
-        app:rv_rippleDuration="80"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/profile_person_item_height"
         android:id="@+id/profile_person_rel">
 
-        <RelativeLayout
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="@dimen/profile_person_avatar_height"
+            android:layout_height="@dimen/profile_person_avatar_height"
+            android:layout_marginTop="@dimen/divider_fab_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:id="@+id/profile_avatar_imageview"
+            android:contentDescription="@string/profile_avatar_imageview"
+            android:src="@drawable/default_avatar"
+            app:civ_border_width="0dp"
+            app:civ_border_color="@color/divider_color"/>
+
+        <ImageView
+            android:layout_width="@dimen/profile_indicator_size"
+            android:layout_height="@dimen/profile_indicator_size"
+            android:layout_centerVertical="true"
+            android:id="@+id/profile_personal_indicator"
+            android:contentDescription="@string/profile_person_indicater"
+            android:src="@mipmap/navigation_next_item"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"/>
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/profile_person_item_height"
-            android:layout_below="@id/profile_title">
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/profile_avatar_imageview"
+            android:layout_toEndOf="@id/profile_avatar_imageview"
+            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_toLeftOf="@id/profile_personal_indicator"
+            android:layout_toStartOf="@id/profile_personal_indicator"
+            android:id="@+id/profile_person_name"
+            android:textSize="@dimen/textsize_first_title"
+            android:gravity="center_vertical"/>
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="@dimen/profile_person_avatar_height"
-                android:layout_height="@dimen/profile_person_avatar_height"
-                android:layout_marginTop="@dimen/divider_fab_margin"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:id="@+id/profile_avatar_imageview"
-                android:contentDescription="@string/profile_avatar_imageview"
-                android:src="@drawable/default_avatar"
-                app:civ_border_width="0dp"
-                app:civ_border_color="@color/divider_color"/>
-
-            <ImageView
-                android:layout_width="@dimen/profile_indicator_size"
-                android:layout_height="@dimen/profile_indicator_size"
-                android:layout_centerVertical="true"
-                android:id="@+id/profile_personal_indicator"
-                android:contentDescription="@string/profile_person_indicater"
-                android:src="@mipmap/navigation_next_item"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_toRightOf="@id/profile_avatar_imageview"
-                android:layout_toEndOf="@id/profile_avatar_imageview"
-                android:layout_marginLeft="30dp"
-                android:layout_marginStart="30dp"
-                android:layout_toLeftOf="@id/profile_personal_indicator"
-                android:layout_toStartOf="@id/profile_personal_indicator"
-                android:id="@+id/profile_person_name"
-                android:textSize="@dimen/textsize_first_title"
-                android:gravity="center_vertical"
-                android:text="Ivan"/>
-
-        </RelativeLayout>
-
-    </com.andexert.library.RippleView>
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/profile_section_height"
         android:background="@color/divider_color_shallow"/>
 
-    <com.andexert.library.RippleView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:rv_color="@color/onTouchColor"
-        app:rv_rippleDuration="80"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/profile_item_height"
         android:id="@+id/profile_timer_rel">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/profile_item_height">
+        <ImageView
+            android:layout_width="@dimen/profile_indicator_size"
+            android:layout_height="@dimen/profile_indicator_size"
+            android:id="@+id/profile_indicator2"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/profile_timer_indicater"
+            android:src="@mipmap/navigation_next_item"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"/>
 
-            <ImageView
-                android:layout_width="@dimen/profile_indicator_size"
-                android:layout_height="@dimen/profile_indicator_size"
-                android:id="@+id/profile_indicator2"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/profile_timer_indicater"
-                android:src="@mipmap/navigation_next_item"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_toLeftOf="@id/profile_indicator2"
+            android:layout_toStartOf="@id/profile_indicator2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/textsize_second_title"
+            android:gravity="center_vertical"
+            android:text="@string/profile_timer_tv"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_toLeftOf="@id/profile_indicator2"
-                android:layout_toStartOf="@id/profile_indicator2"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:textSize="@dimen/textsize_second_title"
-                android:gravity="center_vertical"
-                android:text="@string/profile_timer_tv"/>
-
-        </RelativeLayout>
-
-    </com.andexert.library.RippleView>
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/profile_section_height"
         android:background="@color/divider_color_shallow"/>
 
-    <com.andexert.library.RippleView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:rv_color="@color/onTouchColor"
-        app:rv_rippleDuration="80"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/profile_item_height"
         android:id="@+id/profile_upload_rel">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/profile_item_height">
+        <ImageView
+            android:layout_width="@dimen/profile_indicator_size"
+            android:layout_height="@dimen/profile_indicator_size"
+            android:id="@+id/profile_indicator3"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/profile_upload_indicater"
+            android:src="@mipmap/navigation_next_item"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"/>
 
-            <ImageView
-                android:layout_width="@dimen/profile_indicator_size"
-                android:layout_height="@dimen/profile_indicator_size"
-                android:id="@+id/profile_indicator3"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/profile_upload_indicater"
-                android:src="@mipmap/navigation_next_item"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_toLeftOf="@id/profile_indicator3"
+            android:layout_toStartOf="@id/profile_indicator3"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/textsize_second_title"
+            android:gravity="center_vertical"
+            android:text="@string/profile_upload_tv"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_toLeftOf="@id/profile_indicator3"
-                android:layout_toStartOf="@id/profile_indicator3"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:textSize="@dimen/textsize_second_title"
-                android:gravity="center_vertical"
-                android:text="@string/profile_upload_tv"/>
-
-        </RelativeLayout>
-
-    </com.andexert.library.RippleView>
+    </RelativeLayout>
 
     <!--<View-->
         <!--android:layout_width="match_parent"-->
@@ -177,48 +151,28 @@
         <!--android:layout_below="@id/profile_upload_rel"-->
         <!--android:id="@+id/profile_section3"/>-->
 
-    <com.andexert.library.RippleView
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:rv_color="@color/onTouchColor"
-        app:rv_rippleDuration="80"
-        android:id="@+id/profile_reset_rel">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/profile_item_height"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:textSize="@dimen/textsize_second_title"
-            android:gravity="center_vertical"
-            android:text="@string/profile_reset_tv"/>
-
-    </com.andexert.library.RippleView>
+        android:layout_height="@dimen/profile_item_height"
+        android:id="@+id/profile_reset_rel"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:textSize="@dimen/textsize_second_title"
+        android:gravity="center_vertical"
+        android:text="@string/profile_reset_tv"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/profile_section_height"
         android:background="@color/divider_color_shallow"/>
 
-    <com.andexert.library.RippleView
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:rv_color="@color/onTouchColor"
-        app:rv_rippleDuration="80"
-        android:id="@+id/profile_login_rel">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/profile_item_height"
-            android:layout_centerVertical="true"
-            android:textSize="@dimen/textsize_appbar"
-            android:gravity="center"
-            android:text="@string/profile_login"/>
-
-    </com.andexert.library.RippleView>
+        android:layout_height="@dimen/profile_item_height"
+        android:id="@+id/profile_login_rel"
+        android:textSize="@dimen/textsize_appbar"
+        android:gravity="center"
+        android:text="@string/profile_login"/>
 
     <View
         android:layout_width="match_parent"

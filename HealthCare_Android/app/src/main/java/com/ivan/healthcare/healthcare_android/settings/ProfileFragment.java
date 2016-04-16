@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.andexert.library.RippleView;
 import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.local.User;
@@ -25,13 +25,13 @@ import java.io.InputStream;
  * 个人中心
  * Created by Ivan on 16/2/3.
  */
-public class ProfileFragment extends Fragment implements RippleView.OnRippleCompleteListener {
+public class ProfileFragment extends Fragment implements View.OnClickListener {
 
-    private RippleView mPersonCell;
-    private RippleView mTimerCell;
-    private RippleView mSyncCell;
-    private RippleView mResetCell;
-    private RippleView mLoginCell;
+    private RelativeLayout mPersonCell;
+    private RelativeLayout mTimerCell;
+    private RelativeLayout mSyncCell;
+    private TextView mResetCell;
+    private TextView mLoginCell;
 
     private ImageView mAvatarImageView;
     private TextView mUserNameTextView;
@@ -57,19 +57,19 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
     }
 
     private void initView(View rootView) {
-        mPersonCell = (RippleView) rootView.findViewById(R.id.profile_person_rel);
-        mTimerCell = (RippleView) rootView.findViewById(R.id.profile_timer_rel);
-        mSyncCell = (RippleView) rootView.findViewById(R.id.profile_upload_rel);
-        mResetCell = (RippleView) rootView.findViewById(R.id.profile_reset_rel);
-        mLoginCell = (RippleView) rootView.findViewById(R.id.profile_login_rel);
+        mPersonCell = (RelativeLayout) rootView.findViewById(R.id.profile_person_rel);
+        mTimerCell = (RelativeLayout) rootView.findViewById(R.id.profile_timer_rel);
+        mSyncCell = (RelativeLayout) rootView.findViewById(R.id.profile_upload_rel);
+        mResetCell = (TextView) rootView.findViewById(R.id.profile_reset_rel);
+        mLoginCell = (TextView) rootView.findViewById(R.id.profile_login_rel);
         mAvatarImageView = (ImageView) rootView.findViewById(R.id.profile_avatar_imageview);
         mUserNameTextView = (TextView) rootView.findViewById(R.id.profile_person_name);
 
-        mPersonCell.setOnRippleCompleteListener(this);
-        mTimerCell.setOnRippleCompleteListener(this);
-        mSyncCell.setOnRippleCompleteListener(this);
-        mResetCell.setOnRippleCompleteListener(this);
-        mLoginCell.setOnRippleCompleteListener(this);
+        mPersonCell.setOnClickListener(this);
+        mTimerCell.setOnClickListener(this);
+        mSyncCell.setOnClickListener(this);
+        mResetCell.setOnClickListener(this);
+        mLoginCell.setOnClickListener(this);
     }
 
     private void refreshContents() {
@@ -137,16 +137,16 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
     }
 
     @Override
-    public void onComplete(RippleView rippleView) {
-        if (mPersonCell.equals(rippleView)) {
+    public void onClick(View v) {
+        if (mPersonCell.equals(v)) {
             jumpToPersonal();
-        } else if (mTimerCell.equals(rippleView)) {
+        } else if (mTimerCell.equals(v)) {
             jumpToTimer();
-        } else if (mSyncCell.equals(rippleView)) {
+        } else if (mSyncCell.equals(v)) {
             jumpToSync();
-        } else if (mResetCell.equals(rippleView)) {
+        } else if (mResetCell.equals(v)) {
             reset();
-        } else if (mLoginCell.equals(rippleView)) {
+        } else if (mLoginCell.equals(v)) {
             User.edit().setUid(10001).setUserName("User_10001").commit();
             refreshContents();
         }

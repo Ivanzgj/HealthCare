@@ -2,8 +2,7 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <android.support.v7.widget.SwitchCompat
         android:layout_width="wrap_content"
@@ -16,25 +15,16 @@
         android:layout_centerVertical="true"
         android:focusable="false"/>
 
-    <com.andexert.library.RippleView
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/alarm_ripple_view"
+        android:id="@+id/alarm_time_textview"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_toLeftOf="@id/alarm_switch"
         android:layout_toStartOf="@id/alarm_switch"
-        app:rv_color="@color/onTouchColor"
-        app:rv_rippleDuration="80">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/alarm_time_textview"
-            android:gravity="center_vertical"
-            android:textSize="@dimen/textsize_second_title" />
-
-    </com.andexert.library.RippleView>
+        android:gravity="center_vertical"
+        android:textSize="@dimen/textsize_second_title" />
 
     <View
         android:layout_width="match_parent"

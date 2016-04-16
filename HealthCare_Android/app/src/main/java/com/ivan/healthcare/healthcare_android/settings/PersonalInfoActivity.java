@@ -23,7 +23,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.andexert.library.RippleView;
 import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.R;
@@ -43,7 +42,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * 个人资料页面
  * Created by Ivan on 16/4/7.
  */
-public class PersonalInfoActivity extends BaseActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, SwipeRefreshLayout.OnRefreshListener, RippleView.OnRippleCompleteListener {
+public class PersonalInfoActivity extends BaseActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final int REQUEST_GALLERY_PICK = 0x31;
     private static final int REQUEST_IMAGE_CROP = 0x32;
@@ -65,8 +64,8 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
     private EditText mEmailEdit;
     private EditText mLocationEdit;
     private EditText mIntroEdit;
-    private RippleView mLogoutView;
-    private RippleView mChangePwdView;
+    private TextView mLogoutView;
+    private TextView mChangePwdView;
     private View clickMask;
     private RelativeLayout mLogoutRel;
 
@@ -153,10 +152,10 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
         mIntroEdit = (EditText) mSwipeRefreshLayout.findViewById(R.id.personal_info_intro_edit_text);
         mIntroEdit.setOnClickListener(this);
         mIntroEdit.setOnFocusChangeListener(onFocusChangeListener);
-        mLogoutView = (RippleView) mSwipeRefreshLayout.findViewById(R.id.personal_logout_tv);
-        mLogoutView.setOnRippleCompleteListener(this);
-        mChangePwdView = (RippleView) mSwipeRefreshLayout.findViewById(R.id.personal_change_pwd_tv);
-        mChangePwdView.setOnRippleCompleteListener(this);
+        mLogoutView = (TextView) mSwipeRefreshLayout.findViewById(R.id.personal_logout_tv);
+        mLogoutView.setOnClickListener(this);
+        mChangePwdView = (TextView) mSwipeRefreshLayout.findViewById(R.id.personal_change_pwd_tv);
+        mChangePwdView.setOnClickListener(this);
 
         clickMask = mSwipeRefreshLayout.findViewById(R.id.personal_click_mask);
         clickMask.setOnClickListener(this);
@@ -295,6 +294,12 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
             datePickerDialog.show();
             Compat.fixDialogStyle(datePickerDialog);
 
+        } else if (mLogoutView.equals(v)) {
+            logout();
+
+        } else if (mChangePwdView.equals(v)) {
+            changePwd();
+
         } else if (v instanceof EditText) {
 
             clickMask.setVisibility(View.VISIBLE);
@@ -358,14 +363,4 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
         }, 5000);
     }
 
-    @Override
-    public void onComplete(RippleView rippleView) {
-        if (mLogoutView.equals(rippleView)) {
-            logout();
-
-        } else if (mChangePwdView.equals(rippleView)) {
-            changePwd();
-
-        }
-    }
 }
