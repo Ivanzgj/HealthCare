@@ -441,7 +441,7 @@ public abstract class Chart extends View {
 
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(theme.chartBGColor);
-        canvas.drawRect(yLabelWidth, 0, viewWidth, topMargin + chartHeight + xLabelHeight + xLabelMargin, paint);
+//        canvas.drawRect(yLabelWidth, 0, viewWidth, topMargin + chartHeight + xLabelHeight + xLabelMargin, paint);
 
         canvas.save();
         canvas.translate(curOffset + scrollOffset + yLabelWidth, 0);
@@ -512,7 +512,7 @@ public abstract class Chart extends View {
         paint.setStyle(Paint.Style.FILL);
 
         paint.setColor(theme.chartBGColor);
-        canvas.drawRect(0, 0, yLabelWidth, topMargin + chartHeight + xLabelHeight + xLabelMargin, paint);
+//        canvas.drawRect(0, 0, yLabelWidth, topMargin + chartHeight + xLabelHeight + xLabelMargin, paint);
 
         paint.setAlpha(0);
         paint.setColor(theme.yLabelTextColor);
@@ -545,7 +545,7 @@ public abstract class Chart extends View {
         paint.setTextAlign(Paint.Align.LEFT);
 
         paint.setColor(theme.chartBGColor);
-        canvas.drawRect(0, viewHeight - allLegendsHeight, viewWidth, viewHeight, paint);
+//        canvas.drawRect(0, viewHeight - allLegendsHeight, viewWidth, viewHeight, paint);
 
         int legendCount = mAdapter.getLegendCount();
         for (int i = 0; i < legendCount; i++) {

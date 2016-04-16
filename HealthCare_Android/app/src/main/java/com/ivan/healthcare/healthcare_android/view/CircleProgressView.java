@@ -53,7 +53,7 @@ public class CircleProgressView extends View {
             rect.set(width/2-radius*0.4f, radius*0.1f, width/2+radius*0.4f, radius*0.9f);
         } else {
             radius = width;
-            rect.set(radius*0.1f, height/2-radius*0.4f, radius*0.9f, height/2+radius*0.4f);
+            rect.set(radius*0.1f, height/2-radius*0.4f, radius*0.9f, height/2+radius*0.9f);
         }
     }
 

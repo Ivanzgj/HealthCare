@@ -53,8 +53,8 @@ public class CalendarTheme {
 
     void setThemeLight() {
         title_textColor = Compat.getColor(context, R.color.textColorPrimary);
-        calendar_backgroudColor = Color.WHITE;
-        topView_backgroudColor = Color.WHITE;
+        calendar_backgroudColor = Color.parseColor("#00000000");
+        topView_backgroudColor = Color.parseColor("#00000000");
         weekDay_textColor = Compat.getColor(context, R.color.textColorPrimary);
         day_textColor = Compat.getColor(context, R.color.textColorPrimary);
         shallow_day_textColor = Compat.getColor(context, R.color.textColorSecondary);

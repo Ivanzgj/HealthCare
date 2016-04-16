@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.charts.ChartActivity;
+import com.ivan.healthcare.healthcare_android.util.Compat;
 import com.ivan.healthcare.healthcare_android.view.CalendarView.CalendarTheme;
 import com.ivan.healthcare.healthcare_android.view.CalendarView.CalendarView;
 import com.ivan.healthcare.healthcare_android.view.CalendarView.Day;
@@ -60,6 +61,8 @@ public class CalendarFragment extends Fragment {
         });
 
         mSuggestWebView = (WebView) rootView.findViewById(R.id.suggestwebview);
+        mSuggestWebView.getSettings().setDefaultTextEncodingName("utf-8") ;
+//        mSuggestWebView.setBackgroundColor(Compat.getColor(getActivity(), R.color.colorPrimaryDark)); // 设置背景色
     }
 
 }
