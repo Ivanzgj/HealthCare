@@ -20,6 +20,7 @@ public class NotifyUtil {
 
     public static final int ALARM_NOTIFY_ID_BASE = 0x34567;
     private static final int ALARM_PENDING_REQUEST = 0x12345;
+    public static final String ALARM_ID = "ALARM_ID";
 
     public static Notification getNotify(Context context) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
@@ -44,6 +45,7 @@ public class NotifyUtil {
         AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent();
         intent.setClass(context, NotifyReciever.class);
+        intent.putExtra(ALARM_ID, alarm.getId());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ALARM_PENDING_REQUEST,
                 intent, PendingIntent.FLAG_ONE_SHOT);
         am.setRepeating(AlarmManager.RTC_WAKEUP, alarm.getTime(), AlarmManager.INTERVAL_DAY, pendingIntent);
@@ -56,6 +58,7 @@ public class NotifyUtil {
         AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent();
         intent.setClass(context, NotifyReciever.class);
+        intent.putExtra(ALARM_ID, alarm.getId());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ALARM_PENDING_REQUEST,
                 intent, PendingIntent.FLAG_ONE_SHOT);
         am.cancel(pendingIntent);

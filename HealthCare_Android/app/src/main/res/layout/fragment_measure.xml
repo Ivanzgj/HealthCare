@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- 测量进度条及其数据 -->
     <com.ivan.healthcare.healthcare_android.view.CircleProgressView
@@ -36,15 +36,16 @@
         android:textSize="@dimen/measure_beep_unit_textsize"
         android:text="@string/beep_unit"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <com.ivan.healthcare.healthcare_android.view.material.ButtonFlat
+        app:ripple_color="@color/colorPrimaryLight"
+        android:layout_width="@dimen/measure_start_btn_width"
+        android:layout_height="@dimen/measure_start_btn_height"
         android:id="@+id/beep_measure_textview"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/beep_textview"
         android:layout_marginTop="23dp"
         android:textSize="@dimen/textsize_second_title"
-        android:textColor="@color/default_main_color"
+        android:textColor="@color/colorPrimary"
         android:text="@string/measure_text"/>
 
 

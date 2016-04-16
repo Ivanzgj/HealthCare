@@ -27,6 +27,8 @@ import com.ivan.healthcare.healthcare_android.local.Preference;
 import com.ivan.healthcare.healthcare_android.util.L;
 import com.ivan.healthcare.healthcare_android.util.Compat;
 import com.ivan.healthcare.healthcare_android.view.CircleProgressView;
+import com.ivan.healthcare.healthcare_android.view.material.ButtonFlat;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Set;
@@ -57,7 +59,7 @@ public class MeasureFragment extends Fragment implements View.OnClickListener {
     /**
      * 控制开始测量和结束测量的textview
      */
-    private TextView measureTextView;
+    private ButtonFlat measureBtn;
     /**
      * 蓝牙适配器引用
      */
@@ -89,7 +91,7 @@ public class MeasureFragment extends Fragment implements View.OnClickListener {
                 case (BluetoothAdapter.STATE_ON):
                     state = "bluetooth on";
                     isBluetoothEnable = true;
-                    measureTextView.setText(getResources().getString(R.string.bt_finding));
+                    measureBtn.setText(getResources().getString(R.string.bt_finding));
 
                     // 启动蓝牙服务
                     if (btMsgHandler == null) {
@@ -104,7 +106,7 @@ public class MeasureFragment extends Fragment implements View.OnClickListener {
                     break;
                 case (BluetoothAdapter.STATE_OFF):
                     state = "bluetooth off";
-                    measureTextView.setText(getResources().getString(R.string.measure_text));
+                    measureBtn.setText(getResources().getString(R.string.measure_text));
                     isBluetoothEnable = false;
                     break;
                 default:
@@ -199,7 +201,7 @@ public class MeasureFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v.equals(measureTextView)) {
+        if (v.equals(measureBtn)) {
             // 打开蓝牙
             if (!isBluetoothEnable) {
                 openBluetooth();
@@ -253,8 +255,8 @@ public class MeasureFragment extends Fragment implements View.OnClickListener {
 
         });
 
-        measureTextView = (TextView) rootView.findViewById(R.id.beep_measure_textview);
-        measureTextView.setOnClickListener(this);
+        measureBtn = (ButtonFlat) rootView.findViewById(R.id.beep_measure_textview);
+        measureBtn.setOnClickListener(this);
 
         beepTextView = (TextView) rootView.findViewById(R.id.beep_textview);
 
@@ -262,11 +264,11 @@ public class MeasureFragment extends Fragment implements View.OnClickListener {
 
         btAdapter = BluetoothAdapter.getDefaultAdapter();
         if (btAdapter == null) {
-            measureTextView.setEnabled(false);
+            measureBtn.setEnabled(false);
             return;
         }
         if (btAdapter.isEnabled()) {
-            measureTextView.setText(getResources().getString(R.string.bt_finding));
+            measureBtn.setText(getResources().getString(R.string.bt_finding));
             isBluetoothEnable = true;
 
             // 启动蓝牙服务
@@ -344,13 +346,13 @@ public class MeasureFragment extends Fragment implements View.OnClickListener {
      */
     private void connect(BluetoothDevice device) {
         if (mService.connect(device)) {
-            measureTextView.setText(context.getResources().getString(R.string.measure_ing_text));
+            measureBtn.setText(context.getResources().getString(R.string.measure_ing_text));
             isMeasuring = true;
             AppContext.getPreference().editor()
                         .putString(Preference.BOND_DEVICE_ADDRESS, device.getAddress())
                         .commit();
         } else {
-            measureTextView.setText(context.getResources().getString(R.string.measure_text));
+            measureBtn.setText(context.getResources().getString(R.string.measure_text));
             isMeasuring = false;
             Toast.makeText(context, "连接失败", Toast.LENGTH_SHORT).show();
         }
@@ -486,7 +488,7 @@ public class MeasureFragment extends Fragment implements View.OnClickListener {
                                 btAdapter.cancelDiscovery();
                             }
                             dialog.cancel();
-                            measureTextView.setText(getResources().getString(R.string.measure_text));
+                            measureBtn.setText(getResources().getString(R.string.measure_text));
                             isMeasuring = false;
                         }
                     })

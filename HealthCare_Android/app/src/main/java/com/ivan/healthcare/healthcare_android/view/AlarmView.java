@@ -62,7 +62,12 @@ public class AlarmView extends RelativeLayout {
 
     @Override
     public void setOnClickListener(final OnClickListener l) {
-        mRippleView.setOnClickListener(l);
+        mRippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                l.onClick(rippleView);
+            }
+        });
     }
 
     public void setOnAlarmSwitchListener(OnAlarmSwitchListener l) {

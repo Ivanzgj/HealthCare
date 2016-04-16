@@ -15,7 +15,7 @@ public class NotifyReciever extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.cancel(NotifyUtil.ALARM_NOTIFY_ID_BASE);
-        nm.notify(NotifyUtil.ALARM_NOTIFY_ID_BASE, NotifyUtil.getNotify(context));
+        nm.cancel(NotifyUtil.ALARM_NOTIFY_ID_BASE + intent.getIntExtra(NotifyUtil.ALARM_ID, -1));
+        nm.notify(NotifyUtil.ALARM_NOTIFY_ID_BASE + intent.getIntExtra(NotifyUtil.ALARM_ID, -1), NotifyUtil.getNotify(context));
     }
 }

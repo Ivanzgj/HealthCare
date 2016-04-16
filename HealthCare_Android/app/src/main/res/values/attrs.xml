@@ -15,5 +15,10 @@
     <declare-styleable name="CalendarView">
         <attr name="calenderHeight" format="dimension"/>
     </declare-styleable>
+    
+    <declare-styleable name="Button">
+        <attr name="clickAfterRipple" format="boolean"/>
+        <attr name="ripple_color" format="color"/>
+    </declare-styleable>
 
 </resources>

@@ -71,8 +71,7 @@
                 android:layout_toStartOf="@id/profile_personal_indicator"
                 android:id="@+id/profile_person_name"
                 android:textSize="@dimen/textsize_first_title"
-                android:gravity="center_vertical"
-                android:text="Ivan"/>
+                android:gravity="center_vertical"/>
 
         </RelativeLayout>
 

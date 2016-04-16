@@ -90,7 +90,7 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
         }
 
         if (User.uid == -1) {
-            mLoginCell.setVisibility(View.GONE);
+            mLoginCell.setVisibility(View.VISIBLE);
         } else {
             mLoginCell.setVisibility(View.GONE);
         }
