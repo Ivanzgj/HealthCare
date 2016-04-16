@@ -1,4 +1,4 @@
-package com.ivan.healthcare.healthcare_android.view.chart;
+package com.ivan.healthcare.healthcare_android.chart;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -12,8 +12,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.ivan.healthcare.healthcare_android.AppContext;
-import com.ivan.healthcare.healthcare_android.view.chart.provider.ChartAdapter;
-import com.ivan.healthcare.healthcare_android.view.chart.theme.ChartTheme;
+import com.ivan.healthcare.healthcare_android.chart.provider.ChartAdapter;
+import com.ivan.healthcare.healthcare_android.chart.theme.ChartTheme;
 import com.ivan.healthcare.healthcare_android.util.Compat;
 
 import java.util.ArrayList;

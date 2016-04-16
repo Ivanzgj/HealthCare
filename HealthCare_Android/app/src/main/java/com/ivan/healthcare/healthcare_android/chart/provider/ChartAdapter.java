@@ -1,6 +1,8 @@
-package com.ivan.healthcare.healthcare_android.view.chart.provider;
+package com.ivan.healthcare.healthcare_android.chart.provider;
 
-import com.ivan.healthcare.healthcare_android.view.chart.Chart;
+import com.ivan.healthcare.healthcare_android.chart.Chart;
+
+import java.util.ArrayList;
 
 /**
  * 图表内容的提供者

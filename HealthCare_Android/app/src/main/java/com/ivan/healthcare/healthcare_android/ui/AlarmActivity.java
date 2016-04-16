@@ -1,8 +1,9 @@
-package com.ivan.healthcare.healthcare_android.settings;
+package com.ivan.healthcare.healthcare_android.ui;
 
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +17,6 @@ import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.customobj.Time;
 import com.ivan.healthcare.healthcare_android.local.Alarm;
-import com.ivan.healthcare.healthcare_android.ui.BaseActivity;
 import com.ivan.healthcare.healthcare_android.util.Compat;
 import com.ivan.healthcare.healthcare_android.util.NotifyUtil;
 import com.ivan.healthcare.healthcare_android.view.AlarmView;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
  * 闹钟设置页面
  * Created by Ivan on 16/4/9.
  */
-public class AlarmActivity extends BaseActivity {
+public class AlarmActivity extends AppCompatActivity {
 
     private static final int ADD_ALARM_ITEM_ID = 0x31;
 

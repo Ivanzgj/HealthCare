@@ -31,23 +31,23 @@
         </activity>
 
         <activity
-            android:name=".charts.ChartActivity"
+            android:name=".ui.ChartActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".settings.PersonalInfoActivity"
+            android:name=".ui.PersonalInfoActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".settings.AlarmActivity"
+            android:name=".ui.AlarmActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".settings.BackupActivity"
+            android:name=".ui.BackupActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".settings.CropImageActivity"
+            android:name=".ui.CropImageActivity"
             android:screenOrientation="portrait"/>
 
         <receiver android:name=".reciever.NotifyReciever"/>

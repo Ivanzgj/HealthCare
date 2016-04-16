@@ -48,7 +48,7 @@ public class AIToast {
         public AIToastView(Context context) {
             super(context);
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View rootView = inflater.inflate(R.layout.layout_aitoast, this);
+            View rootView = inflater.inflate(R.layout.view_aitoast, this);
             tv = (TextView) rootView.findViewById(R.id.aitoast_textview);
         }
 

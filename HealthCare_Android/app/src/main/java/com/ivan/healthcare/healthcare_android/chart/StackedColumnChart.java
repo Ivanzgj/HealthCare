@@ -1,4 +1,4 @@
-package com.ivan.healthcare.healthcare_android.view.chart;
+package com.ivan.healthcare.healthcare_android.chart;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
@@ -8,7 +8,7 @@ import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 
-import com.ivan.healthcare.healthcare_android.view.chart.provider.ColumnChartAdapter;
+import com.ivan.healthcare.healthcare_android.chart.provider.ColumnChartAdapter;
 import com.ivan.healthcare.healthcare_android.util.Compat;
 
 import java.util.ArrayList;

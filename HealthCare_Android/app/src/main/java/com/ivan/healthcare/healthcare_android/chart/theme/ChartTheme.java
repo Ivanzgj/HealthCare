@@ -1,4 +1,4 @@
-package com.ivan.healthcare.healthcare_android.view.chart.theme;
+package com.ivan.healthcare.healthcare_android.chart.theme;
 
 import android.content.Context;
 import android.graphics.Color;

@@ -18,7 +18,7 @@ class WeekDayView extends RelativeLayout {
     public WeekDayView(Context context) {
         super(context);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rootView = inflater.inflate(R.layout.layout_weekday, this);
+        View rootView = inflater.inflate(R.layout.view_weekday, this);
         textView = (TextView) rootView.findViewById(R.id.weekday_textView);
     }
 

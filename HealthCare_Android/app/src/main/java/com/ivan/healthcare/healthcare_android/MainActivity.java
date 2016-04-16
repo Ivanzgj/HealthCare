@@ -5,9 +5,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.ivan.healthcare.healthcare_android.local.User;
-import com.ivan.healthcare.healthcare_android.measure.MeasureFragment;
-import com.ivan.healthcare.healthcare_android.charts.CalendarFragment;
-import com.ivan.healthcare.healthcare_android.settings.ProfileFragment;
+import com.ivan.healthcare.healthcare_android.ui.MeasureFragment;
+import com.ivan.healthcare.healthcare_android.ui.CalendarFragment;
+import com.ivan.healthcare.healthcare_android.ui.ProfileFragment;
 import com.ivan.healthcare.healthcare_android.viewcontrollers.TabViewController;
 
 import java.util.ArrayList;

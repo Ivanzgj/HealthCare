@@ -1,4 +1,4 @@
-package com.ivan.healthcare.healthcare_android.measure;
+package com.ivan.healthcare.healthcare_android.ui;
 
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -22,7 +22,7 @@ import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.MainActivity;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.bluetooth.BluetoothCommUtil;
-import com.ivan.healthcare.healthcare_android.view.chart.SimpleChart;
+import com.ivan.healthcare.healthcare_android.chart.SimpleChart;
 import com.ivan.healthcare.healthcare_android.local.Preference;
 import com.ivan.healthcare.healthcare_android.util.L;
 import com.ivan.healthcare.healthcare_android.util.Compat;

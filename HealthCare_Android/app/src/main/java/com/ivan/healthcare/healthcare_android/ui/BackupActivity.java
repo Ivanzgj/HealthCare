@@ -1,19 +1,19 @@
-package com.ivan.healthcare.healthcare_android.settings;
+package com.ivan.healthcare.healthcare_android.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import com.andexert.library.RippleView;
 import com.ivan.healthcare.healthcare_android.R;
-import com.ivan.healthcare.healthcare_android.ui.BaseActivity;
 
 /**
  * 数据上传和同步的页面
  * Created by Ivan on 16/4/11.
  */
-public class BackupActivity extends BaseActivity implements RippleView.OnRippleCompleteListener {
+public class BackupActivity extends AppCompatActivity implements RippleView.OnRippleCompleteListener {
 
     private View rootView;
     private Toolbar mToolBar;
