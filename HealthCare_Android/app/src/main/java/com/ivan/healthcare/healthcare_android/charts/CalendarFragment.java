@@ -1,4 +1,4 @@
-package com.ivan.healthcare.healthcare_android.ui;
+package com.ivan.healthcare.healthcare_android.charts;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.webkit.WebView;
 import android.widget.AdapterView;
 
 import com.ivan.healthcare.healthcare_android.R;
+import com.ivan.healthcare.healthcare_android.charts.ChartActivity;
 import com.ivan.healthcare.healthcare_android.view.CalendarView.CalendarTheme;
 import com.ivan.healthcare.healthcare_android.view.CalendarView.CalendarView;
 import com.ivan.healthcare.healthcare_android.view.CalendarView.Day;

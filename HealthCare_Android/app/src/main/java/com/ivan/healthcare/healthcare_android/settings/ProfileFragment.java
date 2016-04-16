@@ -1,4 +1,4 @@
-package com.ivan.healthcare.healthcare_android.ui;
+package com.ivan.healthcare.healthcare_android.settings;
 
 import android.content.DialogInterface;
 import android.content.Intent;

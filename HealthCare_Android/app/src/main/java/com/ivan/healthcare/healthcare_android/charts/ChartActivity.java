@@ -1,11 +1,10 @@
-package com.ivan.healthcare.healthcare_android.ui;
+package com.ivan.healthcare.healthcare_android.charts;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -15,23 +14,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.R;
-import com.ivan.healthcare.healthcare_android.chart.LineChart;
-import com.ivan.healthcare.healthcare_android.chart.StackedColumnChart;
-import com.ivan.healthcare.healthcare_android.chart.provider.ColumnChartAdapter;
-import com.ivan.healthcare.healthcare_android.chart.provider.LineChartAdapter;
+import com.ivan.healthcare.healthcare_android.ui.BaseActivity;
+import com.ivan.healthcare.healthcare_android.view.chart.LineChart;
+import com.ivan.healthcare.healthcare_android.view.chart.StackedColumnChart;
+import com.ivan.healthcare.healthcare_android.view.chart.provider.ColumnChartAdapter;
+import com.ivan.healthcare.healthcare_android.view.chart.provider.LineChartAdapter;
 import com.ivan.healthcare.healthcare_android.database.DataAccess;
 import com.ivan.healthcare.healthcare_android.util.Compat;
 import com.ivan.healthcare.healthcare_android.util.Utils;
-
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * 显示各种图表的activity
  * Created by Ivan on 16/4/2.
  */
-public class ChartActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
+public class ChartActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
     public static final String CHART_YEAR = "CHART_YEAR";
     public static final String CHART_MONTH = "CHART_MONTH";
