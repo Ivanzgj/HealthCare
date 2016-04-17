@@ -16,7 +16,7 @@
 
     <dimen name="appbar_min_height">56dp</dimen>
     
-    <dimen name="single_line_list_item_height">48dp</dimen>
+    <dimen name="single_line_list_item_height">56dp</dimen>
 
     <dimen name="l_dialog_content">4dp</dimen>
     <dimen name="p_dialog_content_bottom">8dp</dimen>
@@ -58,7 +58,7 @@
     <!-- profile -->
     <dimen name="profile_person_item_height">80dp</dimen>
     <dimen name="profile_person_avatar_height">64dp</dimen>
-    <dimen name="profile_section_height">12dp</dimen>
+    <dimen name="profile_section_height">16dp</dimen>
     <dimen name="profile_line_section_height">1dp</dimen>
     <dimen name="profile_item_height">@dimen/single_line_list_item_height</dimen>
     <dimen name="profile_avatar_gradient_radius">34dp</dimen>
@@ -77,12 +77,21 @@
     <!-- chart -->
 
     <!-- alarm activity -->
-    <dimen name="alarm_list_item_height">60dp</dimen>
+    <dimen name="alarm_list_item_height">@dimen/single_line_list_item_height</dimen>
 
     <!-- backup activity -->
     <dimen name="backup_item_height">@dimen/single_line_list_item_height</dimen>
 
     <!-- crop activity -->
     <dimen name="crop_image_size">80dp</dimen>
+
+    <!-- main activity user detail slider -->
+    <dimen name="main_slider_header_height">144dp</dimen>
+    <dimen name="main_slider_avatar_height">96dp</dimen>
+    <dimen name="main_slider_item_height">56dp</dimen>
+    <dimen name="main_slider_textsize_gap">3dp</dimen>
+    <dimen name="main_slider_img_title_gap">32dp</dimen>
+    <dimen name="main_slider_avatar_margin">32dp</dimen>
+    <dimen name="main_slider_main_margin">32dp</dimen>
 
 </resources>

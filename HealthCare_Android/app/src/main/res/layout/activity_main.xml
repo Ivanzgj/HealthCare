@@ -10,8 +10,9 @@
         android:orientation="vertical"
         android:layout_gravity="start"
         android:clickable="true"
-        android:background="#88FFFFFF"
         android:id="@+id/main_slider_layout">
+
+        <include layout="@layout/layout_user_detail"/>
 
     </LinearLayout>
 
