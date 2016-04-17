@@ -15,7 +15,6 @@
             android:layout_width="@dimen/main_slider_avatar_height"
             android:layout_height="@dimen/main_slider_avatar_height"
             android:layout_gravity="center"
-            android:src="@mipmap/ic_launcher"
             android:id="@+id/user_detail_avatar"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -39,8 +38,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:id="@+id/user_detail_uid"
-                android:textSize="@dimen/textsize_second_title"
-                android:text="10001"/>
+                android:textSize="@dimen/textsize_second_title"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -48,16 +46,14 @@
                 android:layout_weight="2"
                 android:id="@+id/user_detail_name"
                 android:textSize="@dimen/textsize_huge"
-                android:textColor="@color/textColorPrimary"
-                android:text="Ivan"/>
+                android:textColor="@color/textColorPrimary"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="2"
                 android:id="@+id/user_detail_intro"
-                android:textSize="@dimen/textsize_second_title"
-                android:text="hellohellohellohellohellohellohellohellohello"/>
+                android:textSize="@dimen/textsize_second_title"/>
 
         </LinearLayout>
 
@@ -101,7 +97,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_below="@id/user_detail_today_times"
                     android:text="@string/personal_info_today_times"
-                    android:textSize="@dimen/textsize_normal"
+                    android:textSize="@dimen/textsize_little"
                     android:textColor="@color/textColorSecondary"/>
 
             </RelativeLayout>
@@ -126,7 +122,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_below="@id/user_detail_total_times"
                     android:text="@string/personal_info_total_times"
-                    android:textSize="@dimen/textsize_normal"
+                    android:textSize="@dimen/textsize_little"
                     android:textColor="@color/textColorSecondary"/>
 
             </RelativeLayout>
@@ -151,7 +147,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_below="@id/user_detail_health_assess"
                     android:text="@string/personal_info_health_assess"
-                    android:textSize="@dimen/textsize_normal"
+                    android:textSize="@dimen/textsize_little"
                     android:textColor="@color/textColorSecondary"/>
 
             </RelativeLayout>
@@ -223,9 +219,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:id="@+id/user_detail_sex"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="男"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/textsize_second_title"/>
 
@@ -269,9 +265,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:id="@+id/user_detail_birth"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="1993-08-03"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/textsize_second_title"/>
 
@@ -315,9 +311,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:id="@+id/user_detail_age"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="22"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/textsize_second_title"/>
 
@@ -361,9 +357,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:id="@+id/user_detail_constellation"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="狮子座"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/textsize_second_title"/>
 
@@ -407,9 +403,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:id="@+id/user_detail_email"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="475176416@qq.com"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/textsize_second_title"/>
 
@@ -453,9 +449,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:id="@+id/user_detail_location"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="你猜我住在哪里？？？"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/textsize_second_title"/>
 
