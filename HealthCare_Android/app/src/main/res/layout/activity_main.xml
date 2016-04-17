@@ -13,7 +13,13 @@
         android:background="@color/pureWindowBackground"
         android:id="@+id/main_slider_layout">
 
-        <include layout="@layout/layout_user_detail"/>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/layout_user_detail"/>
+
+        </ScrollView>
 
     </LinearLayout>
 

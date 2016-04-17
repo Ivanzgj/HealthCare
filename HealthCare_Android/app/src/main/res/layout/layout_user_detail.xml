@@ -187,7 +187,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_slider_item_height"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin">
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -213,7 +214,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="@string/personal_info_sex_hint"
-                android:textSize="@dimen/textsize_normal"
+                android:textSize="@dimen/textsize_little"
                 android:layout_marginBottom="@dimen/main_slider_textsize_gap"/>
 
             <TextView
@@ -223,7 +224,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/textsize_second_title"/>
+                android:textSize="@dimen/textsize_normal"/>
 
         </LinearLayout>
 
@@ -259,7 +260,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="@string/personal_info_birth_hint"
-                android:textSize="@dimen/textsize_normal"
+                android:textSize="@dimen/textsize_little"
                 android:layout_marginBottom="@dimen/main_slider_textsize_gap"/>
 
             <TextView
@@ -269,7 +270,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/textsize_second_title"/>
+                android:textSize="@dimen/textsize_normal"/>
 
         </LinearLayout>
 
@@ -305,7 +306,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="@string/personal_info_age_hint"
-                android:textSize="@dimen/textsize_normal"
+                android:textSize="@dimen/textsize_little"
                 android:layout_marginBottom="@dimen/main_slider_textsize_gap"/>
 
             <TextView
@@ -315,7 +316,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/textsize_second_title"/>
+                android:textSize="@dimen/textsize_normal"/>
 
         </LinearLayout>
 
@@ -351,7 +352,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="@string/personal_info_constellation_hint"
-                android:textSize="@dimen/textsize_normal"
+                android:textSize="@dimen/textsize_little"
                 android:layout_marginBottom="@dimen/main_slider_textsize_gap"/>
 
             <TextView
@@ -361,7 +362,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/textsize_second_title"/>
+                android:textSize="@dimen/textsize_normal"/>
 
         </LinearLayout>
 
@@ -397,7 +398,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="@string/personal_info_email_hint"
-                android:textSize="@dimen/textsize_normal"
+                android:textSize="@dimen/textsize_little"
                 android:layout_marginBottom="@dimen/main_slider_textsize_gap"/>
 
             <TextView
@@ -407,7 +408,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/textsize_second_title"/>
+                android:textSize="@dimen/textsize_normal"/>
 
         </LinearLayout>
 
@@ -443,7 +444,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="@string/personal_info_location_hint"
-                android:textSize="@dimen/textsize_normal"
+                android:textSize="@dimen/textsize_little"
                 android:layout_marginBottom="@dimen/main_slider_textsize_gap"/>
 
             <TextView
@@ -453,7 +454,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/textsize_second_title"/>
+                android:textSize="@dimen/textsize_normal"/>
 
         </LinearLayout>
 

@@ -9,6 +9,7 @@ import com.ivan.healthcare.healthcare_android.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * 数据库操作方法类
@@ -38,7 +39,23 @@ public class DataAccess {
                             .field("uid")
                             .first();
         if (result == null) {
-            return User.UID_UNDEFINE;
+            User.sex = User.UserSex.USER_ALIEN;
+            int ok = AppContext.getDB().query()
+                                    .table(Configurations.USER_TABLE)
+                                    .add("uid", -1)
+                                    .add("username", "user_-1")
+                                    .add("age", 0)
+                                    .add("sex", User.getSexInt())
+                                    .add("constellation", Constellation.getConstellationInt(Constellation.ConstellationEnum.Undefine))
+                                    .add("birth", "")
+                                    .add("email", "")
+                                    .add("address", "")
+                                    .add("introduction", "")
+                                    .add("measure_total_times", 0)
+                                    .add("measure_today_times", 0)
+                                    .add("measure_total_assessment", 0)
+                                    .insert();
+            return ok>0?-1:User.UID_UNDEFINE;
         } else {
             return Integer.valueOf(result.getString("uid"));
         }
