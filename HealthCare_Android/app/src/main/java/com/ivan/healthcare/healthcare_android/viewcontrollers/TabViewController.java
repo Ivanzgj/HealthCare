@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +61,12 @@ public class TabViewController extends RelativeLayout {
 		initView();
 	}
 
+	public TabViewController(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		this.context = context;
+		fm = ((FragmentActivity)context).getSupportFragmentManager();
+	}
+
 	private void initView() {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View root = inflater.inflate(R.layout.layout_tabview_controller, this, true);
@@ -99,5 +106,5 @@ public class TabViewController extends RelativeLayout {
 	public void setScrollable(boolean scrollable) {
 		viewPager.setScrollable(scrollable);
 	}
-	
+
 }

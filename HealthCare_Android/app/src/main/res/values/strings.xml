@@ -13,6 +13,9 @@
     <string name="main_data_title">数据</string>
     <string name="main_profile_title">设置</string>
 
+    <string name="main_drawer_open">show the user details</string>
+    <string name="main_drawer_close">hide the user details</string>
+
     <!-- 测量页面 -->
     <string name="open_bt_btn">open bluetooth</string>
     <string name="close_bt_btn">close bluetooth</string>

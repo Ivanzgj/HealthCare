@@ -5,6 +5,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="divider_fab_margin">8dp</dimen>
 
+    <dimen name="main_drawer_width">320dp</dimen>
+
     <dimen name="textsize_little">12sp</dimen>
     <dimen name="textsize_normal">14sp</dimen>
     <dimen name="textsize_second_title">16sp</dimen>

@@ -1,13 +1,13 @@
 package com.ivan.healthcare.healthcare_android;
 
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
-
 import com.ivan.healthcare.healthcare_android.local.User;
 import com.ivan.healthcare.healthcare_android.measure.MeasureFragment;
 import com.ivan.healthcare.healthcare_android.charts.CalendarFragment;
@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
     private TabViewController tabViewController;
 
@@ -54,20 +55,36 @@ public class MainActivity extends AppCompatActivity {
         titles.add(getResources().getString(R.string.main_measure_title));
         titles.add(getResources().getString(R.string.main_data_title));
         titles.add(getResources().getString(R.string.main_profile_title));
+
+        mDrawerLayout = (DrawerLayout) View.inflate(this, R.layout.activity_main, null);
+
         tabViewController = new TabViewController(this, fragmentArrayList, iconArrayList, titles);
         tabViewController.setScrollable(true);
 
-        LinearLayout rootView = new LinearLayout(this);
-        rootView.setOrientation(LinearLayout.VERTICAL);
-        rootView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        LinearLayout contentLayout = new LinearLayout(this);
+        contentLayout.setOrientation(LinearLayout.VERTICAL);
+        contentLayout.setLayoutParams(
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT));
 
         mToolbar = (Toolbar) View.inflate(this, R.layout.layout_toolbar, null);
         mToolbar.setTitle(R.string.app_name);
+        setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
-        rootView.addView(mToolbar);
-        rootView.addView(tabViewController);
+        contentLayout.addView(mToolbar);
+        contentLayout.addView(tabViewController);
 
-        setContentView(rootView);
+        mDrawerLayout.addView(contentLayout);
+
+        ActionBarDrawerToggle mDrawerToggle =
+                new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.main_drawer_open, R.string.main_drawer_close);
+        mDrawerToggle.syncState();
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        setContentView(mDrawerLayout);
     }
 
     @Override
