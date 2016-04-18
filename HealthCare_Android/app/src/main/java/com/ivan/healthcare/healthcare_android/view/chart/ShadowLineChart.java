@@ -151,33 +151,33 @@ public class ShadowLineChart extends Chart {
 
         mAdapter = adapter;
 
-        for (int i=0;i<mAdapter.getLineCount();i++) {
-            ArrayList<Float> data = mAdapter.getLineData(i);
-            for (int j=0;j<mAdapter.getLineData(i).size();j++) {
-                float value = data.get(j);
-                if (maxValue < value)	maxValue = (int) value;
-                if (minValue > value)	minValue = (int) value;
-            }
-        }
-
-        int yStep = getYStep();
         if (selfAdaptive) {
+
+            for (int i=0;i<mAdapter.getLineCount();i++) {
+                ArrayList<Float> data = mAdapter.getLineData(i);
+                for (int j=0;j<mAdapter.getLineData(i).size();j++) {
+                    float value = data.get(j);
+                    if (maxValue < value)	maxValue = (int) value;
+                    if (minValue > value)	minValue = (int) value;
+                }
+            }
+
             setYStep(10);
-            yStep = 10;
-            this.yLength = maxValue - minValue;
+            int yStep = 10;
+            yLength = maxValue - minValue;
             ArrayList<Float> yLabels = new ArrayList<>();
             for (int i=0;i<=yStep;i++){
                 yLabels.add(minValue + i*yLength/yStep);
             }
-            setYlabels(yLabels);
-            return;
+            super.setYLabels(yLabels);
         }
+    }
 
+    @Override
+    public void setYLabels(ArrayList<Float> yLabels) {
+        super.setYLabels(yLabels);
+        maxValue = yLabels.get(yLabels.size() - 1);
+        minValue = yLabels.get(0);
         yLength = maxValue - minValue;
-        ArrayList<Float> yLabels = new ArrayList<>();
-        for (int i = 0; i <= yStep; i++){
-            yLabels.add(minValue + i*yLength/yStep);
-        }
-        setYlabels(yLabels);
     }
 }

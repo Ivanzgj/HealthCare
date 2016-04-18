@@ -131,37 +131,29 @@ public class StackedColumnChart extends Chart {
 			return;
 		}
 
-		int maxY = 0;
-
-		for (int i = 0; i < mAdapter.getColumnData(0).size(); i++) {
-			float value = 0;
-			for (int j = 0; j < mAdapter.getColumnCount(); j++) {
-				value += mAdapter.getColumnData(j).get(i);
-			}
-			if (maxY < value) {
-				maxY = (int) Math.ceil(value);
-			}
-		}
-
-		int yStep = getYStep();
 		if (selfAdaptive) {
+
+			int maxY = 0;
+
+			for (int i = 0; i < mAdapter.getColumnData(0).size(); i++) {
+				float value = 0;
+				for (int j = 0; j < mAdapter.getColumnCount(); j++) {
+					value += mAdapter.getColumnData(j).get(i);
+				}
+				if (maxY < value) {
+					maxY = (int) Math.ceil(value);
+				}
+			}
+
 			setYStep(10);
-			yStep = 10;
+			int yStep = 10;
 			maxY = (int) (maxY * 1.1);
 			ArrayList<Float> yLabels = new ArrayList<>();
 			for (int i=0;i<=yStep;i++){
 				yLabels.add((float) (i*maxY/yStep));
 			}
-			setYlabels(yLabels);
-			return;
+			setYLabels(yLabels);
 		}
-
-		if (maxY % yStep != 0)		maxY = (int) (Math.ceil(maxY/yStep))*yStep;
-		ArrayList<Float> yLabels = new ArrayList<>();
-		for (int i=0;i<=yStep;i++){
-			yLabels.add((float) (i*maxY/yStep));
-		}
-		setYlabels(yLabels);
 	}
 
 	/**
@@ -186,7 +178,7 @@ public class StackedColumnChart extends Chart {
 		valueAnimator.addListener(new Animator.AnimatorListener() {
 			@Override
 			public void onAnimationStart(Animator animation) {
-				setAnimateType(ANIMATE_Y_FALG);
+				setAnimateType(ANIMATE_Y_FLAG);
 				setAnimateRate(0.f);
 			}
 
@@ -202,7 +194,7 @@ public class StackedColumnChart extends Chart {
 
 			@Override
 			public void onAnimationRepeat(Animator animation) {
-				setAnimateType(ANIMATE_Y_FALG);
+				setAnimateType(ANIMATE_Y_FLAG);
 				setAnimateRate(0.f);
 			}
 		});

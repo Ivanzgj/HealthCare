@@ -123,36 +123,28 @@ public class ParallelColumnChart extends StackedColumnChart {
             return;
         }
 
-        int maxY = 0;
+        if (selfAdaptive) {
 
-        for (int i = 0; i < mAdapter.getColumnCount(); i++) {
-            for (int j = 0;j < mAdapter.getColumnData(i).size(); j++) {
-                float value = mAdapter.getColumnData(i).get(j);
-                if (maxY < value) {
-                    maxY = (int) Math.ceil(value);
+            int maxY = 0;
+
+            for (int i = 0; i < mAdapter.getColumnCount(); i++) {
+                for (int j = 0;j < mAdapter.getColumnData(i).size(); j++) {
+                    float value = mAdapter.getColumnData(i).get(j);
+                    if (maxY < value) {
+                        maxY = (int) Math.ceil(value);
+                    }
                 }
             }
-        }
 
-        int yStep = getYStep();
-        if (selfAdaptive) {
             setYStep(10);
-            yStep = 10;
+            int yStep = 10;
             maxY = (int) (maxY * 1.1);
             ArrayList<Float> yLabels = new ArrayList<>();
             for (int i=0;i<=yStep;i++){
                 yLabels.add((float) (i*maxY/yStep));
             }
-            setYlabels(yLabels);
-            return;
+            setYLabels(yLabels);
         }
-
-        if (maxY % yStep != 0)		maxY = (int) (Math.ceil(maxY/yStep))*yStep;
-        ArrayList<Float> yLabels = new ArrayList<>();
-        for (int i=0;i<=yStep;i++){
-            yLabels.add((float) (i*maxY/yStep));
-        }
-        setYlabels(yLabels);
     }
 
 }

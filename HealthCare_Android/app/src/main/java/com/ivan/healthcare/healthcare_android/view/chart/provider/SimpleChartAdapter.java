@@ -11,11 +11,6 @@ public abstract class SimpleChartAdapter extends LineChartAdapter {
             return null;
         }
 
-        @Override
-        public boolean drawXLabels() {
-            return false;
-        }
-
         public int getLegendCount() {
             return 0;
         }

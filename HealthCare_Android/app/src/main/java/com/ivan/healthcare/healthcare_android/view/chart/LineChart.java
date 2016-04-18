@@ -30,8 +30,6 @@ public class LineChart extends Chart {
 
 	private Context context;
 
-	private int minY = 0;
-
 	private LineChartAdapter mAdapter = new LineChartAdapter() {
 		@Override
 		public int getLineCount() {
@@ -101,7 +99,7 @@ public class LineChart extends Chart {
 
 			drawData(canvas, paint);
         }
-		else if (animateType == ANIMATE_Y_FALG) {	// y轴动画
+		else if (animateType == ANIMATE_Y_FLAG) {	// y轴动画
 
 			drawYAnimateData(canvas, paint);
 		}
@@ -130,40 +128,29 @@ public class LineChart extends Chart {
 			return;
 		}
 
-		int maxY = Integer.MIN_VALUE;
-		int minY = Integer.MAX_VALUE;
-
-		for (int i=0;i<mAdapter.getLineCount();i++) {
-			for (int j=0;j<mAdapter.getLineData(i).size();j++) {
-				float value = mAdapter.getLineData(i).get(j);
-				if (maxY < value)	maxY = (int) value;
-				if (minY > value)	minY = (int) value;
-			}
-		}
-
-		int yStep = getYStep();
 		if (selfAdaptive) {
+
+			int maxY = Integer.MIN_VALUE;
+			int minY = Integer.MAX_VALUE;
+
+			for (int i=0;i<mAdapter.getLineCount();i++) {
+				for (int j=0;j<mAdapter.getLineData(i).size();j++) {
+					float value = mAdapter.getLineData(i).get(j);
+					if (maxY < value)	maxY = (int) value;
+					if (minY > value)	minY = (int) value;
+				}
+			}
+
 			setYStep(10);
-			yStep = 10;
+			int yStep = 10;
 			maxY = (int) (maxY * 1.1);
 			minY = (int) (minY * 0.9);
-			this.minY = minY;
 			ArrayList<Float> yLabels = new ArrayList<>();
 			for (int i=0;i<=yStep;i++){
 				yLabels.add((float) (minY + i*(maxY-minY)/yStep));
 			}
-			setYlabels(yLabels);
-			return;
+			setYLabels(yLabels);
 		}
-
-		minY = (int) (minY * 0.9);
-		this.minY = minY;
-		if (maxY % yStep != 0)		maxY = (maxY/yStep+1)*yStep;
-		ArrayList<Float> yLabels = new ArrayList<>();
-		for (int i=0;i<=yStep;i++){
-			yLabels.add((float) (minY + i*(maxY-minY)/yStep));
-		}
-		setYlabels(yLabels);
 	}
 
 	/**
@@ -299,7 +286,7 @@ public class LineChart extends Chart {
 		valueAnimator.addListener(new Animator.AnimatorListener() {
 			@Override
 			public void onAnimationStart(Animator animation) {
-				setAnimateType(ANIMATE_Y_FALG);
+				setAnimateType(ANIMATE_Y_FLAG);
 				setAnimateRate(0.f);
 			}
 
@@ -315,7 +302,7 @@ public class LineChart extends Chart {
 
 			@Override
 			public void onAnimationRepeat(Animator animation) {
-				setAnimateType(ANIMATE_Y_FALG);
+				setAnimateType(ANIMATE_Y_FLAG);
 				setAnimateRate(0.f);
 			}
 		});

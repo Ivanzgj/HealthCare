@@ -32,7 +32,7 @@ import java.util.ArrayList;
  *    {@link #getAnimateRate()}，{@link #getAnimateType()}，{@link #setAnimateRate(float)}，{@link #setAnimateType(int)}
  *    来作为动画绘图的依据。做动画时调用者可以自行定义其规则并调用之，也可以自己实现一套变量。
  *    实现动画应该实现Chart类的抽象动画方法。
- *    动画类型预定义有两种：{@link #ANIMATE_X_FLAG}和{@link #ANIMATE_Y_FALG};</p>
+ *    动画类型预定义有两种：{@link #ANIMATE_X_FLAG}和{@link #ANIMATE_Y_FLAG};</p>
  *
  * @see LineChart
  * @see StackedColumnChart
@@ -41,7 +41,7 @@ import java.util.ArrayList;
 public abstract class Chart extends View {
 
     protected final int ANIMATE_X_FLAG = 1;
-    protected final int ANIMATE_Y_FALG = 0;
+    protected final int ANIMATE_Y_FLAG = 0;
     protected final int ANIMATE_NON_FLAG = -1;
 
     protected int animateType = ANIMATE_NON_FLAG;
@@ -52,6 +52,7 @@ public abstract class Chart extends View {
     protected ValueAnimator valueAnimator;
 
     private final int X_LABEL_TEXT_SIZE = AppContext.dp2px(11);
+    private final int Y_LABEL_TEXT_SIZE = AppContext.dp2px(13);
     private final int X_LABEL_LINE_SPACE = AppContext.dp2px(2);
 
     public final int MODE_LINE_CHART = 0x31;
@@ -99,7 +100,7 @@ public abstract class Chart extends View {
      */
     private final float LINE_WIDTH = AppContext.dp2px(2.5f);
     private final float LINE_LENGTH = AppContext.dp2px(25);
-    private final float CIRCAL_RADIUS = AppContext.dp2px(2.5f);
+    private final float CIRCLE_RADIUS = AppContext.dp2px(2.5f);
     private final float RECT_WIDTH = AppContext.dp2px(25);
     private final float RECT_HEIGHT = AppContext.dp2px(10);
     private final float TEXT_SIZE = AppContext.dp2px(13);
@@ -185,6 +186,11 @@ public abstract class Chart extends View {
      * 图表主题
      */
     private ChartTheme theme;
+
+    /**
+     * 背景颜色，优先于theme
+     */
+    private int backgroundColor = -1;
 
     /**
      * 数据源适配器
@@ -345,7 +351,7 @@ public abstract class Chart extends View {
      * 设置y轴标签
      * @param yLabels y轴标签列表
      */
-    public void setYlabels(ArrayList<Float> yLabels) {
+    public void setYLabels(ArrayList<Float> yLabels) {
         yGridLineCount = yLabels.size();
         this.yLabels = yLabels;
         maxYValue = yLabels.get(yLabels.size() - 1);
@@ -408,6 +414,10 @@ public abstract class Chart extends View {
         return mAdapter;
     }
 
+    public void setBackgroundColor(int color) {
+        backgroundColor = color;
+    }
+
 
 
     /**
@@ -443,14 +453,18 @@ public abstract class Chart extends View {
         paint.setAntiAlias(true);
 
         paint.setStyle(Paint.Style.FILL);
-        paint.setColor(theme.chartBGColor);
-//        canvas.drawRect(yLabelWidth, 0, viewWidth, topMargin + chartHeight + xLabelHeight + xLabelMargin, paint);
+        if (backgroundColor != -1) {
+            paint.setColor(backgroundColor);
+            canvas.drawRect(yLabelWidth, 0, viewWidth, topMargin + chartHeight + xLabelHeight + xLabelMargin, paint);
+        } else if (theme.chartBGColor != -1) {
+            paint.setColor(theme.chartBGColor);
+            canvas.drawRect(yLabelWidth, 0, viewWidth, topMargin + chartHeight + xLabelHeight + xLabelMargin, paint);
+        }
 
         canvas.save();
         canvas.translate(curOffset + scrollOffset + yLabelWidth, 0);
 
         paint.setTextAlign(Paint.Align.CENTER);
-
 
         // 画x轴label
         if (mAdapter.drawXLabels()) {
@@ -465,7 +479,7 @@ public abstract class Chart extends View {
                     String xLabel = mAdapter.getXLabel(i);
                     String[] labels = xLabel.split(",");    // 分割行
 
-                    // 画xlabel标签
+                    // 画xLabel标签
                     if (xLabel.equals("今,天")) {
                         // 今天加上绿色背景
                         paint.setColor(theme.todayXLabelBGColor);
@@ -515,13 +529,20 @@ public abstract class Chart extends View {
         paint.setStyle(Paint.Style.FILL);
 
         paint.setColor(theme.chartBGColor);
-//        canvas.drawRect(0, 0, yLabelWidth, topMargin + chartHeight + xLabelHeight + xLabelMargin, paint);
+        if (backgroundColor != -1) {
+            paint.setColor(backgroundColor);
+            canvas.drawRect(0, 0, yLabelWidth, topMargin + chartHeight + xLabelHeight + xLabelMargin, paint);
+        } else if (theme.chartBGColor != -1) {
+            paint.setColor(theme.chartBGColor );
+            canvas.drawRect(0, 0, yLabelWidth, topMargin + chartHeight + xLabelHeight + xLabelMargin, paint);
+        }
 
         paint.setAlpha(0);
         paint.setColor(theme.yLabelTextColor);
         paint.setTextAlign(Paint.Align.RIGHT);
         paint.setStrokeWidth(2);
-        paint.setTextSize((float) (ylineSep * 0.8));
+        float textSize = ylineSep * 0.8f;
+        paint.setTextSize(textSize>Y_LABEL_TEXT_SIZE?Y_LABEL_TEXT_SIZE:textSize);
 //        paint.setTypeface(Typeface.DEFAULT_BOLD);
 
         Paint.FontMetricsInt fontMetrics = paint.getFontMetricsInt();
@@ -547,8 +568,13 @@ public abstract class Chart extends View {
         paint.setStyle(Paint.Style.FILL);
         paint.setTextAlign(Paint.Align.LEFT);
 
-        paint.setColor(theme.chartBGColor);
-//        canvas.drawRect(0, viewHeight - allLegendsHeight, viewWidth, viewHeight, paint);
+        if (backgroundColor != -1) {
+            paint.setColor(backgroundColor);
+            canvas.drawRect(0, viewHeight - allLegendsHeight, viewWidth, viewHeight, paint);
+        } else if (theme.chartBGColor != -1) {
+            paint.setColor(theme.chartBGColor);
+            canvas.drawRect(0, viewHeight - allLegendsHeight, viewWidth, viewHeight, paint);
+        }
 
         int legendCount = mAdapter.getLegendCount();
         for (int i = 0; i < legendCount; i++) {
@@ -573,7 +599,7 @@ public abstract class Chart extends View {
                 paint.setStrokeWidth(LINE_WIDTH);
                 y = start + LEGEND_HEIGHT / 2;
                 canvas.drawLine(LEFT_MARGIN, y, LEFT_MARGIN+LINE_LENGTH, y, paint);
-                canvas.drawCircle(LEFT_MARGIN+LINE_LENGTH / 2, y, CIRCAL_RADIUS, paint);
+                canvas.drawCircle(LEFT_MARGIN+LINE_LENGTH / 2, y, CIRCLE_RADIUS, paint);
                 paint.setStrokeWidth(AppContext.dp2px(1));
                 paint.setColor(theme.legendTextColor);
                 canvas.drawText(text, LEFT_MARGIN+LINE_LENGTH+OFF_SET, start + baseline, paint);
@@ -731,7 +757,7 @@ public abstract class Chart extends View {
      * 获取动画类型
      * @see #ANIMATE_NON_FLAG
      * @see #ANIMATE_X_FLAG
-     * @see #ANIMATE_Y_FALG
+     * @see #ANIMATE_Y_FLAG
      */
     protected int getAnimateType() {
         return animateType;

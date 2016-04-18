@@ -106,5 +106,6 @@
     <!-- monitor -->
     <string name="monitor_accelerate_unit">m/s2</string>
     <string name="monitor_accelerate_chart_title">振&#160;动&#160;数&#160;据&#160;图</string>
+    <string name="monitor_screen_chart_title">屏&#160;幕&#160;亮&#160;灭&#160;图</string>
 
 </resources>

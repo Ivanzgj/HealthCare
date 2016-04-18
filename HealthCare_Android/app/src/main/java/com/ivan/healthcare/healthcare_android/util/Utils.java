@@ -14,13 +14,18 @@ import java.util.Locale;
 public class Utils {
 
     public static String getDateString(Date date) {
-        DateFormat formater = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA);
-        return formater.format(date).substring(0, 8);
+        DateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA);
+        return formatter.format(date).substring(0, 8);
     }
 
     public static String getDateString(Date date, String pattern) {
-        DateFormat formater = new SimpleDateFormat(pattern, Locale.CHINA);
-        return formater.format(date).substring(0, pattern.length());
+        DateFormat formatter = new SimpleDateFormat(pattern, Locale.CHINA);
+        return formatter.format(date).substring(0, pattern.length());
+    }
+
+    public static String getTimeString(Date date, String pattern) {
+        DateFormat formatter = new SimpleDateFormat("yyyyMMdd"+pattern, Locale.CHINA);
+        return formatter.format(date).substring(8, pattern.length()+8);
     }
 
 }

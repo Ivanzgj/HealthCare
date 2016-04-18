@@ -288,6 +288,7 @@ public class ChartActivity extends BaseActivity implements ViewPager.OnPageChang
         LineChart chart = new LineChart(this);
         chart.setAdapter(adapter);
         chart.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        chart.setBackgroundColor(Compat.getColor(this, R.color.pureWindowBackground));
 
         return chart;
     }
@@ -364,6 +365,7 @@ public class ChartActivity extends BaseActivity implements ViewPager.OnPageChang
         LineChart chart = new LineChart(this);
         chart.setAdapter(adapter);
         chart.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        chart.setBackgroundColor(Compat.getColor(this, R.color.pureWindowBackground));
 
         return chart;
     }
@@ -421,6 +423,7 @@ public class ChartActivity extends BaseActivity implements ViewPager.OnPageChang
         StackedColumnChart chart = new StackedColumnChart(this);
         chart.setAdapter(adapter);
         chart.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        chart.setBackgroundColor(Compat.getColor(this, R.color.pureWindowBackground));
 
         return chart;
     }

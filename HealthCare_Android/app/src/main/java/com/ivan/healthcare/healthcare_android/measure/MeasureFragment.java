@@ -22,6 +22,7 @@ import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.MainActivity;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.bluetooth.BluetoothCommUtil;
+import com.ivan.healthcare.healthcare_android.util.Compat;
 import com.ivan.healthcare.healthcare_android.view.chart.LineChart;
 import com.ivan.healthcare.healthcare_android.local.Preference;
 import com.ivan.healthcare.healthcare_android.util.L;
@@ -233,6 +234,7 @@ public class MeasureFragment extends Fragment implements View.OnClickListener {
         }, 2000);
 
         measureChart = (LineChart) rootView.findViewById(R.id.measure_chart);
+        measureChart.setBackgroundColor(Compat.getColor(getActivity(), R.color.pureWindowBackground));
 
         // test
         final ArrayList<Float> data = new ArrayList<>();
@@ -253,6 +255,11 @@ public class MeasureFragment extends Fragment implements View.OnClickListener {
             @Override
             public int getLineColor(int index) {
                 return R.color.chart_cyan;
+            }
+
+            @Override
+            public boolean drawXLabels() {
+                return false;
             }
 
         });

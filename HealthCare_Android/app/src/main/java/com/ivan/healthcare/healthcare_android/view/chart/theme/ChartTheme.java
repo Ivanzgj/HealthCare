@@ -55,7 +55,7 @@ public class ChartTheme {
         shallowGridColor = Color.WHITE;
         yLabelTextColor = Compat.getColor(context, R.color.textColorSecondary);
         legendTextColor = Compat.getColor(context, R.color.textColorPrimary);
-        chartBGColor = Color.WHITE;
+        chartBGColor = -1;
     }
 
     void setThemeDark() {
