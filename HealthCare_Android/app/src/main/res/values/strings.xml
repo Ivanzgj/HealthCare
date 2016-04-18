@@ -9,7 +9,8 @@
     <string name="close">关闭</string>
     <string name="disconnect">断开连接</string>
 
-    <string name="main_measure_title">测量</string>
+    <string name="main_measure_title">心率</string>
+    <string name="main_monitor_title">监控</string>
     <string name="main_data_title">数据</string>
     <string name="main_profile_title">设置</string>
 
@@ -101,5 +102,9 @@
     <!-- crop activity -->
     <string name="crop_title">头像裁剪</string>
     <string name="crop_save">保存</string>
+
+    <!-- monitor -->
+    <string name="monitor_accelerate_unit">m/s2</string>
+    <string name="monitor_accelerate_chart_title">振&#160;动&#160;数&#160;据&#160;图</string>
 
 </resources>

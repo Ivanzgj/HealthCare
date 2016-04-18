@@ -5,17 +5,14 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-
 import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.view.chart.provider.ChartAdapter;
 import com.ivan.healthcare.healthcare_android.view.chart.theme.ChartTheme;
 import com.ivan.healthcare.healthcare_android.util.Compat;
-
 import java.util.ArrayList;
 
 /**
@@ -67,7 +64,7 @@ public abstract class Chart extends View {
     /**
      * 图表默认间距
      */
-    private final int gridGap = AppContext.dp2px(30);
+    private int gridGap = AppContext.dp2px(30);
     /**
      * x轴标签高度
      */
@@ -244,12 +241,8 @@ public abstract class Chart extends View {
         setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
 
         xGridLineCount = mAdapter.getXLabelsCount();
-        if (xGridLineCount != 0) {
-            if (chartWidth == -1) {
-                chartWidth = gridGap * xGridLineCount;
-            }
-            rectWidth = chartWidth /xGridLineCount;
-        }
+        chartWidth = gridGap * xGridLineCount;
+        rectWidth = chartWidth /xGridLineCount;
         // view宽度
         viewWidth = getWidth();
         // view高度
@@ -360,14 +353,6 @@ public abstract class Chart extends View {
     }
 
     /**
-     * 设置图标宽度
-     * @param wid 宽度，像素单位
-     */
-    public void setChartWidth(int wid){
-        chartWidth = wid;
-    }
-
-    /**
      * 清空所有状态
      */
     public void clearAll() {
@@ -407,7 +392,21 @@ public abstract class Chart extends View {
         return yStep;
     }
 
+    public float getChartHeight() {
+        return chartHeight;
+    }
 
+    public int getyLabelWidth() {
+        return yLabelWidth;
+    }
+
+    public int getTopMargin() {
+        return topMargin;
+    }
+
+    public ChartAdapter getAdapter() {
+        return mAdapter;
+    }
 
 
 
@@ -427,6 +426,10 @@ public abstract class Chart extends View {
     protected void setAdapter(ChartAdapter adapter) {
         mAdapter = adapter;
         mAdapter.chart = this;
+    }
+
+    public void setXWidth(int gridGap) {
+        this.gridGap = gridGap;
     }
 
 

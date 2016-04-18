@@ -14,6 +14,7 @@ import com.ivan.healthcare.healthcare_android.local.Constellation;
 import com.ivan.healthcare.healthcare_android.local.User;
 import com.ivan.healthcare.healthcare_android.measure.MeasureFragment;
 import com.ivan.healthcare.healthcare_android.charts.CalendarFragment;
+import com.ivan.healthcare.healthcare_android.monitor.MonitorFragment;
 import com.ivan.healthcare.healthcare_android.settings.ProfileFragment;
 import com.ivan.healthcare.healthcare_android.ui.BaseActivity;
 import com.ivan.healthcare.healthcare_android.viewcontrollers.TabViewController;
@@ -47,30 +48,38 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         initView();
-
         User.initUserInfo();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         refreshUserDetails();
     }
 
     private void initView() {
         MeasureFragment bluetoothCommFragment = new MeasureFragment();
+        MonitorFragment monitorFragment = new MonitorFragment();
         CalendarFragment chartFragment = new CalendarFragment();
         ProfileFragment profileFragment = new ProfileFragment();
 
         ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
         fragmentArrayList.add(bluetoothCommFragment);
+        fragmentArrayList.add(monitorFragment);
         fragmentArrayList.add(chartFragment);
         fragmentArrayList.add(profileFragment);
         ArrayList<Integer> iconArrayList = new ArrayList<>();
-        iconArrayList.add(R.mipmap.tab_review_unselected);
+        iconArrayList.add(R.mipmap.tab_measure_unselected);
+        iconArrayList.add(R.mipmap.tab_monitor_unselected);
         iconArrayList.add(R.mipmap.tab_graph_unselected);
         iconArrayList.add(R.mipmap.tab_settings_unselected);
-        iconArrayList.add(R.mipmap.tab_review_selected);
+        iconArrayList.add(R.mipmap.tab_measure_selected);
+        iconArrayList.add(R.mipmap.tab_monitor_selected);
         iconArrayList.add(R.mipmap.tab_graph_selected);
         iconArrayList.add(R.mipmap.tab_settings_selected);
         ArrayList<String> titles = new ArrayList<>();
         titles.add(getResources().getString(R.string.main_measure_title));
+        titles.add(getResources().getString(R.string.main_monitor_title));
         titles.add(getResources().getString(R.string.main_data_title));
         titles.add(getResources().getString(R.string.main_profile_title));
 
@@ -102,7 +111,11 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onDrawerClosed(View drawerView) {
                         super.onDrawerClosed(drawerView);
-                        refreshUserDetails();
+                    }
+
+                    @Override
+                    public void onDrawerOpened(View drawerView) {
+                        super.onDrawerOpened(drawerView);
                     }
                 };
         mDrawerToggle.syncState();

@@ -26,8 +26,7 @@ import com.ivan.healthcare.healthcare_android.view.chart.LineChart;
 import com.ivan.healthcare.healthcare_android.local.Preference;
 import com.ivan.healthcare.healthcare_android.util.L;
 import com.ivan.healthcare.healthcare_android.view.CircleProgressView;
-import com.ivan.healthcare.healthcare_android.view.chart.SimpleChart;
-import com.ivan.healthcare.healthcare_android.view.chart.provider.LineChartAdapter;
+import com.ivan.healthcare.healthcare_android.view.chart.provider.SimpleChartAdapter;
 import com.ivan.healthcare.healthcare_android.view.material.ButtonFlat;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -239,7 +238,7 @@ public class MeasureFragment extends Fragment implements View.OnClickListener {
         final ArrayList<Float> data = new ArrayList<>();
         data.add(100.f);data.add(50.f);data.add(110.f);data.add(55.f);data.add(102.f);
         data.add(53.f);data.add(100.f);data.add(55.f);data.add(110.f);data.add(54.f);
-        measureChart.setAdapter(new SimpleChart.SimpleChartAdapter() {
+        measureChart.setAdapter(new SimpleChartAdapter() {
 
             @Override
             public int getLineCount() {

@@ -1,6 +1,10 @@
 package com.ivan.healthcare.healthcare_android.view.chart.provider;
 
 import com.ivan.healthcare.healthcare_android.view.chart.Chart;
+import com.ivan.healthcare.healthcare_android.view.chart.LineChart;
+import com.ivan.healthcare.healthcare_android.view.chart.ParallelColumnChart;
+import com.ivan.healthcare.healthcare_android.view.chart.ShadowLineChart;
+import com.ivan.healthcare.healthcare_android.view.chart.StackedColumnChart;
 
 /**
  * 图表内容的提供者
@@ -43,6 +47,15 @@ public abstract class ChartAdapter {
 
     public void notifyDataSetChanged() {
         if (chart != null) {
+            if (chart instanceof LineChart) {
+                ((LineChart) chart).setAdapter((LineChartAdapter) chart.getAdapter());
+            } else if (chart instanceof ShadowLineChart) {
+                ((ShadowLineChart) chart).setAdapter((LineChartAdapter) chart.getAdapter());
+            } else if (chart instanceof ParallelColumnChart) {
+                ((ParallelColumnChart) chart).setAdapter((ColumnChartAdapter) chart.getAdapter());
+            } else if (chart instanceof StackedColumnChart) {
+                ((StackedColumnChart) chart).setAdapter((ColumnChartAdapter) chart.getAdapter());
+            }
             chart.clearAll();
             chart.postInvalidate();
         }

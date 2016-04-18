@@ -22,11 +22,11 @@ public class LineChart extends Chart {
 	/**
 	 * 图表线宽
 	 */
-	private final int lineWidth = AppContext.dp2px(2.5f);
+	final int lineWidth = AppContext.dp2px(2.5f);
 	/**
 	 * 折线上的原点半径
 	 */
-	private final int circleRadius = AppContext.dp2px(2.5f);
+	final int circleRadius = AppContext.dp2px(2.5f);
 
 	private Context context;
 
@@ -91,7 +91,7 @@ public class LineChart extends Chart {
 	}
 
 	@Override
-	public void onDrawData(Canvas canvas, Paint paint) {
+	protected void onDrawData(Canvas canvas, Paint paint) {
 
 		if (mAdapter.getLineCount() == 0)	return;
 
@@ -116,8 +116,8 @@ public class LineChart extends Chart {
 	 * @param adapter 数据源适配器
 	 */
 	public void setAdapter(@NonNull LineChartAdapter adapter) {
-		mAdapter = adapter;
 		super.setAdapter(adapter);
+		mAdapter = adapter;
 		setLineDataSet();
 	}
 

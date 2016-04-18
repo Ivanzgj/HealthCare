@@ -13,6 +13,7 @@
     <dimen name="textsize_appbar">20sp</dimen>
     <dimen name="textsize_first_title">24sp</dimen>
     <dimen name="textsize_huge">34sp</dimen>
+    <dimen name="textsize_scare">48sp</dimen>
 
     <dimen name="appbar_min_height">56dp</dimen>
     
@@ -93,5 +94,9 @@
     <dimen name="main_slider_img_title_gap">32dp</dimen>
     <dimen name="main_slider_avatar_margin">32dp</dimen>
     <dimen name="main_slider_main_margin">32dp</dimen>
+
+    <!-- monitor -->
+    <dimen name="monitor_chart_height">224dp</dimen>
+    <dimen name="monitor_accelerate_item_height">56dp</dimen>
 
 </resources>
