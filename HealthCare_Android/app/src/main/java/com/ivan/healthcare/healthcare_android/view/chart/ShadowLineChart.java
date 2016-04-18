@@ -65,7 +65,8 @@ public class ShadowLineChart extends Chart {
 
     private int xCount = 10;
     private float yLength = 0;
-    private float minValue = 0;
+    private float minValue = Integer.MAX_VALUE;
+    private float maxValue = Integer.MIN_VALUE;
     private float xStepWidth;
 
     private Path path;
@@ -150,14 +151,12 @@ public class ShadowLineChart extends Chart {
 
         mAdapter = adapter;
 
-        int maxY = Integer.MIN_VALUE;
-        int minY = Integer.MAX_VALUE;
         for (int i=0;i<mAdapter.getLineCount();i++) {
             ArrayList<Float> data = mAdapter.getLineData(i);
             for (int j=0;j<mAdapter.getLineData(i).size();j++) {
                 float value = data.get(j);
-                if (maxY < value)	maxY = (int) value;
-                if (minY > value)	minY = (int) value;
+                if (maxValue < value)	maxValue = (int) value;
+                if (minValue > value)	minValue = (int) value;
             }
         }
 
@@ -165,10 +164,7 @@ public class ShadowLineChart extends Chart {
         if (selfAdaptive) {
             setYStep(10);
             yStep = 10;
-            maxY *= 1.1f;
-            minY *= 0.9f;
-            this.minValue = minY;
-            this.yLength = maxY - this.minValue;
+            this.yLength = maxValue - minValue;
             ArrayList<Float> yLabels = new ArrayList<>();
             for (int i=0;i<=yStep;i++){
                 yLabels.add(minValue + i*yLength/yStep);
@@ -177,8 +173,7 @@ public class ShadowLineChart extends Chart {
             return;
         }
 
-        this.minValue = minY * 0.9f;
-        this.yLength = maxY * 1.1f - this.minValue;
+        yLength = maxValue - minValue;
         ArrayList<Float> yLabels = new ArrayList<>();
         for (int i = 0; i <= yStep; i++){
             yLabels.add(minValue + i*yLength/yStep);
