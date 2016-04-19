@@ -111,7 +111,7 @@ public abstract class Chart extends View {
     /**
      * 默认y轴分格
      */
-    public int yStep = 10;
+    private int yStep = 10;
 
     /**
      * 是否自适应调整图表Y轴最大值和分格
@@ -147,7 +147,7 @@ public abstract class Chart extends View {
     private YAxisValueFormatter yf = new YAxisValueFormatter(){
 
         @Override
-        public String YvaluesString(float v) {
+        public String yValuesString(float v) {
 
             return v+"";
         }
@@ -180,7 +180,7 @@ public abstract class Chart extends View {
     /**
      * 行宽
      */
-    private float ylineSep;
+    private float yLineSep;
 
     /**
      * 图表主题
@@ -190,7 +190,7 @@ public abstract class Chart extends View {
     /**
      * 背景颜色，优先于theme
      */
-    private int backgroundColor = -1;
+    private int backgroundColor = 0;
 
     /**
      * 数据源适配器
@@ -243,12 +243,17 @@ public abstract class Chart extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-
         setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+
+        super.onDraw(canvas);
 
         xGridLineCount = mAdapter.getXLabelsCount();
         chartWidth = gridGap * xGridLineCount;
-        rectWidth = chartWidth /xGridLineCount;
+        rectWidth = gridGap;
         // view宽度
         viewWidth = getWidth();
         // view高度
@@ -260,13 +265,7 @@ public abstract class Chart extends View {
         // 列高
         rectHeight = chartHeight;
         // 行宽
-        ylineSep = (chartHeight /((float)yGridLineCount-1.f));
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-
-        super.onDraw(canvas);
+        yLineSep = (chartHeight /((float)yGridLineCount-1.f));
 
         drawChart(canvas);
 
@@ -370,20 +369,6 @@ public abstract class Chart extends View {
         scrollOffset = 0;
         setAnimateRate(1.f);
         setAnimateType(ANIMATE_NON_FLAG);
-
-        xGridLineCount = mAdapter.getXLabelsCount();
-        if (xGridLineCount != 0) {
-            chartWidth = gridGap * xGridLineCount;
-            rectWidth = chartWidth /xGridLineCount;
-        }
-        // 图例占据的空间高度
-        allLegendsHeight = LEGEND_HEIGHT * mAdapter.getLegendCount();
-        // 图表高度
-        chartHeight = viewHeight - xLabelHeight - topMargin - xLabelMargin/2 - allLegendsHeight;
-        // 列高
-        rectHeight = chartHeight;
-        // 行宽
-        ylineSep = (chartHeight /((float)yGridLineCount-1.f));
     }
 
     /**
@@ -392,10 +377,6 @@ public abstract class Chart extends View {
      */
     public void setYStep(int step) {
         this.yStep = step;
-    }
-
-    public int getYStep() {
-        return yStep;
     }
 
     public float getChartHeight() {
@@ -418,6 +399,10 @@ public abstract class Chart extends View {
         backgroundColor = color;
     }
 
+    public float getPointMiddleOffset() {
+        return rectWidth / 2;
+    }
+
 
 
     /**
@@ -438,7 +423,7 @@ public abstract class Chart extends View {
         mAdapter.chart = this;
     }
 
-    public void setXWidth(int gridGap) {
+    protected void setXWidth(int gridGap) {
         this.gridGap = gridGap;
     }
 
@@ -453,10 +438,10 @@ public abstract class Chart extends View {
         paint.setAntiAlias(true);
 
         paint.setStyle(Paint.Style.FILL);
-        if (backgroundColor != -1) {
+        if (backgroundColor != 0) {
             paint.setColor(backgroundColor);
             canvas.drawRect(yLabelWidth, 0, viewWidth, topMargin + chartHeight + xLabelHeight + xLabelMargin, paint);
-        } else if (theme.chartBGColor != -1) {
+        } else if (theme.chartBGColor != 0) {
             paint.setColor(theme.chartBGColor);
             canvas.drawRect(yLabelWidth, 0, viewWidth, topMargin + chartHeight + xLabelHeight + xLabelMargin, paint);
         }
@@ -512,7 +497,7 @@ public abstract class Chart extends View {
         // 画水平方向的gridLine
         paint.setColor(theme.gridLineColor);
         for (int i=0;i<yGridLineCount;i++){
-            canvas.drawLine(0, i*ylineSep+topMargin, chartWidth, i*ylineSep+topMargin, paint);
+            canvas.drawLine(0, i* yLineSep +topMargin, chartWidth, i* yLineSep +topMargin, paint);
         }
 
         onDrawData(canvas, paint);
@@ -528,11 +513,10 @@ public abstract class Chart extends View {
 
         paint.setStyle(Paint.Style.FILL);
 
-        paint.setColor(theme.chartBGColor);
-        if (backgroundColor != -1) {
+        if (backgroundColor != 0) {
             paint.setColor(backgroundColor);
             canvas.drawRect(0, 0, yLabelWidth, topMargin + chartHeight + xLabelHeight + xLabelMargin, paint);
-        } else if (theme.chartBGColor != -1) {
+        } else if (theme.chartBGColor != 0) {
             paint.setColor(theme.chartBGColor );
             canvas.drawRect(0, 0, yLabelWidth, topMargin + chartHeight + xLabelHeight + xLabelMargin, paint);
         }
@@ -541,7 +525,7 @@ public abstract class Chart extends View {
         paint.setColor(theme.yLabelTextColor);
         paint.setTextAlign(Paint.Align.RIGHT);
         paint.setStrokeWidth(2);
-        float textSize = ylineSep * 0.8f;
+        float textSize = yLineSep * 0.8f;
         paint.setTextSize(textSize>Y_LABEL_TEXT_SIZE?Y_LABEL_TEXT_SIZE:textSize);
 //        paint.setTypeface(Typeface.DEFAULT_BOLD);
 
@@ -550,9 +534,9 @@ public abstract class Chart extends View {
 
         // 画y轴label
         for (int i=0;i<yGridLineCount; i++) {
-            canvas.drawText(yf.YvaluesString(yLabels.get((yGridLineCount - 1 - i))),
+            canvas.drawText(yf.yValuesString(yLabels.get((yGridLineCount - 1 - i))),
                     yLabelWidth - yLabelDistanceToChart,
-                    i * ylineSep + topMargin + offset,
+                    i * yLineSep + topMargin + offset,
                     paint);
         }
     }
@@ -568,10 +552,10 @@ public abstract class Chart extends View {
         paint.setStyle(Paint.Style.FILL);
         paint.setTextAlign(Paint.Align.LEFT);
 
-        if (backgroundColor != -1) {
+        if (backgroundColor != 0) {
             paint.setColor(backgroundColor);
             canvas.drawRect(0, viewHeight - allLegendsHeight, viewWidth, viewHeight, paint);
-        } else if (theme.chartBGColor != -1) {
+        } else if (theme.chartBGColor != 0) {
             paint.setColor(theme.chartBGColor);
             canvas.drawRect(0, viewHeight - allLegendsHeight, viewWidth, viewHeight, paint);
         }
@@ -828,7 +812,7 @@ public abstract class Chart extends View {
      * @author Ivan
      */
     public interface YAxisValueFormatter {
-        String YvaluesString(float v);
+        String yValuesString(float v);
     }
 
 

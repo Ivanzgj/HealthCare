@@ -27,6 +27,7 @@ import com.ivan.healthcare.healthcare_android.view.chart.provider.SimpleChartAda
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 全方位长时间监听身体各项数据的页面
@@ -41,6 +42,8 @@ public class MonitorFragment extends Fragment implements SensorEventListener {
     private TextView mAccelerateTextView;
 
     private ArrayList<Float> mAccelerateDataArrayList;
+    private float maxAccelerateValue = Float.MIN_VALUE;
+    private float minAccelerateValue = Float.MAX_VALUE;
     private LineChartAdapter mAccelerateAdapter;
 
     private ArrayList<Float> mScreenDataArrayList;
@@ -86,7 +89,7 @@ public class MonitorFragment extends Fragment implements SensorEventListener {
         mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         Sensor accelerator = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         if (accelerator != null) {
-            mSensorManager.registerListener(this, accelerator, SensorManager.SENSOR_DELAY_NORMAL);
+            mSensorManager.registerListener(this, accelerator, (int) TimeUnit.MILLISECONDS.toMicros(500));
         }
 
         IntentFilter filter = new IntentFilter();
@@ -132,6 +135,11 @@ public class MonitorFragment extends Fragment implements SensorEventListener {
 
             @Override
             public int getLineColor(int index) {
+                return R.color.colorPrimaryDark;
+            }
+
+            @Override
+            public int getShadowColor(int position) {
                 return R.color.colorPrimaryLight;
             }
 
@@ -157,11 +165,12 @@ public class MonitorFragment extends Fragment implements SensorEventListener {
         mScreenLineChart.setYLabels(yLabels);
         mScreenLineChart.setYAxisValuesFormatter(new Chart.YAxisValueFormatter() {
             @Override
-            public String YvaluesString(float v) {
-                return (int)v + "";
+            public String yValuesString(float v) {
+                return (int) v + "";
             }
         });
         mScreenLineChart.setXWidth(AppContext.dp2px(60));
+        mScreenLineChart.setDrawPointMiddle(true);
         mScreenDataArrayList = new ArrayList<>();
         mScreenXLabels = new ArrayList<>();
         mScreenDataArrayList.add(1.f);
@@ -179,12 +188,17 @@ public class MonitorFragment extends Fragment implements SensorEventListener {
 
             @Override
             public int getLineColor(int index) {
+                return R.color.colorPrimaryDark;
+            }
+
+            @Override
+            public int getShadowColor(int position) {
                 return R.color.colorPrimaryLight;
             }
 
             @Override
             public int getXLabelsCount() {
-                return mScreenXLabels.size()> SCREEN_DATA_COUNT ?mScreenXLabels.size(): SCREEN_DATA_COUNT;
+                return mScreenXLabels.size()>SCREEN_DATA_COUNT ? mScreenXLabels.size() : SCREEN_DATA_COUNT;
             }
 
             @Override
@@ -208,11 +222,19 @@ public class MonitorFragment extends Fragment implements SensorEventListener {
             float zLateral = event.values[2];
 
             String accelerate = formatter.format(Math.sqrt(xLateral * xLateral + yLateral * yLateral + zLateral * zLateral));
-            mAccelerateTextView.setText(accelerate);
+            float value = Float.valueOf(accelerate);
+            if (value > maxAccelerateValue) {
+                maxAccelerateValue = value;
+            }
+            if (value < minAccelerateValue) {
+                minAccelerateValue = value;
+            }
+            String f = getResources().getString(R.string.monitor_accelerate_value_string);
+            mAccelerateTextView.setText(String.format(f, value, maxAccelerateValue, minAccelerateValue));
             if (mAccelerateDataArrayList.size() > ACCELERATE_DATA_COUNT) {
                 mAccelerateDataArrayList.remove(0);
             }
-            mAccelerateDataArrayList.add(Float.valueOf(accelerate));
+            mAccelerateDataArrayList.add(value);
             mAccelerateAdapter.notifyDataSetChanged();
         }
     }

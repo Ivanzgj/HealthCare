@@ -2,6 +2,7 @@ package com.ivan.healthcare.healthcare_android.view.chart;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.annotation.NonNull;
@@ -17,7 +18,9 @@ import java.util.ArrayList;
  */
 public class ShadowLineChart extends Chart {
 
-    private static final int LINE_WIDTH = AppContext.dp2px(2);
+    private final int LINE_WIDTH = AppContext.dp2px(2);
+
+    private boolean isPointMiddle = false;
 
     private LineChartAdapter mAdapter = new LineChartAdapter() {
         @Override
@@ -67,7 +70,7 @@ public class ShadowLineChart extends Chart {
     private float yLength = 0;
     private float minValue = Integer.MAX_VALUE;
     private float maxValue = Integer.MIN_VALUE;
-    private float xStepWidth;
+    private float xStepWidth = -1;
 
     private Path path;
 
@@ -91,8 +94,10 @@ public class ShadowLineChart extends Chart {
         if (mAdapter != null) {
             xCount = mAdapter.getXLabelsCount();
         }
-        xStepWidth = chartWidth / xCount;
-        setXWidth((int) xStepWidth);
+        if (xStepWidth <= 0) {
+            xStepWidth = chartWidth / xCount;
+            setXWidth((int) xStepWidth);
+        }
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
@@ -103,10 +108,10 @@ public class ShadowLineChart extends Chart {
             return;
         }
 
+        float pointOffset = 0.f;
+        if (isPointMiddle)  pointOffset = getPointMiddleOffset();
+
         paint.setAntiAlias(true);
-        paint.setStrokeWidth(LINE_WIDTH);
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Compat.getColor(getContext(), mAdapter.getLineColor(0)));
         path.reset();
 
         ArrayList<Float> data = mAdapter.getLineData(0);
@@ -120,9 +125,9 @@ public class ShadowLineChart extends Chart {
         for (int i = 0;i < data.size()-1; i++) {
             float y1 = data.get(i);
             float y2 = data.get(i+1);
-            startX = i*xStepWidth;
+            startX = pointOffset + i*xStepWidth;
             startY = (1-(y1-minValue)/yLength)*chartHeight+topMargin;
-            endX = (i+1)*xStepWidth;
+            endX = pointOffset + (i+1)*xStepWidth;
             endY = (1-(y2-minValue)/yLength)*chartHeight+topMargin;
             float cx = (startX + endX) / 2;
             if (i == 0) {
@@ -130,9 +135,19 @@ public class ShadowLineChart extends Chart {
             }
             path.cubicTo(cx, startY, cx, endY, endX, endY);
         }
-        path.lineTo(endX, chartHeight+topMargin);
-        path.lineTo(0, chartHeight+topMargin);
+
+        int lineColor = mAdapter.getLineColor(0);
+        int shadowColor = mAdapter.getShadowColor(0);
+        paint.setStrokeWidth(LINE_WIDTH);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Compat.getColor(getContext(), lineColor));
+        canvas.drawPath(path, paint);
+
+        path.lineTo(endX, chartHeight + topMargin);
+        path.lineTo(pointOffset, chartHeight + topMargin);
         path.close();
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(Compat.getColor(getContext(), shadowColor));
         canvas.drawPath(path, paint);
     }
 
@@ -179,5 +194,14 @@ public class ShadowLineChart extends Chart {
         maxValue = yLabels.get(yLabels.size() - 1);
         minValue = yLabels.get(0);
         yLength = maxValue - minValue;
+    }
+
+    public void setDrawPointMiddle(boolean isMiddle) {
+        isPointMiddle = isMiddle;
+    }
+
+    public void setXWidth(int gridGap) {
+        this.xStepWidth = gridGap;
+        super.setXWidth(gridGap);
     }
 }
