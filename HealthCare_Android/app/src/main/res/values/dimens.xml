@@ -100,10 +100,10 @@
     <dimen name="monitor_accelerate_item_height">56dp</dimen>
 
     <!-- login dialog -->
-    <dimen name="login_dialog_width">224dp</dimen>
-    <dimen name="login_dialog_header_height">32dp</dimen>
-    <dimen name="login_dialog_input_height">32dp</dimen>
+    <dimen name="login_dialog_width">280dp</dimen>
+    <dimen name="login_dialog_header_height">48dp</dimen>
+    <dimen name="login_dialog_input_height">48dp</dimen>
     <dimen name="login_dialog_input_title_width">64dp</dimen>
-    <dimen name="login_dialog_btn_height">32dp</dimen>
+    <dimen name="login_dialog_btn_height">48dp</dimen>
 
 </resources>
