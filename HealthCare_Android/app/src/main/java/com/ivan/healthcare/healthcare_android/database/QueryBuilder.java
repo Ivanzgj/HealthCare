@@ -414,8 +414,10 @@ public class QueryBuilder {
 	public int delete() {
 		execString.append("delete from ");
 		execString.append(tableName);
-		execString.append(" ");
-		execString.append(whereString);
+		if (whereString != null) {
+			execString.append(" ");
+			execString.append(whereString);
+		}
 		return executeUpdateOrDelete(execString.toString());
 	}
 	
