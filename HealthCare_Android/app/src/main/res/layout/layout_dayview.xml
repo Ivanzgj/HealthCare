@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textSize="@dimen/textsize_second_title"
+        android:textSize="@dimen/textSize_second_title"
         android:id="@+id/dayView_day_textview" />
 
 </RelativeLayout>

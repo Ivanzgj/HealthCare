@@ -93,6 +93,19 @@ public class User {
         constellation = Constellation.getConstellationEnum(constellationInt);
     }
 
+    public static void login(String account, String pwd, UserLogListener l) {
+
+    }
+
+    public static void logout(UserLogListener l) {
+
+    }
+
+    public static interface UserLogListener {
+        void onSuccess();
+        void onFail(int errorFlag);
+    }
+
     /**
      * User编辑类
      */

@@ -85,7 +85,7 @@ public class DataAccess {
             User.userName = result.getString("username");
             User.age = result.getInt("age");
             User.setSexInt(result.getInt("sex"));
-            User.birthday = result.getString("birthday");
+            User.birthday = result.getString("birth");
             User.setConstellationInt(result.getInt("constellation"));
             User.email = result.getString("email");
             User.address = result.getString("address");
@@ -119,6 +119,7 @@ public class DataAccess {
                             .where("uid").equal(String.valueOf(User.uid))
                             .update();
         if (result == 0) {
+            AppContext.getDB().query().table(Configurations.USER_TABLE).delete();
             result = AppContext.getDB().query()
                                 .table(Configurations.USER_TABLE)
                                 .add("uid", String.valueOf(User.uid))

@@ -19,7 +19,7 @@
         android:gravity="center_vertical"
         android:text="@string/calendar_section_text"
         android:textColor="@color/pureWindowBackground"
-        android:textSize="@dimen/textsize_normal"
+        android:textSize="@dimen/textSize_normal"
         android:background="@color/divider_color"/>
 
     <WebView

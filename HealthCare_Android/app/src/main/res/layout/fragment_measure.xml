@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/measure_blood_high_tv"
-                android:textSize="@dimen/textsize_normal"
+                android:textSize="@dimen/textSize_normal"
                 android:text="@string/measure_blood_high_pressure"/>
 
             <TextView
@@ -33,7 +33,7 @@
                 android:id="@+id/measure_blood_pressure_high_tv"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:textSize="@dimen/textsize_normal"
+                android:textSize="@dimen/textSize_normal"
                 android:gravity="end"
                 android:text="120"/>
 
@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/measure_blood_low_tv"
-                android:textSize="@dimen/textsize_normal"
+                android:textSize="@dimen/textSize_normal"
                 android:text="@string/measure_blood_low_pressure"/>
 
             <TextView
@@ -57,7 +57,7 @@
                 android:id="@+id/measure_blood_pressure_low_tv"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:textSize="@dimen/textsize_normal"
+                android:textSize="@dimen/textSize_normal"
                 android:gravity="end"
                 android:text="80"/>
 
@@ -132,11 +132,11 @@
             android:paddingTop="@dimen/measure_btn_margin_top">
 
             <com.ivan.healthcare.healthcare_android.view.material.ButtonFlat
-                app:ripple_color="@color/colorPrimaryLight"
+                app:ripple_color="@color/onTouchColor"
                 android:layout_width="@dimen/measure_start_btn_width"
                 android:layout_height="@dimen/measure_start_btn_height"
                 android:id="@+id/beep_measure_btn"
-                android:textSize="@dimen/textsize_second_title"
+                android:textSize="@dimen/textSize_second_title"
                 android:textColor="@color/colorPrimary"
                 android:text="@string/measure_text"/>
 

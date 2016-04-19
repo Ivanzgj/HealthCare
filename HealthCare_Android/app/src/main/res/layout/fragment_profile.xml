@@ -56,7 +56,7 @@
                     android:layout_toLeftOf="@id/profile_personal_indicator"
                     android:layout_toStartOf="@id/profile_personal_indicator"
                     android:id="@+id/profile_person_name"
-                    android:textSize="@dimen/textsize_first_title"
+                    android:textSize="@dimen/textSize_first_title"
                     android:gravity="center_vertical"/>
 
             </RelativeLayout>
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/profile_blood_mode_textview"
                     android:layout_centerVertical="true"
-                    android:textSize="@dimen/textsize_second_title"
+                    android:textSize="@dimen/textSize_second_title"
                     android:gravity="center_vertical"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
@@ -101,7 +101,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:textSize="@dimen/textsize_second_title"
+                    android:textSize="@dimen/textSize_second_title"
                     android:gravity="center_vertical"
                     android:text="@string/profile_blood_mode_tv"/>
 
@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/profile_monitor_mode_textview"
                     android:layout_centerVertical="true"
-                    android:textSize="@dimen/textsize_second_title"
+                    android:textSize="@dimen/textSize_second_title"
                     android:gravity="center_vertical"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
@@ -142,7 +142,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:textSize="@dimen/textsize_second_title"
+                    android:textSize="@dimen/textSize_second_title"
                     android:gravity="center_vertical"
                     android:text="@string/profile_monitor_mode_tv"/>
 
@@ -166,7 +166,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/profile_monitor_gap_textview"
                     android:layout_centerVertical="true"
-                    android:textSize="@dimen/textsize_second_title"
+                    android:textSize="@dimen/textSize_second_title"
                     android:gravity="center_vertical"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
@@ -183,7 +183,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:textSize="@dimen/textsize_second_title"
+                    android:textSize="@dimen/textSize_second_title"
                     android:gravity="center_vertical"
                     android:text="@string/profile_monitor_gap_tv"/>
 
@@ -224,7 +224,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:textSize="@dimen/textsize_second_title"
+                    android:textSize="@dimen/textSize_second_title"
                     android:gravity="center_vertical"
                     android:text="@string/profile_timer_tv"/>
 
@@ -270,7 +270,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:textSize="@dimen/textsize_second_title"
+                    android:textSize="@dimen/textSize_second_title"
                     android:gravity="center_vertical"
                     android:text="@string/profile_upload_tv"/>
 
@@ -300,7 +300,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:textSize="@dimen/textsize_second_title"
+                android:textSize="@dimen/textSize_second_title"
                 android:gravity="center_vertical"
                 android:text="@string/profile_reset_tv"/>
 
@@ -323,7 +323,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/profile_item_height"
                 android:layout_centerVertical="true"
-                android:textSize="@dimen/textsize_appbar"
+                android:textSize="@dimen/textSize_appbar"
                 android:gravity="center"
                 android:text="@string/profile_login"/>
 

@@ -34,12 +34,12 @@
 
     <!-- toolbar title -->
     <style name="ToolbarTextAppearance" parent="Base.TextAppearance.AppCompat">
-        <item name="android:textSize">@dimen/textsize_second_title</item>
+        <item name="android:textSize">@dimen/textSize_second_title</item>
     </style>
 
     <!-- dialog theme -->
     <style name="DialogWindowTitle">
-        <item name="android:textSize">@dimen/textsize_appbar</item>
+        <item name="android:textSize">@dimen/textSize_appbar</item>
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 

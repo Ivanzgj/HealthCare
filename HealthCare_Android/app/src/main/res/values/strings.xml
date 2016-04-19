@@ -117,4 +117,11 @@
     <string name="monitor_screen_chart_title">屏&#160;幕&#160;亮&#160;灭&#160;图</string>
     <string name="monitor_accelerate_value_string">%1$.2f/%2$.2f/%3$.2f</string>
 
+    <!-- login dialog -->
+    <string name="login_dialog_header_login">登陆</string>
+    <string name="login_dialog_header_register">注册</string>
+    <string name="login_dialog_name">用户名</string>
+    <string name="login_dialog_pwd">密码</string>
+    <string name="login_dialog_pwd_confirm">确认密码</string>
+
 </resources>

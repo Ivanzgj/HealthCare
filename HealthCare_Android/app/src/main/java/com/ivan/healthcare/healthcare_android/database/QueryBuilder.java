@@ -17,7 +17,7 @@ import com.ivan.healthcare.healthcare_android.util.L;
 public class QueryBuilder {
 
 	private final String SQL_TAG = "com.ivan.healthcare.healthcare_android.database";
-	public static final Object NIL = new Object();
+	private final static Object NIL = new Object();
 	/**
 	 * 数据库实例的引用
 	 */
@@ -91,7 +91,10 @@ public class QueryBuilder {
 	 * @param value 该字段的值
 	 * @return QueryBuilder构造器
 	 */
-	public QueryBuilder add(String field, Object value) { 
+	public QueryBuilder add(String field, Object value) {
+		if (value == null) {
+			value = NIL;
+		}
 		contentValues.put(field, value);
 		return this;
 	}

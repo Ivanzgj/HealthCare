@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/backup_item_height"
-            android:textSize="@dimen/textsize_second_title"
+            android:textSize="@dimen/textSize_second_title"
             android:gravity="center_vertical"
             android:text="@string/backup_backup"
             android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -44,7 +44,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/backup_item_height"
-            android:textSize="@dimen/textsize_second_title"
+            android:textSize="@dimen/textSize_second_title"
             android:gravity="center_vertical"
             android:text="@string/backup_sync"
             android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -70,7 +70,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/backup_item_height"
-            android:textSize="@dimen/textsize_second_title"
+            android:textSize="@dimen/textSize_second_title"
             android:gravity="center_vertical"
             android:text="@string/backup_clear"
             android:paddingLeft="@dimen/activity_horizontal_margin"

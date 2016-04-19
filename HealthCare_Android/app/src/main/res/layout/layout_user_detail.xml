@@ -38,14 +38,14 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:id="@+id/user_detail_uid"
-                android:textSize="@dimen/textsize_second_title"/>
+                android:textSize="@dimen/textSize_second_title"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="2"
                 android:id="@+id/user_detail_name"
-                android:textSize="@dimen/textsize_huge"
+                android:textSize="@dimen/textSize_huge"
                 android:textColor="@color/textColorPrimary"/>
 
             <TextView
@@ -53,7 +53,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="2"
                 android:id="@+id/user_detail_intro"
-                android:textSize="@dimen/textsize_second_title"/>
+                android:textSize="@dimen/textSize_second_title"/>
 
         </LinearLayout>
 
@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/user_detail_today_times"
                     android:layout_centerHorizontal="true"
-                    android:textSize="@dimen/textsize_second_title"
+                    android:textSize="@dimen/textSize_second_title"
                     android:textColor="@color/textColorSecondary"/>
 
                 <TextView
@@ -97,7 +97,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_below="@id/user_detail_today_times"
                     android:text="@string/personal_info_today_times"
-                    android:textSize="@dimen/textsize_little"
+                    android:textSize="@dimen/textSize_little"
                     android:textColor="@color/textColorSecondary"/>
 
             </RelativeLayout>
@@ -112,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/user_detail_total_times"
                     android:layout_centerHorizontal="true"
-                    android:textSize="@dimen/textsize_second_title"
+                    android:textSize="@dimen/textSize_second_title"
                     android:textColor="@color/textColorSecondary"/>
 
                 <TextView
@@ -122,7 +122,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_below="@id/user_detail_total_times"
                     android:text="@string/personal_info_total_times"
-                    android:textSize="@dimen/textsize_little"
+                    android:textSize="@dimen/textSize_little"
                     android:textColor="@color/textColorSecondary"/>
 
             </RelativeLayout>
@@ -137,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/user_detail_health_assess"
                     android:layout_centerHorizontal="true"
-                    android:textSize="@dimen/textsize_second_title"
+                    android:textSize="@dimen/textSize_second_title"
                     android:textColor="@color/textColorSecondary"/>
 
                 <TextView
@@ -147,7 +147,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_below="@id/user_detail_health_assess"
                     android:text="@string/personal_info_health_assess"
-                    android:textSize="@dimen/textsize_little"
+                    android:textSize="@dimen/textSize_little"
                     android:textColor="@color/textColorSecondary"/>
 
             </RelativeLayout>
@@ -214,7 +214,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="@string/personal_info_sex_hint"
-                android:textSize="@dimen/textsize_little"
+                android:textSize="@dimen/textSize_little"
                 android:layout_marginBottom="@dimen/main_slider_textsize_gap"/>
 
             <TextView
@@ -224,7 +224,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/textsize_normal"/>
+                android:textSize="@dimen/textSize_normal"/>
 
         </LinearLayout>
 
@@ -260,7 +260,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="@string/personal_info_birth_hint"
-                android:textSize="@dimen/textsize_little"
+                android:textSize="@dimen/textSize_little"
                 android:layout_marginBottom="@dimen/main_slider_textsize_gap"/>
 
             <TextView
@@ -270,7 +270,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/textsize_normal"/>
+                android:textSize="@dimen/textSize_normal"/>
 
         </LinearLayout>
 
@@ -306,7 +306,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="@string/personal_info_age_hint"
-                android:textSize="@dimen/textsize_little"
+                android:textSize="@dimen/textSize_little"
                 android:layout_marginBottom="@dimen/main_slider_textsize_gap"/>
 
             <TextView
@@ -316,7 +316,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/textsize_normal"/>
+                android:textSize="@dimen/textSize_normal"/>
 
         </LinearLayout>
 
@@ -352,7 +352,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="@string/personal_info_constellation_hint"
-                android:textSize="@dimen/textsize_little"
+                android:textSize="@dimen/textSize_little"
                 android:layout_marginBottom="@dimen/main_slider_textsize_gap"/>
 
             <TextView
@@ -362,7 +362,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/textsize_normal"/>
+                android:textSize="@dimen/textSize_normal"/>
 
         </LinearLayout>
 
@@ -398,7 +398,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="@string/personal_info_email_hint"
-                android:textSize="@dimen/textsize_little"
+                android:textSize="@dimen/textSize_little"
                 android:layout_marginBottom="@dimen/main_slider_textsize_gap"/>
 
             <TextView
@@ -408,7 +408,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/textsize_normal"/>
+                android:textSize="@dimen/textSize_normal"/>
 
         </LinearLayout>
 
@@ -444,7 +444,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="@string/personal_info_location_hint"
-                android:textSize="@dimen/textsize_little"
+                android:textSize="@dimen/textSize_little"
                 android:layout_marginBottom="@dimen/main_slider_textsize_gap"/>
 
             <TextView
@@ -454,7 +454,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/textsize_normal"/>
+                android:textSize="@dimen/textSize_normal"/>
 
         </LinearLayout>
 

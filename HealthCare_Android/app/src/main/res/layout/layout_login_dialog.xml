@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/login_dialog_width"
+    android:layout_height="wrap_content"
+    android:background="@drawable/round_white_bordered_rectangle">
+    
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/login_dialog_header_height"
+        android:background="@drawable/top_round_rectangle"
+        android:id="@+id/login_dialog_header_rel">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_dialog_header_height"
+            android:orientation="horizontal"
+            android:background="@drawable/top_round_rectangle">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/login_dialog_login_header_mask"
+                android:background="@drawable/top_round_white_rectangle"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/login_dialog_register_header_mask"
+                android:background="@drawable/top_round_white_rectangle"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_dialog_header_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/login_dialog_login_header"
+                android:textSize="@dimen/textSize_normal"
+                android:textColor="@color/textColorPrimary"
+                android:gravity="center"
+                android:text="@string/login_dialog_header_login"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/login_dialog_register_header"
+                android:textSize="@dimen/textSize_normal"
+                android:textColor="@color/textColorPrimary"
+                android:gravity="center"
+                android:text="@string/login_dialog_header_register"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/login_dialog_main_rel"
+        android:orientation="vertical"
+        android:layout_below="@id/login_dialog_header_rel"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_dialog_input_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/login_dialog_input_title_width"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/textSize_normal"
+                android:gravity="center_vertical"
+                android:text="@string/login_dialog_name"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/login_dialog_name_input"
+                android:inputType="text"
+                android:textSize="@dimen/textSize_normal"
+                android:gravity="center_vertical" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_dialog_input_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/login_dialog_input_title_width"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/textSize_normal"
+                android:gravity="center_vertical"
+                android:text="@string/login_dialog_pwd"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/login_dialog_pwd_input"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/textSize_normal"
+                android:inputType="textPassword" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_dialog_input_height"
+            android:id="@+id/login_dialog_confirm_rel"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/login_dialog_input_title_width"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/textSize_normal"
+                android:gravity="center_vertical"
+                android:text="@string/login_dialog_pwd_confirm"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/login_dialog_pwd_confirm_input"
+                android:textSize="@dimen/textSize_normal"
+                android:gravity="center_vertical" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_dialog_main_rel"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round_primary_rectangle">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/round_write_rectangle_corner_radius"
+            android:background="@color/colorPrimary"/>
+
+        <com.ivan.healthcare.healthcare_android.view.material.ButtonFlat
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_dialog_btn_height"
+            android:id="@+id/login_dialog_login_btn"
+            android:textSize="@dimen/textSize_appbar"
+            android:textColor="@color/textColorPrimary"
+            app:ripple_color="@color/onTouchColor"
+            android:text="@string/login_dialog_header_login"/>
+
+    </FrameLayout>
+
+</RelativeLayout>

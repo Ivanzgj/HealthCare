@@ -97,7 +97,7 @@
                                 android:layout_height="wrap_content"
                                 android:id="@+id/personal_info_today_times"
                                 android:layout_centerHorizontal="true"
-                                android:textSize="@dimen/textsize_second_title"
+                                android:textSize="@dimen/textSize_second_title"
                                 android:textColor="@color/textColorSecondary"/>
 
                             <TextView
@@ -107,7 +107,7 @@
                                 android:layout_centerHorizontal="true"
                                 android:layout_below="@id/personal_info_today_times"
                                 android:text="@string/personal_info_today_times"
-                                android:textSize="@dimen/textsize_normal"
+                                android:textSize="@dimen/textSize_normal"
                                 android:textColor="@color/textColorSecondary"/>
 
                         </RelativeLayout>
@@ -122,7 +122,7 @@
                                 android:layout_height="wrap_content"
                                 android:id="@+id/personal_info_total_times"
                                 android:layout_centerHorizontal="true"
-                                android:textSize="@dimen/textsize_second_title"
+                                android:textSize="@dimen/textSize_second_title"
                                 android:textColor="@color/textColorSecondary"/>
 
                             <TextView
@@ -132,7 +132,7 @@
                                 android:layout_marginTop="5dp"
                                 android:layout_below="@id/personal_info_total_times"
                                 android:text="@string/personal_info_total_times"
-                                android:textSize="@dimen/textsize_normal"
+                                android:textSize="@dimen/textSize_normal"
                                 android:textColor="@color/textColorSecondary"/>
 
                         </RelativeLayout>
@@ -147,7 +147,7 @@
                                 android:layout_height="wrap_content"
                                 android:id="@+id/personal_info_health_assess"
                                 android:layout_centerHorizontal="true"
-                                android:textSize="@dimen/textsize_second_title"
+                                android:textSize="@dimen/textSize_second_title"
                                 android:textColor="@color/textColorSecondary"/>
 
                             <TextView
@@ -157,7 +157,7 @@
                                 android:layout_marginTop="5dp"
                                 android:layout_below="@id/personal_info_health_assess"
                                 android:text="@string/personal_info_health_assess"
-                                android:textSize="@dimen/textsize_normal"
+                                android:textSize="@dimen/textSize_normal"
                                 android:textColor="@color/textColorSecondary"/>
 
                         </RelativeLayout>
@@ -222,7 +222,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:id="@+id/personal_info_uid_edit_text"
-                            android:textSize="@dimen/textsize_normal"
+                            android:textSize="@dimen/textSize_normal"
                             android:text="@string/personal_info_uid_hint"
                             android:background="#00000000"
                             android:gravity="center_vertical"
@@ -263,7 +263,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:id="@+id/personal_info_name_edit_text"
-                            android:textSize="@dimen/textsize_normal"
+                            android:textSize="@dimen/textSize_normal"
                             android:hint="@string/personal_info_name_hint"
                             android:background="#00000000"
                             android:textColor="@color/textColorSecondary"
@@ -309,7 +309,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:id="@+id/personal_info_sex_tv"
-                            android:textSize="@dimen/textsize_normal"
+                            android:textSize="@dimen/textSize_normal"
                             android:hint="@string/personal_info_sex_hint"
                             android:background="#00000000"
                             android:gravity="center_vertical"
@@ -350,7 +350,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:id="@+id/personal_info_birth_tv"
-                            android:textSize="@dimen/textsize_normal"
+                            android:textSize="@dimen/textSize_normal"
                             android:hint="@string/personal_info_birth_hint"
                             android:background="#00000000"
                             android:gravity="center_vertical"
@@ -391,7 +391,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:id="@+id/personal_info_age_tv"
-                            android:textSize="@dimen/textsize_normal"
+                            android:textSize="@dimen/textSize_normal"
                             android:hint="@string/personal_info_age_hint"
                             android:background="#00000000"
                             android:gravity="center_vertical"
@@ -432,7 +432,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:id="@+id/personal_info_constellation_tv"
-                            android:textSize="@dimen/textsize_normal"
+                            android:textSize="@dimen/textSize_normal"
                             android:hint="@string/personal_info_constellation_hint"
                             android:background="#00000000"
                             android:gravity="center_vertical"
@@ -479,7 +479,7 @@
                             android:id="@+id/personal_email_edit_text"
                             android:inputType="textEmailAddress"
                             android:hint="@string/personal_info_email_hint"
-                            android:textSize="@dimen/textsize_normal"
+                            android:textSize="@dimen/textSize_normal"
                             android:background="#00000000"
                             android:textColor="@color/textColorSecondary"
                             android:gravity="center_vertical"
@@ -521,7 +521,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:id="@+id/personal_info_location_edit_text"
-                            android:textSize="@dimen/textsize_normal"
+                            android:textSize="@dimen/textSize_normal"
                             android:hint="@string/personal_info_location_hint"
                             android:background="#00000000"
                             android:textColor="@color/textColorSecondary"
@@ -563,7 +563,7 @@
                         android:layout_height="match_parent"
                         android:id="@+id/personal_info_intro_edit_text"
                         android:hint="@string/personal_info_intro_hint"
-                        android:textSize="@dimen/textsize_normal"
+                        android:textSize="@dimen/textSize_normal"
                         android:background="#00000000"
                         android:textColor="@color/textColorSecondary"
                         android:gravity="top"
@@ -596,7 +596,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/personal_logout_button_height"
                             android:text="@string/personal_change_pwd"
-                            android:textSize="@dimen/textsize_second_title"
+                            android:textSize="@dimen/textSize_second_title"
                             android:gravity="center"/>
 
                     </com.andexert.library.RippleView>
@@ -622,7 +622,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/personal_logout_button_height"
                             android:text="@string/personal_logout"
-                            android:textSize="@dimen/textsize_second_title"
+                            android:textSize="@dimen/textSize_second_title"
                             android:gravity="center"
                             android:textColor="@color/red"/>
 

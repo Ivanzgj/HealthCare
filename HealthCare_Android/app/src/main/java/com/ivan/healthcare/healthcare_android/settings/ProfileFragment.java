@@ -204,8 +204,7 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
 
         } else if (mLoginCell.equals(rippleView)) {
 
-            User.edit().setUid(10001).setUserName("User_10001").commit();
-            refreshContents();
+            login();
 
         } else if (mBloodModeCell.equals(rippleView)) {
 
@@ -220,6 +219,22 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
             setMonitorSpeed();
 
         }
+    }
+
+    private void login() {
+        LoginDialog loginDialog = new LoginDialog(getActivity(), true);
+        loginDialog.setOnLoginRegisterCompleteListener(new LoginDialog.OnLoginRegisterCompleteListener() {
+            @Override
+            public void onLoginRegisterComplete(boolean isLogin) {
+                refreshContents();
+            }
+
+            @Override
+            public void onFail(boolean isLogin, int errorFlag) {
+
+            }
+        });
+        loginDialog.show();
     }
 
     private void setBloodMode() {

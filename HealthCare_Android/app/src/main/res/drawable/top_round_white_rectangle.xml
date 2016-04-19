@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <corners
+                android:topLeftRadius="@dimen/round_write_rectangle_corner_radius"
+                android:topRightRadius="@dimen/round_write_rectangle_corner_radius"/>
+            <solid android:color="@color/pureWindowBackground"/>
+            <stroke android:color="@color/colorPrimary"
+                android:width="1dp"/>
+        </shape>
+    </item>
+
+    <item android:top="@dimen/round_write_rectangle_corner_radius"
+        android:left="1dp"
+        android:right="1dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/pureWindowBackground"/>
+        </shape>
+    </item>
+</layer-list>

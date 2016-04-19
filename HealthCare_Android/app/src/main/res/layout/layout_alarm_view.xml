@@ -32,7 +32,7 @@
             android:layout_height="match_parent"
             android:id="@+id/alarm_time_textview"
             android:gravity="center_vertical"
-            android:textSize="@dimen/textsize_second_title" />
+            android:textSize="@dimen/textSize_second_title" />
 
     </com.andexert.library.RippleView>
 
