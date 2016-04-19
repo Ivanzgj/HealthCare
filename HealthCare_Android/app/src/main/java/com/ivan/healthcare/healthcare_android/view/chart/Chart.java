@@ -320,7 +320,7 @@ public abstract class Chart extends View {
         }
         setAnimateType(ANIMATE_NON_FLAG);
         setAnimateRate(1.f);
-        invalideChartData();
+        invalidateChartData();
     }
 
 
@@ -607,7 +607,7 @@ public abstract class Chart extends View {
     /**
      * 重画数据，UI线程调用
      */
-    protected void invalideChartData() {
+    protected void invalidateChartData() {
         invalidate(yLabelWidth, 0, (int) viewWidth, (int) (viewHeight - allLegendsHeight));
     }
 
@@ -780,13 +780,11 @@ public abstract class Chart extends View {
                 e1.setLocation(e2.getX(), e1.getY());
                 curOffset += scrollOffset;
                 scrollOffset = 0;
-                getParent().requestDisallowInterceptTouchEvent(false);
             } else if (-(curOffset + scrollOffset) > chartWidth - viewWidth +yLabelWidth) {
                 scrollOffset = viewWidth - chartWidth - yLabelWidth - curOffset;
                 e1.setLocation(e2.getX(), e1.getY());
                 curOffset += scrollOffset;
                 scrollOffset = 0;
-                getParent().requestDisallowInterceptTouchEvent(false);
             }
             postInvalidate(yLabelWidth, 0, (int) viewWidth, (int) (viewHeight - allLegendsHeight));
             return false;
