@@ -14,4 +14,30 @@
         <item>@string/personal_sex_alien</item>
     </string-array>
 
+    <string-array name="blood_mode_array">
+        <item>@string/profile_blood_mode_auto</item>
+        <item>@string/profile_blood_mode_custom</item>
+    </string-array>
+
+    <string-array name="monitor_mode_array">
+        <item>@string/profile_monitor_mode_auto</item>
+        <item>@string/profile_monitor_mode_custom</item>
+    </string-array>
+
+    <string-array name="monitor_speed_array">
+        <item>200ms</item>
+        <item>500ms</item>
+        <item>1000ms</item>
+        <item>1500ms</item>
+        <item>2000ms</item>
+    </string-array>
+
+    <integer-array name="monitor_speed_int_array">
+        <item>200</item>
+        <item>500</item>
+        <item>1000</item>
+        <item>1500</item>
+        <item>2000</item>
+    </integer-array>
+
 </resources>

@@ -54,6 +54,14 @@
     <!-- profile -->
     <string name="profile_avatar_imageview">个人头像</string>
     <string name="profile_person_indicater">点此进入个人信息</string>
+    <string name="profile_blood_mode_tv">血压测量模式</string>
+    <string name="profile_blood_mode_auto">自动完成</string>
+    <string name="profile_blood_mode_custom">定时测量</string>
+    <string name="profile_monitor_mode_tv">睡眠监控模式</string>
+    <string name="profile_monitor_mode_auto">自适应测量</string>
+    <string name="profile_monitor_mode_custom">自定义测量</string>
+    <string name="profile_monitor_auto_speed">%1$dms/次</string>
+    <string name="profile_monitor_gap_tv">睡眠监控记录速率</string>
     <string name="profile_timer_tv">定时提醒</string>
     <string name="profile_timer_indicater">点此进入闹钟设置</string>
     <string name="profile_upload_tv">数据同步</string>
@@ -61,7 +69,7 @@
     <string name="profile_reset_tv">重置数据</string>
     <string name="profile_reset_indicater">点此进入数据重置设置</string>
     <string name="profile_title">设置</string>
-    <string name="profile_login">登陆</string>
+    <string name="profile_login">登陆&#160;|&#160;注册</string>
 
     <!-- personal activity -->
     <string name="personal_title">个人资料</string>

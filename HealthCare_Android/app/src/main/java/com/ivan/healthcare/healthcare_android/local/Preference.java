@@ -15,6 +15,9 @@ import java.util.Map;
 public class Preference {
 
     public static final String BOND_DEVICE_ADDRESS = "BOND_DEVICE_ADDRESS";
+    public static final String BLOOD_MODE = "BLOOD_MODE";
+    public static final String MONITOR_MODE = "MONITOR_MODE";
+    public static final String MONITOR_SPEED = "MONITOR_SPEED";
 
     private static Map<String, Object> cache;
 
