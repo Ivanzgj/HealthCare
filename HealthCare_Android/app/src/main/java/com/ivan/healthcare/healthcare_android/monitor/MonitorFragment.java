@@ -14,16 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.R;
-import com.ivan.healthcare.healthcare_android.util.Compat;
 import com.ivan.healthcare.healthcare_android.util.Utils;
 import com.ivan.healthcare.healthcare_android.view.chart.Chart;
 import com.ivan.healthcare.healthcare_android.view.chart.ShadowLineChart;
 import com.ivan.healthcare.healthcare_android.view.chart.provider.LineChartAdapter;
 import com.ivan.healthcare.healthcare_android.view.chart.provider.SimpleChartAdapter;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,10 +41,12 @@ public class MonitorFragment extends Fragment implements SensorEventListener {
     private ArrayList<Float> mAccelerateDataArrayList;
     private float maxAccelerateValue = Float.MIN_VALUE;
     private float minAccelerateValue = Float.MAX_VALUE;
+    private ShadowLineChart mAccelerateLineChart;
     private LineChartAdapter mAccelerateAdapter;
 
     private ArrayList<Float> mScreenDataArrayList;
     private ArrayList<String> mScreenXLabels;
+    private ShadowLineChart mScreenLineChart;
     private LineChartAdapter mScreenAdapter;
 
     private DecimalFormat formatter;
@@ -62,17 +61,15 @@ public class MonitorFragment extends Fragment implements SensorEventListener {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
                 mScreenDataArrayList.add(1.f);
-                String time = Utils.getTimeString(new Date(), TIME_PATTERN);
-                mScreenXLabels.add(time);
-                mScreenAdapter.notifyDataSetChanged();
             } else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
                 mScreenDataArrayList.add(0.f);
-                String time = Utils.getTimeString(new Date(), TIME_PATTERN);
-                mScreenXLabels.add(time);
-                mScreenAdapter.notifyDataSetChanged();
             } else if (intent.getAction().equals(Intent.ACTION_USER_PRESENT)) {
-
+                mScreenDataArrayList.add(2.f);
             }
+            String time = Utils.getTimeString(new Date(), TIME_PATTERN);
+            mScreenXLabels.add(time);
+//            mScreenAdapter.notifyDataSetChanged();
+            mScreenLineChart.scrollToEnd();
         }
     };
 
@@ -119,7 +116,7 @@ public class MonitorFragment extends Fragment implements SensorEventListener {
         TextView mAccelerateDetailTextView = (TextView) rootView.findViewById(R.id.monitor_accelerate_chart_detail);
         mAccelerateDetailTextView.setText(Utils.getDateString(new Date(), "yyyy-MM-dd"));
 
-        ShadowLineChart mAccelerateLineChart = (ShadowLineChart) rootView.findViewById(R.id.monitor_accelerate_chart);
+        mAccelerateLineChart = (ShadowLineChart) rootView.findViewById(R.id.monitor_accelerate_chart);
 //        mAccelerateLineChart.setBackgroundColor(Compat.getColor(getActivity(), R.color.colorPrimary));
         mAccelerateDataArrayList = new ArrayList<>();
         mAccelerateAdapter = new SimpleChartAdapter() {
@@ -155,18 +152,21 @@ public class MonitorFragment extends Fragment implements SensorEventListener {
         };
         mAccelerateLineChart.setAdapter(mAccelerateAdapter);
 
-        ShadowLineChart mScreenLineChart = (ShadowLineChart) rootView.findViewById(R.id.monitor_screen_chart);
+        mScreenLineChart = (ShadowLineChart) rootView.findViewById(R.id.monitor_screen_chart);
 //        mScreenLineChart.setBackgroundColor(Compat.getColor(getActivity(), R.color.colorPrimary));
         mScreenLineChart.selfAdaptive = false;
-        mScreenLineChart.setYStep(2);
+        mScreenLineChart.setYStep(3);
         ArrayList<Float> yLabels = new ArrayList<>();
         yLabels.add(0.f);
         yLabels.add(1.f);
+        yLabels.add(2.f);
         mScreenLineChart.setYLabels(yLabels);
         mScreenLineChart.setYAxisValuesFormatter(new Chart.YAxisValueFormatter() {
             @Override
             public String yValuesString(float v) {
-                return (int) v + "";
+                if (v == 0.f)   return "off";
+                if (v == 1.f)   return "on";
+                else            return "in";
             }
         });
         mScreenLineChart.setXWidth(AppContext.dp2px(60));

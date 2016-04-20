@@ -323,7 +323,21 @@ public abstract class Chart extends View {
         invalidateChartData();
     }
 
+    public void scrollTo(int x) {
+        if (x < viewWidth - yLabelWidth) {
+            x = 0;
+        }
+        else if (x > chartWidth - viewWidth + yLabelWidth * 2) {
+            x = (int) (chartWidth - viewWidth + yLabelWidth * 2);
+        }
+        scrollOffset = 0;
+        curOffset = -x;
+        postInvalidate(yLabelWidth, 0, (int) viewWidth, (int) (viewHeight - allLegendsHeight));
+    }
 
+    public void scrollToEnd() {
+        scrollTo(chartWidth);
+    }
 
 
 
@@ -780,7 +794,7 @@ public abstract class Chart extends View {
                 e1.setLocation(e2.getX(), e1.getY());
                 curOffset += scrollOffset;
                 scrollOffset = 0;
-            } else if (-(curOffset + scrollOffset) > chartWidth - viewWidth +yLabelWidth) {
+            } else if (-(curOffset + scrollOffset) > chartWidth - viewWidth + yLabelWidth) {
                 scrollOffset = viewWidth - chartWidth - yLabelWidth - curOffset;
                 e1.setLocation(e2.getX(), e1.getY());
                 curOffset += scrollOffset;
