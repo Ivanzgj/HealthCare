@@ -324,4 +324,5 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
         accelerateNum = 0;
         isMonitoring = false;
     }
+
 }

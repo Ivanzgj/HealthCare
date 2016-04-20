@@ -115,4 +115,8 @@ public class TabViewController extends RelativeLayout {
 		tabbar.setVisibility(View.VISIBLE);
 	}
 
+	public boolean isTabbarVisible() {
+		return tabbar.getVisibility() == View.VISIBLE;
+	}
+
 }

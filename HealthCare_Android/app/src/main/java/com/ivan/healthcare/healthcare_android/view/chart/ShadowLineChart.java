@@ -132,12 +132,12 @@ public class ShadowLineChart extends Chart {
                 path.moveTo(startX, startY);
             }
             path.cubicTo(cx, startY, cx, endY, endX, endY);
-//            drawLine(canvas, paint, i, data.get(i), i+1, data.get(i+1), true);
+            drawLine(canvas, paint, i, data.get(i), i+1, data.get(i+1), true);
         }
 
         int lineColor = mAdapter.getLineColor(0);
         int shadowColor = mAdapter.getShadowColor(0);
-        
+
         paint.setStrokeWidth(LINE_WIDTH);
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(Compat.getColor(getContext(), lineColor));

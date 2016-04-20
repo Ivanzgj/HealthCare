@@ -125,13 +125,13 @@
         android:id="@+id/monitor_float_button"
         android:layout_gravity="right|bottom"
         android:src="@mipmap/ic_launcher"
-        app:rippleColor="@color/onTouchColor"
-        app:backgroundTint="@color/colorPrimary"
+        app:rippleColor="@color/colorPrimary"
+        app:backgroundTint="@color/colorAccent"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"
         app:borderWidth="0dp"
-        android:layout_marginRight="@dimen/fab_margin"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="@dimen/divider_fab_margin"/>
+        android:layout_marginRight="@dimen/divider_fab_margin"
+        android:layout_marginEnd="@dimen/divider_fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"/>
 
 </FrameLayout>
