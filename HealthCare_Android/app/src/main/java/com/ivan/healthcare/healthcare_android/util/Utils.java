@@ -28,4 +28,9 @@ public class Utils {
         return formatter.format(date).substring(8, pattern.length()+8);
     }
 
+    public static String getTimeString(Date date) {
+        DateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA);
+        return formatter.format(date);
+    }
+
 }

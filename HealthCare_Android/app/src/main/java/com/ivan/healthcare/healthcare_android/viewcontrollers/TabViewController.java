@@ -107,4 +107,12 @@ public class TabViewController extends RelativeLayout {
 		viewPager.setScrollable(scrollable);
 	}
 
+	public void hideTabbar() {
+		tabbar.setVisibility(View.GONE);
+	}
+
+	public void showTabbar() {
+		tabbar.setVisibility(View.VISIBLE);
+	}
+
 }

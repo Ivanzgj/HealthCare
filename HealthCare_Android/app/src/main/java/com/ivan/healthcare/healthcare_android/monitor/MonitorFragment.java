@@ -9,18 +9,23 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.ivan.healthcare.healthcare_android.AppContext;
+import com.ivan.healthcare.healthcare_android.MainActivity;
 import com.ivan.healthcare.healthcare_android.R;
+import com.ivan.healthcare.healthcare_android.database.DataAccess;
 import com.ivan.healthcare.healthcare_android.util.Utils;
 import com.ivan.healthcare.healthcare_android.view.chart.Chart;
 import com.ivan.healthcare.healthcare_android.view.chart.ShadowLineChart;
 import com.ivan.healthcare.healthcare_android.view.chart.provider.LineChartAdapter;
 import com.ivan.healthcare.healthcare_android.view.chart.provider.SimpleChartAdapter;
+import com.ivan.healthcare.healthcare_android.view.material.ButtonFlat;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,13 +35,15 @@ import java.util.concurrent.TimeUnit;
  * 全方位长时间监听身体各项数据的页面
  * Created by Ivan on 16/4/18.
  */
-public class MonitorFragment extends Fragment implements SensorEventListener {
+public class MonitorFragment extends Fragment implements SensorEventListener, View.OnClickListener {
 
     private final int ACCELERATE_DATA_COUNT = 10;
     private final int SCREEN_DATA_COUNT = 5;
     private final String TIME_PATTERN = "HH:mm:ss";
 
     private TextView mAccelerateTextView;
+    private FloatingActionButton mMonitorButton;
+    private ButtonFlat mHistoryButton;
 
     private ArrayList<Float> mAccelerateDataArrayList;
     private float maxAccelerateValue = Float.MIN_VALUE;
@@ -52,6 +59,10 @@ public class MonitorFragment extends Fragment implements SensorEventListener {
     private DecimalFormat formatter;
     private SensorManager mSensorManager;
 
+    private Boolean isMonitoring = false;
+    private String monitorTime = null;
+    private int accelerateNum = 0;
+
     /**
      * 监听屏幕亮灭和解锁
      */
@@ -59,17 +70,22 @@ public class MonitorFragment extends Fragment implements SensorEventListener {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            float value = 0.f;
             if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
-                mScreenDataArrayList.add(1.f);
+                value = 1.f;
             } else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
-                mScreenDataArrayList.add(0.f);
+                value = 0.f;
             } else if (intent.getAction().equals(Intent.ACTION_USER_PRESENT)) {
-                mScreenDataArrayList.add(2.f);
+                value = 2.f;
             }
+            mScreenDataArrayList.add(value);
             String time = Utils.getTimeString(new Date(), TIME_PATTERN);
             mScreenXLabels.add(time);
 //            mScreenAdapter.notifyDataSetChanged();
             mScreenLineChart.scrollToEnd();
+            if (isMonitoring && monitorTime != null) {
+                DataAccess.writeSrcData(monitorTime, Utils.getTimeString(new Date()), (int) value);
+            }
         }
     };
 
@@ -164,9 +180,9 @@ public class MonitorFragment extends Fragment implements SensorEventListener {
         mScreenLineChart.setYAxisValuesFormatter(new Chart.YAxisValueFormatter() {
             @Override
             public String yValuesString(float v) {
-                if (v == 0.f)   return "off";
-                if (v == 1.f)   return "on";
-                else            return "in";
+                if (v == 0.f) return "off";
+                if (v == 1.f) return "on";
+                else return "in";
             }
         });
         mScreenLineChart.setXWidth(AppContext.dp2px(60));
@@ -211,6 +227,11 @@ public class MonitorFragment extends Fragment implements SensorEventListener {
         };
         mScreenLineChart.setAdapter(mScreenAdapter);
 
+        mMonitorButton = (FloatingActionButton) rootView.findViewById(R.id.monitor_float_button);
+        mMonitorButton.setOnClickListener(this);
+        mHistoryButton = (ButtonFlat) rootView.findViewById(R.id.monitor_history_btn);
+        mHistoryButton.setOnClickListener(this);
+
         formatter = new DecimalFormat("##.##");
     }
 
@@ -235,12 +256,55 @@ public class MonitorFragment extends Fragment implements SensorEventListener {
                 mAccelerateDataArrayList.remove(0);
             }
             mAccelerateDataArrayList.add(value);
-            mAccelerateAdapter.notifyDataSetChanged();
+            synchronized (isMonitoring) {
+                mAccelerateAdapter.notifyDataSetChanged();
+            }
+            if (isMonitoring && monitorTime != null) {
+                DataAccess.writeVibrationData(monitorTime, accelerateNum, value);
+                accelerateNum++;
+            }
         }
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (mMonitorButton.equals(v)) {
+            synchronized (isMonitoring) {
+                if (!isMonitoring) {
+                    ((MainActivity) getActivity()).getTabViewController().hideTabbar();
+                    ((MainActivity) getActivity()).getTabViewController().setScrollable(false);
+                    ((MainActivity) getActivity()).getToolbar().setVisibility(View.GONE);
+                    mHistoryButton.setVisibility(View.GONE);
+                    startMonitor();
+                } else {
+                    ((MainActivity) getActivity()).getTabViewController().showTabbar();
+                    ((MainActivity) getActivity()).getTabViewController().setScrollable(true);
+                    ((MainActivity) getActivity()).getToolbar().setVisibility(View.VISIBLE);
+                    mHistoryButton.setVisibility(View.VISIBLE);
+                    stopMonitor();
+                }
+                isMonitoring = !isMonitoring;
+                mAccelerateDataArrayList.clear();
+                mScreenDataArrayList.clear();
+                mAccelerateAdapter.notifyDataSetChanged();
+                mScreenAdapter.notifyDataSetChanged();
+            }
+        } else if (mHistoryButton.equals(v)) {
+
+        }
+    }
+
+    public void startMonitor() {
+        monitorTime = Utils.getTimeString(new Date());
+    }
+
+    public void stopMonitor() {
+        monitorTime = null;
+        accelerateNum = 0;
     }
 }

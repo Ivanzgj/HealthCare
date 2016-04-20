@@ -43,6 +43,9 @@ public class MainActivity extends BaseActivity {
     private TextView mTotalTimesTextView;
     private TextView mTotalStatusTextView;
 
+    private TabViewController tabViewController;
+    private Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +88,7 @@ public class MainActivity extends BaseActivity {
 
         DrawerLayout mDrawerLayout = (DrawerLayout) View.inflate(this, R.layout.activity_main, null);
 
-        TabViewController tabViewController = new TabViewController(this, fragmentArrayList, iconArrayList, titles);
+        tabViewController = new TabViewController(this, fragmentArrayList, iconArrayList, titles);
         tabViewController.setScrollable(true);
 
         LinearLayout contentLayout = new LinearLayout(this);
@@ -94,7 +97,7 @@ public class MainActivity extends BaseActivity {
                 new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT));
 
-        Toolbar mToolbar = (Toolbar) View.inflate(this, R.layout.layout_toolbar, null);
+        mToolbar = (Toolbar) View.inflate(this, R.layout.layout_toolbar, null);
         mToolbar.setTitle(R.string.app_name);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
@@ -175,5 +178,13 @@ public class MainActivity extends BaseActivity {
         mEmailTextView.setText(User.email);
         mLocationTextView.setText(User.address);
         mIntroTextView.setText(User.introduction);
+    }
+
+    public TabViewController getTabViewController() {
+        return tabViewController;
+    }
+
+    public Toolbar getToolbar() {
+        return mToolbar;
     }
 }

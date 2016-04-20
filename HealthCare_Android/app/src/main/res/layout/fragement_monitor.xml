@@ -1,100 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
+<FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/activity_vertical_margin">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginBottom="@dimen/activity_vertical_margin">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/activity_vertical_margin">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/textSize_second_title"
+                    android:text="@string/monitor_accelerate_chart_title"
+                    android:id="@+id/monitor_accelerate_chart_title"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/monitor_accelerate_chart_detail"
+                    android:textSize="@dimen/textSize_normal"
+                    android:layout_below="@id/monitor_accelerate_chart_title"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_alignBottom="@id/monitor_accelerate_chart_detail"
+                    android:layout_toLeftOf="@id/monitor_accelerate_chart_title"
+                    android:layout_toStartOf="@id/monitor_accelerate_chart_title"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/monitor_accelerate_textview"
+                        android:textSize="@dimen/textSize_normal"
+                        android:textColor="@color/textColorPrimary"
+                        android:gravity="bottom"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/textSize_normal"
+                        android:textColor="@color/textColorPrimary"
+                        android:gravity="bottom"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
+                        android:text="@string/monitor_accelerate_unit"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <com.ivan.healthcare.healthcare_android.view.chart.ShadowLineChart
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/monitor_accelerate_chart"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/textSize_second_title"
-                android:text="@string/monitor_accelerate_chart_title"
-                android:id="@+id/monitor_accelerate_chart_title"/>
+                android:text="@string/monitor_screen_chart_title"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/monitor_accelerate_chart_detail"
-                android:textSize="@dimen/textSize_normal"
-                android:layout_below="@id/monitor_accelerate_chart_title"/>
+            <com.ivan.healthcare.healthcare_android.view.chart.ShadowLineChart
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/monitor_screen_chart"/>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_alignBottom="@id/monitor_accelerate_chart_detail"
-                android:layout_toLeftOf="@id/monitor_accelerate_chart_title"
-                android:layout_toStartOf="@id/monitor_accelerate_chart_title"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true">
+        </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/monitor_accelerate_textview"
-                    android:textSize="@dimen/textSize_normal"
-                    android:textColor="@color/textColorPrimary"
-                    android:gravity="bottom"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="@dimen/textSize_normal"
-                    android:textColor="@color/textColorPrimary"
-                    android:gravity="bottom"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:text="@string/monitor_accelerate_unit"/>
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-        <com.ivan.healthcare.healthcare_android.view.chart.ShadowLineChart
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/monitor_accelerate_chart"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:layout_weight="1">
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/textSize_second_title"
-            android:text="@string/monitor_screen_chart_title"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"/>
+            android:background="@color/colorPrimary">
 
-        <com.ivan.healthcare.healthcare_android.view.chart.ShadowLineChart
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/monitor_screen_chart"/>
+            <com.ivan.healthcare.healthcare_android.view.material.ButtonFlat
+                app:ripple_color="@color/onTouchColor"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/monitor_history_btn_height"
+                android:id="@+id/monitor_history_btn"
+                android:textSize="@dimen/textSize_second_title"
+                android:text="@string/monitor_history_btn_text"/>
+            
+        </FrameLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/monitor_float_button"
+        android:layout_gravity="right|bottom"
+        android:src="@mipmap/ic_launcher"
+        app:rippleColor="@color/onTouchColor"
+        app:backgroundTint="@color/colorPrimary"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp"
+        app:borderWidth="0dp"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/divider_fab_margin"/>
+
+</FrameLayout>

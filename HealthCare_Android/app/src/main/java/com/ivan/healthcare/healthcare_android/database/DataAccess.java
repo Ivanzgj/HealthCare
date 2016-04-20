@@ -9,7 +9,6 @@ import com.ivan.healthcare.healthcare_android.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * 数据库操作方法类
@@ -28,6 +27,11 @@ public class DataAccess {
         public int pressureLow;
         public int beepRate;
         public int assessment;
+    }
+
+    public static class SrcDataUnit {
+        public String recTime;
+        public int srcOn;
     }
 
     /**
@@ -284,6 +288,82 @@ public class DataAccess {
 
             return dataList;
         }
+    }
+
+    /**
+     * 写入振动数据
+     * @param time 测量的开始时间
+     * @param position 标记该数据是该次测量的第几个数据
+     * @param value 该次测量值
+     * @return 写入是否成功
+     */
+    public static boolean writeVibrationData(String time, int position, float value) {
+        int result = AppContext.getDB().query()
+                .table(Configurations.VIBRATION_TABLE)
+                .add("time", time)
+                .add("position", position)
+                .add("value", value)
+                .insert();
+        return result != 0;
+    }
+
+    /**
+     * 写入屏幕控制数据
+     * @param time 测量的开始时间
+     * @param rec_time 标记该记录的时间
+     * @param on 该次测量值，0屏幕熄灭|1屏幕亮起|2解锁
+     * @return 写入是否成功
+     */
+    public static boolean writeSrcData(String time, String rec_time, int on) {
+        int result = AppContext.getDB().query()
+                .table(Configurations.SRC_TABLE)
+                .add("measure_date", time)
+                .add("rec_time", rec_time)
+                .add("src_on", on)
+                .insert();
+        return result != 0;
+    }
+
+    /**
+     * 获得指定测量时间的振动数据
+     * @param time 测量开始时间
+     */
+    public static ArrayList<Float> getVibrationData(String time) {
+        ArrayList<Result> results = AppContext.getDB().query()
+                .table(Configurations.VIBRATION_TABLE)
+                .field("value")
+                .where("time").equal(time)
+                .order("position ASC")
+                .list();
+
+        ArrayList<Float> result = new ArrayList<>();
+        for (Result r : results) {
+            result.add(r.getFloat("value"));
+        }
+        return result;
+    }
+
+    /**
+     * 获得指定测量时间的屏幕控制数据
+     * @param time 测量开始时间
+     */
+    public static ArrayList<SrcDataUnit> getSrcData(String time) {
+        ArrayList<Result> results = AppContext.getDB().query()
+                .table(Configurations.SRC_TABLE)
+                .field("src_on")
+                .field("rec_time")
+                .where("measure_time").equal(time)
+                .order("rec_time ASC")
+                .list();
+
+        ArrayList<SrcDataUnit> result = new ArrayList<>();
+        for (Result r : results) {
+            SrcDataUnit unit = new SrcDataUnit();
+            unit.recTime = r.getString("rec_time");
+            unit.srcOn = r.getInt("src_on");
+            result.add(unit);
+        }
+        return result;
     }
 
 }
