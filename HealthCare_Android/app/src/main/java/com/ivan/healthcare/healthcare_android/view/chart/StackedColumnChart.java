@@ -133,7 +133,7 @@ public class StackedColumnChart extends Chart {
 
 		if (selfAdaptive) {
 
-			int maxY = 0;
+			float maxY = 0;
 
 			for (int i = 0; i < mAdapter.getColumnData(0).size(); i++) {
 				float value = 0;
@@ -141,16 +141,16 @@ public class StackedColumnChart extends Chart {
 					value += mAdapter.getColumnData(j).get(i);
 				}
 				if (maxY < value) {
-					maxY = (int) Math.ceil(value);
+					maxY = (float) Math.ceil(value);
 				}
 			}
 
 			setYStep(10);
 			int yStep = 10;
-			maxY = (int) (maxY * 1.1);
+			maxY = (float) (maxY * 1.1);
 			ArrayList<Float> yLabels = new ArrayList<>();
 			for (int i=0;i<=yStep;i++){
-				yLabels.add((float) (i*maxY/yStep));
+				yLabels.add((i*maxY/yStep));
 			}
 			setYLabels(yLabels);
 		}

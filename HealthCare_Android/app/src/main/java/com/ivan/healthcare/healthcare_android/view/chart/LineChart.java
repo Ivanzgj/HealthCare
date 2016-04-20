@@ -130,24 +130,24 @@ public class LineChart extends Chart {
 
 		if (selfAdaptive) {
 
-			int maxY = Integer.MIN_VALUE;
-			int minY = Integer.MAX_VALUE;
+			float maxY = Float.MIN_VALUE;
+			float minY = Float.MAX_VALUE;
 
 			for (int i=0;i<mAdapter.getLineCount();i++) {
 				for (int j=0;j<mAdapter.getLineData(i).size();j++) {
 					float value = mAdapter.getLineData(i).get(j);
-					if (maxY < value)	maxY = (int) value;
-					if (minY > value)	minY = (int) value;
+					if (maxY < value)	maxY = (float) Math.ceil(value);
+					if (minY > value)	minY = (float) Math.floor(value);
 				}
 			}
 
 			setYStep(10);
 			int yStep = 10;
-			maxY = (int) (maxY * 1.1);
-			minY = (int) (minY * 0.9);
+			maxY = (float) (maxY * 1.1);
+			minY = (float) (minY * 0.9);
 			ArrayList<Float> yLabels = new ArrayList<>();
 			for (int i=0;i<=yStep;i++){
-				yLabels.add((float) (minY + i*(maxY-minY)/yStep));
+				yLabels.add((minY + i*(maxY-minY)/yStep));
 			}
 			setYLabels(yLabels);
 		}

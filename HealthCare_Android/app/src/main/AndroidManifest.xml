@@ -50,7 +50,11 @@
             android:name=".settings.CropImageActivity"
             android:screenOrientation="portrait"/>
 
-        <receiver android:name=".reciever.NotifyReciever"/>
+        <activity
+            android:name=".monitor.MonitorHistoryActivity"
+            android:screenOrientation="portrait"/>
+
+        <receiver android:name=".receiver.NotifyReceiver"/>
 
     </application>
 

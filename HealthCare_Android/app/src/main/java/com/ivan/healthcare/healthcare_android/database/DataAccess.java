@@ -317,7 +317,7 @@ public class DataAccess {
     public static boolean writeSrcData(String time, String rec_time, int on) {
         int result = AppContext.getDB().query()
                 .table(Configurations.SRC_TABLE)
-                .add("measure_date", time)
+                .add("measure_time", time)
                 .add("rec_time", rec_time)
                 .add("src_on", on)
                 .insert();
@@ -365,5 +365,39 @@ public class DataAccess {
         }
         return result;
     }
+
+    /**
+     * 获得历史监控的所有时间,降序排列
+     */
+    public static ArrayList<String> getHistoryMonitorVibrationTime() {
+        ArrayList<Result> results = AppContext.getDB().query()
+                .table(Configurations.VIBRATION_TABLE)
+                .field("distinct time")
+                .order("time DESC")
+                .list();
+
+        ArrayList<String> result = new ArrayList<>();
+        for (Result r : results) {
+            result.add(r.getString("time"));
+        }
+        return result;
+    }
+
+//    /**
+//     * 获得历史监控的所有时间,降序排列
+//     */
+//    public static ArrayList<String> getHistoryMonitorScreenTime() {
+//        ArrayList<Result> results = AppContext.getDB().query()
+//                .table(Configurations.SRC_TABLE)
+//                .field("distinct measure_time")
+//                .order("measure_time DESC")
+//                .list();
+//
+//        ArrayList<String> result = new ArrayList<>();
+//        for (Result r : results) {
+//            result.add(r.getString("measure_time"));
+//        }
+//        return result;
+//    }
 
 }

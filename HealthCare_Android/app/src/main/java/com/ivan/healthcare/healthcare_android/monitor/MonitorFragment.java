@@ -19,6 +19,7 @@ import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.MainActivity;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.database.DataAccess;
+import com.ivan.healthcare.healthcare_android.util.L;
 import com.ivan.healthcare.healthcare_android.util.Utils;
 import com.ivan.healthcare.healthcare_android.view.chart.Chart;
 import com.ivan.healthcare.healthcare_android.view.chart.ShadowLineChart;
@@ -83,8 +84,11 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
             mScreenXLabels.add(time);
 //            mScreenAdapter.notifyDataSetChanged();
             mScreenLineChart.scrollToEnd();
+            L.d("test", isMonitoring + " " + (monitorTime==null?"null":monitorTime));
             if (isMonitoring && monitorTime != null) {
-                DataAccess.writeSrcData(monitorTime, Utils.getTimeString(new Date()), (int) value);
+                if (DataAccess.writeSrcData(monitorTime, Utils.getTimeString(new Date()), (int) value)) {
+                    L.d("test", "screen:"+value+"");
+                }
             }
         }
     };
@@ -128,12 +132,21 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
     }
 
     private void initView(View rootView) {
+
+        formatter = new DecimalFormat("###.##");
+
         mAccelerateTextView = (TextView) rootView.findViewById(R.id.monitor_accelerate_textview);
         TextView mAccelerateDetailTextView = (TextView) rootView.findViewById(R.id.monitor_accelerate_chart_detail);
         mAccelerateDetailTextView.setText(Utils.getDateString(new Date(), "yyyy-MM-dd"));
 
         mAccelerateLineChart = (ShadowLineChart) rootView.findViewById(R.id.monitor_accelerate_chart);
 //        mAccelerateLineChart.setBackgroundColor(Compat.getColor(getActivity(), R.color.colorPrimary));
+        mAccelerateLineChart.setYAxisValuesFormatter(new Chart.YAxisValueFormatter() {
+            @Override
+            public String yValuesString(float v) {
+                return formatter.format(v);
+            }
+        });
         mAccelerateDataArrayList = new ArrayList<>();
         mAccelerateAdapter = new SimpleChartAdapter() {
             @Override
@@ -148,7 +161,7 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
 
             @Override
             public int getLineColor(int index) {
-                return R.color.colorPrimaryDark;
+                return R.color.colorPrimary;
             }
 
             @Override
@@ -204,7 +217,7 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
 
             @Override
             public int getLineColor(int index) {
-                return R.color.colorPrimaryDark;
+                return R.color.colorPrimary;
             }
 
             @Override
@@ -231,8 +244,6 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
         mMonitorButton.setOnClickListener(this);
         mHistoryButton = (ButtonFlat) rootView.findViewById(R.id.monitor_history_btn);
         mHistoryButton.setOnClickListener(this);
-
-        formatter = new DecimalFormat("##.##");
     }
 
     @Override
@@ -260,8 +271,9 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
                 mAccelerateAdapter.notifyDataSetChanged();
             }
             if (isMonitoring && monitorTime != null) {
-                DataAccess.writeVibrationData(monitorTime, accelerateNum, value);
-                accelerateNum++;
+                if (DataAccess.writeVibrationData(monitorTime, accelerateNum, value)) {
+                    accelerateNum++;
+                }
             }
         }
     }
@@ -288,23 +300,28 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
                     mHistoryButton.setVisibility(View.VISIBLE);
                     stopMonitor();
                 }
-                isMonitoring = !isMonitoring;
                 mAccelerateDataArrayList.clear();
                 mScreenDataArrayList.clear();
+                mScreenDataArrayList.add(1.f);
+                DataAccess.writeSrcData(monitorTime, Utils.getTimeString(new Date()), 1);
                 mAccelerateAdapter.notifyDataSetChanged();
                 mScreenAdapter.notifyDataSetChanged();
             }
         } else if (mHistoryButton.equals(v)) {
-
+            Intent intent = new Intent();
+            intent.setClass(getActivity(), MonitorHistoryActivity.class);
+            startActivity(intent);
         }
     }
 
     public void startMonitor() {
         monitorTime = Utils.getTimeString(new Date());
+        isMonitoring = true;
     }
 
     public void stopMonitor() {
         monitorTime = null;
         accelerateNum = 0;
+        isMonitoring = false;
     }
 }

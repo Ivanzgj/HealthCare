@@ -10,7 +10,7 @@ import android.support.v4.app.NotificationCompat;
 import com.ivan.healthcare.healthcare_android.MainActivity;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.customobj.Time;
-import com.ivan.healthcare.healthcare_android.reciever.NotifyReciever;
+import com.ivan.healthcare.healthcare_android.receiver.NotifyReceiver;
 
 /**
  * 通知工具类
@@ -44,7 +44,7 @@ public class NotifyUtil {
     public static void openAlarmNotification(Context context, Time alarm) {
         AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent();
-        intent.setClass(context, NotifyReciever.class);
+        intent.setClass(context, NotifyReceiver.class);
         intent.putExtra(ALARM_ID, alarm.getId());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ALARM_PENDING_REQUEST,
                 intent, PendingIntent.FLAG_ONE_SHOT);
@@ -57,7 +57,7 @@ public class NotifyUtil {
     public static void closeAlarmNotification(Context context, Time alarm) {
         AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent();
-        intent.setClass(context, NotifyReciever.class);
+        intent.setClass(context, NotifyReceiver.class);
         intent.putExtra(ALARM_ID, alarm.getId());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ALARM_PENDING_REQUEST,
                 intent, PendingIntent.FLAG_ONE_SHOT);

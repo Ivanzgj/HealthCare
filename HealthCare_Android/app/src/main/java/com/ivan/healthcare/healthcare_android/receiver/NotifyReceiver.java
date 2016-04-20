@@ -1,4 +1,4 @@
-package com.ivan.healthcare.healthcare_android.reciever;
+package com.ivan.healthcare.healthcare_android.receiver;
 
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
@@ -10,7 +10,7 @@ import com.ivan.healthcare.healthcare_android.util.NotifyUtil;
  * 通知广播的接收者
  * Created by Ivan on 16/4/15.
  */
-public class NotifyReciever extends BroadcastReceiver {
+public class NotifyReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {

@@ -125,4 +125,7 @@
     <string name="login_dialog_pwd">密码</string>
     <string name="login_dialog_pwd_confirm">确认密码</string>
 
+    <!-- monitor history -->
+    <string name="monitor_history_title">监控历史数据</string>
+
 </resources>

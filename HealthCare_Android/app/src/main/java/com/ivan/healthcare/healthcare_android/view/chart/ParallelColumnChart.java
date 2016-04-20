@@ -125,23 +125,23 @@ public class ParallelColumnChart extends StackedColumnChart {
 
         if (selfAdaptive) {
 
-            int maxY = 0;
+            float maxY = 0;
 
             for (int i = 0; i < mAdapter.getColumnCount(); i++) {
                 for (int j = 0;j < mAdapter.getColumnData(i).size(); j++) {
                     float value = mAdapter.getColumnData(i).get(j);
                     if (maxY < value) {
-                        maxY = (int) Math.ceil(value);
+                        maxY = (float) Math.ceil(value);
                     }
                 }
             }
 
             setYStep(10);
             int yStep = 10;
-            maxY = (int) (maxY * 1.1);
+            maxY = (float) (maxY * 1.1);
             ArrayList<Float> yLabels = new ArrayList<>();
             for (int i=0;i<=yStep;i++){
-                yLabels.add((float) (i*maxY/yStep));
+                yLabels.add((i*maxY/yStep));
             }
             setYLabels(yLabels);
         }

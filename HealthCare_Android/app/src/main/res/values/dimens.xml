@@ -98,7 +98,7 @@
     <!-- monitor -->
     <!--<dimen name="monitor_chart_height">224dp</dimen>-->
     <dimen name="monitor_accelerate_item_height">56dp</dimen>
-    <dimen name="monitor_history_btn_height">32dp</dimen>
+    <dimen name="monitor_history_btn_height">40dp</dimen>
 
     <!-- login dialog -->
     <dimen name="login_dialog_width">280dp</dimen>
@@ -106,5 +106,8 @@
     <dimen name="login_dialog_input_height">48dp</dimen>
     <dimen name="login_dialog_input_title_width">64dp</dimen>
     <dimen name="login_dialog_btn_height">48dp</dimen>
+
+    <!-- monitor history -->
+    <dimen name="monitor_history_drawer_width">168dp</dimen>
 
 </resources>

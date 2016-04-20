@@ -1,16 +1,28 @@
 package com.ivan.healthcare.healthcare_android.monitor;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
-
+import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.R;
+import com.ivan.healthcare.healthcare_android.database.DataAccess;
 import com.ivan.healthcare.healthcare_android.ui.BaseActivity;
+import com.ivan.healthcare.healthcare_android.util.Compat;
+import com.ivan.healthcare.healthcare_android.view.chart.Chart;
 import com.ivan.healthcare.healthcare_android.view.chart.ShadowLineChart;
 import com.ivan.healthcare.healthcare_android.view.chart.provider.LineChartAdapter;
 import com.ivan.healthcare.healthcare_android.view.chart.provider.SimpleChartAdapter;
-
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -19,38 +31,88 @@ import java.util.ArrayList;
  */
 public class MonitorHistoryActivity extends BaseActivity {
 
-    public static final String INTENT_EXTRA_DATE = "INTENT_EXTRA_DATE";
+    private final int SCREEN_DATA_COUNT = 5;
 
-    private TextView mDateTextView;
+    private TextView mVibrationDateTextView;
+    private TextView mScreenDataTextView;
     private ShadowLineChart mAccelerateChart;
     private ShadowLineChart mSrcChart;
+    private ListView mTimeListView;
 
     private LineChartAdapter mAccelerateAdapter;
     private LineChartAdapter mSrcAdapter;
 
+    private ArrayList<String> mTimeArrayList;
+    private BaseAdapter mTimeAdapter;
     private ArrayList<Float> mAccelerateDataArrayList;
     private ArrayList<Float> mScreenDataArrayList;
     private ArrayList<String> mScreenXLabels;
 
-    private String date = "";
+    private DrawerLayout mDrawerLayout;
+
+    private DecimalFormat formatter;
+
+    private String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Intent intent = getIntent();
-        date = intent.getStringExtra(INTENT_EXTRA_DATE);
         initView();
+        refreshContent();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initView() {
-        View rootView = View.inflate(this, R.layout.activity_monitor_history, null);
+        mDrawerLayout = (DrawerLayout) View.inflate(this, R.layout.activity_monitor_history, null);
 
-        mDateTextView = (TextView) rootView.findViewById(R.id.monitor_history_accelerate_chart_date);
-        mAccelerateChart = (ShadowLineChart) rootView.findViewById(R.id.monitor_history_accelerate_chart);
-        mSrcChart = (ShadowLineChart) rootView.findViewById(R.id.monitor_history_screen_chart);
+        Toolbar mToolbar = (Toolbar) mDrawerLayout.findViewById(R.id.monitor_history_toolbar);
+        mToolbar.setTitle(R.string.monitor_history_title);
+        setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
-        mDateTextView.setText(date);
+        mVibrationDateTextView = (TextView) mDrawerLayout.findViewById(R.id.monitor_history_accelerate_chart_date);
+        mScreenDataTextView = (TextView) mDrawerLayout.findViewById(R.id.monitor_history_screen_chart_date);
+
+        mAccelerateChart = (ShadowLineChart) mDrawerLayout.findViewById(R.id.monitor_history_accelerate_chart);
+        mAccelerateChart.setXWidth(AppContext.dp2px(20));
+        mAccelerateChart.setYAxisValuesFormatter(new Chart.YAxisValueFormatter() {
+            @Override
+            public String yValuesString(float v) {
+                return formatter.format(v);
+            }
+        });
+
+        mSrcChart = (ShadowLineChart) mDrawerLayout.findViewById(R.id.monitor_history_screen_chart);
+        mSrcChart.selfAdaptive = false;
+        mSrcChart.setYStep(3);
+        ArrayList<Float> yLabels = new ArrayList<>();
+        yLabels.add(0.f);
+        yLabels.add(1.f);
+        yLabels.add(2.f);
+        mSrcChart.setYLabels(yLabels);
+        mSrcChart.setYAxisValuesFormatter(new Chart.YAxisValueFormatter() {
+            @Override
+            public String yValuesString(float v) {
+                if (v == 0.f) return "off";
+                if (v == 1.f) return "on";
+                else return "in";
+            }
+        });
+        mSrcChart.setXWidth(AppContext.dp2px(60));
+        mSrcChart.setDrawPointMiddle(true);
 
         mAccelerateDataArrayList = new ArrayList<>();
         mScreenDataArrayList = new ArrayList<>();
@@ -69,7 +131,7 @@ public class MonitorHistoryActivity extends BaseActivity {
 
             @Override
             public int getLineColor(int index) {
-                return R.color.colorPrimaryDark;
+                return R.color.colorPrimary;
             }
 
             @Override
@@ -84,7 +146,7 @@ public class MonitorHistoryActivity extends BaseActivity {
 
             @Override
             public String getXLabel(int position) {
-                return position+"";
+                return (position+1)+"";
             }
         };
         mAccelerateChart.setAdapter(mAccelerateAdapter);
@@ -102,7 +164,7 @@ public class MonitorHistoryActivity extends BaseActivity {
 
             @Override
             public int getLineColor(int index) {
-                return R.color.colorPrimaryDark;
+                return R.color.colorPrimary;
             }
 
             @Override
@@ -112,7 +174,7 @@ public class MonitorHistoryActivity extends BaseActivity {
 
             @Override
             public int getXLabelsCount() {
-                return mScreenXLabels.size();
+                return mScreenXLabels.size()>SCREEN_DATA_COUNT ? mScreenXLabels.size() : SCREEN_DATA_COUNT;
             }
 
             @Override
@@ -125,6 +187,97 @@ public class MonitorHistoryActivity extends BaseActivity {
         };
         mSrcChart.setAdapter(mSrcAdapter);
 
-        setContentView(rootView);
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.main_drawer_open, R.string.main_drawer_close) {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                mTimeAdapter.notifyDataSetChanged();
+            }
+        };
+        mDrawerToggle.syncState();
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        mTimeArrayList = new ArrayList<>();
+        mTimeListView = (ListView) mDrawerLayout.findViewById(R.id.monitor_history_time_listView);
+        mTimeAdapter = new BaseAdapter() {
+            @Override
+            public int getCount() {
+                return mTimeArrayList.size();
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return mTimeArrayList.get(position);
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return 0;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                TextView tv;
+                if (convertView != null) {
+                    tv = (TextView) convertView;
+                } else {
+                    tv = new TextView(MonitorHistoryActivity.this);
+                    tv.setGravity(Gravity.CENTER);
+                    tv.setTextSize(13);
+                    tv.setTextColor(Compat.getColor(MonitorHistoryActivity.this, R.color.textColorSecondary));
+                    tv.setHeight(getResources().getDimensionPixelSize(R.dimen.single_line_list_item_height));
+                }
+                tv.setText(mTimeArrayList.get(position));
+                return tv;
+            }
+        };
+        mTimeListView.setAdapter(mTimeAdapter);
+        mTimeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                date = mTimeArrayList.get(position);
+                refreshContent();
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
+
+        formatter = new DecimalFormat("##.##");
+
+        setContentView(mDrawerLayout);
+    }
+
+    private void refreshContent() {
+
+        mTimeArrayList = DataAccess.getHistoryMonitorVibrationTime();
+        mTimeAdapter.notifyDataSetChanged();
+
+        if (mTimeArrayList.size() == 0) {
+            return;
+        }
+
+        if (date == null) {
+            date = mTimeArrayList.get(0);
+        }
+
+        mAccelerateChart.reset();
+
+        mVibrationDateTextView.setText(date);
+        mAccelerateDataArrayList = DataAccess.getVibrationData(date);
+        mAccelerateAdapter.notifyDataSetChanged();
+
+        mScreenDataTextView.setText(date);
+        ArrayList<DataAccess.SrcDataUnit> srcData = DataAccess.getSrcData(date);
+        mScreenDataArrayList.clear();
+        mScreenXLabels.clear();
+        for (DataAccess.SrcDataUnit data : srcData) {
+            mScreenDataArrayList.add((float) data.srcOn);
+            mScreenXLabels.add(data.recTime);
+        }
+        mSrcAdapter.notifyDataSetChanged();
     }
 }
