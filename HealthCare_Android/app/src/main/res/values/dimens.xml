@@ -108,6 +108,7 @@
     <dimen name="login_dialog_btn_height">48dp</dimen>
 
     <!-- monitor history -->
-    <dimen name="monitor_history_drawer_width">168dp</dimen>
+    <dimen name="monitor_history_drawer_width">224dp</dimen>
+    <dimen name="monitor_history_srawer_title_height">48dp</dimen>
 
 </resources>

@@ -6,8 +6,8 @@
     <color name="colorAccent">#03A9F4</color>
     <color name="onTouchColor">@color/colorAccent</color>
 
+    <color name="colorPrimaryAlpha">#DD00BCD4</color>
     <color name="pureWindowBackground">#FFFFFF</color>
-    <color name="windiwShadowColor">#55000000</color>
 
     <color name="textColorPrimary">#212121</color>
     <color name="textColorPrimaryPressed">#7F7D7D</color>

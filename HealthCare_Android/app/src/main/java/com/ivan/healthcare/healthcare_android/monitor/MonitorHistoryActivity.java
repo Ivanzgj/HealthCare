@@ -18,6 +18,7 @@ import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.database.DataAccess;
 import com.ivan.healthcare.healthcare_android.ui.BaseActivity;
 import com.ivan.healthcare.healthcare_android.util.Compat;
+import com.ivan.healthcare.healthcare_android.util.Utils;
 import com.ivan.healthcare.healthcare_android.view.chart.Chart;
 import com.ivan.healthcare.healthcare_android.view.chart.ShadowLineChart;
 import com.ivan.healthcare.healthcare_android.view.chart.provider.LineChartAdapter;
@@ -180,7 +181,8 @@ public class MonitorHistoryActivity extends BaseActivity {
             @Override
             public String getXLabel(int position) {
                 if (position < mScreenXLabels.size()) {
-                    return mScreenXLabels.get(position);
+                    String text = Utils.convertTimeFormat(mScreenXLabels.get(position), "yyyyMMddHHmmss", "yyyy年MM月dd日HH:mm:ss");
+                    return text.substring(11, text.length());
                 }
                 return "";
             }
@@ -228,11 +230,12 @@ public class MonitorHistoryActivity extends BaseActivity {
                 } else {
                     tv = new TextView(MonitorHistoryActivity.this);
                     tv.setGravity(Gravity.CENTER);
-                    tv.setTextSize(13);
-                    tv.setTextColor(Compat.getColor(MonitorHistoryActivity.this, R.color.textColorSecondary));
+                    tv.setTextSize(16);
+                    tv.setTextColor(Compat.getColor(MonitorHistoryActivity.this, R.color.textColorPrimary));
                     tv.setHeight(getResources().getDimensionPixelSize(R.dimen.single_line_list_item_height));
                 }
-                tv.setText(mTimeArrayList.get(position));
+                String text = Utils.convertTimeFormat(mTimeArrayList.get(position), "yyyyMMddHHmmss", "yyyy年MM月dd日HH:mm:ss");
+                tv.setText(text);
                 return tv;
             }
         };
@@ -266,11 +269,12 @@ public class MonitorHistoryActivity extends BaseActivity {
 
         mAccelerateChart.reset();
 
-        mVibrationDateTextView.setText(date);
+        String title = Utils.convertTimeFormat(date, "yyyyMMddHHmmss", "yyyy年MM月dd日HH:mm:ss");
+        mVibrationDateTextView.setText(title);
         mAccelerateDataArrayList = DataAccess.getVibrationData(date);
         mAccelerateAdapter.notifyDataSetChanged();
 
-        mScreenDataTextView.setText(date);
+        mScreenDataTextView.setText(title);
         ArrayList<DataAccess.SrcDataUnit> srcData = DataAccess.getSrcData(date);
         mScreenDataArrayList.clear();
         mScreenXLabels.clear();
