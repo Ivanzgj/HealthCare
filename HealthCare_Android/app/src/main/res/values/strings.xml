@@ -17,6 +17,8 @@
     <string name="main_drawer_open">show the user details</string>
     <string name="main_drawer_close">hide the user details</string>
 
+    <string name="press_back_key_tips">退出应用将会马上终止所有测量活动，是否确定退出？</string>
+
     <!-- 测量页面 -->
     <string name="open_bt_btn">open bluetooth</string>
     <string name="close_bt_btn">close bluetooth</string>

@@ -1,5 +1,6 @@
 package com.ivan.healthcare.healthcare_android;
 
+import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import com.ivan.healthcare.healthcare_android.charts.CalendarFragment;
 import com.ivan.healthcare.healthcare_android.monitor.MonitorFragment;
 import com.ivan.healthcare.healthcare_android.settings.ProfileFragment;
 import com.ivan.healthcare.healthcare_android.ui.BaseActivity;
+import com.ivan.healthcare.healthcare_android.util.DialogBuilder;
 import com.ivan.healthcare.healthcare_android.viewcontrollers.TabViewController;
 
 import java.io.File;
@@ -191,7 +193,24 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return tabViewController.isTabbarVisible() && super.onKeyDown(keyCode, event);
+        if (!tabViewController.isTabbarVisible()) {
+            return true;
+        } else if (keyCode == KeyEvent.KEYCODE_BACK) {
+            new DialogBuilder(this).create()
+                    .setTitle(R.string.tips)
+                    .setContent(R.string.press_back_key_tips)
+                    .setPositive(R.string.ok)
+                    .setNegative(R.string.cancel)
+                    .setOnPositiveClickListener(new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            MainActivity.this.finish();
+                        }
+                    })
+                    .show();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
