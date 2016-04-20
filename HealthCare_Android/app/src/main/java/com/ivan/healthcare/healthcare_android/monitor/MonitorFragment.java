@@ -120,7 +120,7 @@ public class MonitorFragment extends Fragment implements SensorEventListener {
         mAccelerateDetailTextView.setText(Utils.getDateString(new Date(), "yyyy-MM-dd"));
 
         ShadowLineChart mAccelerateLineChart = (ShadowLineChart) rootView.findViewById(R.id.monitor_accelerate_chart);
-        mAccelerateLineChart.setBackgroundColor(Compat.getColor(getActivity(), R.color.colorPrimary));
+//        mAccelerateLineChart.setBackgroundColor(Compat.getColor(getActivity(), R.color.colorPrimary));
         mAccelerateDataArrayList = new ArrayList<>();
         mAccelerateAdapter = new SimpleChartAdapter() {
             @Override
@@ -156,7 +156,7 @@ public class MonitorFragment extends Fragment implements SensorEventListener {
         mAccelerateLineChart.setAdapter(mAccelerateAdapter);
 
         ShadowLineChart mScreenLineChart = (ShadowLineChart) rootView.findViewById(R.id.monitor_screen_chart);
-        mScreenLineChart.setBackgroundColor(Compat.getColor(getActivity(), R.color.colorPrimary));
+//        mScreenLineChart.setBackgroundColor(Compat.getColor(getActivity(), R.color.colorPrimary));
         mScreenLineChart.selfAdaptive = false;
         mScreenLineChart.setYStep(2);
         ArrayList<Float> yLabels = new ArrayList<>();

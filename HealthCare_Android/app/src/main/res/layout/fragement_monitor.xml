@@ -10,7 +10,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:background="@color/colorPrimary">
+        android:layout_marginTop="@dimen/activity_vertical_margin">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -25,7 +25,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/textSize_second_title"
-                android:textColor="@color/pureWindowBackground"
                 android:text="@string/monitor_accelerate_chart_title"
                 android:id="@+id/monitor_accelerate_chart_title"/>
 
@@ -34,7 +33,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/monitor_accelerate_chart_detail"
                 android:textSize="@dimen/textSize_normal"
-                android:textColor="@color/pureWindowBackground"
                 android:layout_below="@id/monitor_accelerate_chart_title"/>
 
             <LinearLayout
@@ -51,14 +49,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/monitor_accelerate_textview"
-                    android:textSize="@dimen/textSize_appbar"
+                    android:textSize="@dimen/textSize_normal"
                     android:textColor="@color/textColorPrimary"
                     android:gravity="bottom"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textSize="@dimen/textSize_appbar"
+                    android:textSize="@dimen/textSize_normal"
                     android:textColor="@color/textColorPrimary"
                     android:gravity="bottom"
                     android:layout_marginLeft="5dp"
@@ -80,19 +78,17 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_weight="1"
-        android:background="@color/colorPrimary">
+        android:layout_weight="1">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/textSize_second_title"
-            android:textColor="@color/pureWindowBackground"
             android:text="@string/monitor_screen_chart_title"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"/>
 
         <com.ivan.healthcare.healthcare_android.view.chart.ShadowLineChart
             android:layout_width="match_parent"
