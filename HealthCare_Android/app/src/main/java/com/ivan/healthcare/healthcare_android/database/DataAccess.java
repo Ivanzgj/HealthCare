@@ -2,7 +2,7 @@ package com.ivan.healthcare.healthcare_android.database;
 
 import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.Configurations;
-import com.ivan.healthcare.healthcare_android.customobj.Time;
+import com.ivan.healthcare.healthcare_android.local.Time;
 import com.ivan.healthcare.healthcare_android.local.Constellation;
 import com.ivan.healthcare.healthcare_android.local.User;
 import com.ivan.healthcare.healthcare_android.util.Utils;

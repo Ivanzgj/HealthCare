@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.TimePicker;
 import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.R;
-import com.ivan.healthcare.healthcare_android.customobj.Time;
+import com.ivan.healthcare.healthcare_android.local.Time;
 import com.ivan.healthcare.healthcare_android.local.Alarm;
 import com.ivan.healthcare.healthcare_android.ui.BaseActivity;
 import com.ivan.healthcare.healthcare_android.util.Compat;

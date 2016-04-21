@@ -19,7 +19,6 @@ import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.MainActivity;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.database.DataAccess;
-import com.ivan.healthcare.healthcare_android.util.L;
 import com.ivan.healthcare.healthcare_android.util.Utils;
 import com.ivan.healthcare.healthcare_android.view.chart.Chart;
 import com.ivan.healthcare.healthcare_android.view.chart.ShadowLineChart;
@@ -64,6 +63,8 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
     private String monitorTime = null;
     private int accelerateNum = 0;
 
+    private final Object lock = new Object();
+
     /**
      * 监听屏幕亮灭和解锁
      */
@@ -79,15 +80,13 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
             } else if (intent.getAction().equals(Intent.ACTION_USER_PRESENT)) {
                 value = 2.f;
             }
-            mScreenDataArrayList.add(value);
-            String time = Utils.getTimeString(new Date(), TIME_PATTERN);
-            mScreenXLabels.add(time);
-//            mScreenAdapter.notifyDataSetChanged();
-            mScreenLineChart.scrollToEnd();
-            L.d("test", isMonitoring + " " + (monitorTime==null?"null":monitorTime));
-            if (isMonitoring && monitorTime != null) {
-                if (DataAccess.writeSrcData(monitorTime, Utils.getTimeString(new Date()), (int) value)) {
-                    L.d("test", "screen:"+value+"");
+            synchronized (lock) {
+                mScreenDataArrayList.add(value);
+                String time = Utils.getTimeString(new Date(), TIME_PATTERN);
+                mScreenXLabels.add(time);
+                mScreenLineChart.scrollToEnd();
+                if (isMonitoring && monitorTime != null) {
+                    DataAccess.writeSrcData(monitorTime, Utils.getTimeString(new Date()), (int) value);
                 }
             }
         }
@@ -104,10 +103,6 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
-        Sensor accelerator = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        if (accelerator != null) {
-            mSensorManager.registerListener(this, accelerator, (int) TimeUnit.MILLISECONDS.toMicros(500));
-        }
 
         IntentFilter filter = new IntentFilter();
         // 屏幕灭屏广播
@@ -122,12 +117,29 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
     @Override
     public void onResume() {
         super.onResume();
+        if (!isMonitoring) {
+            Sensor accelerator = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            if (accelerator != null) {
+                mSensorManager.registerListener(this, accelerator, (int) TimeUnit.MILLISECONDS.toMicros(500));
+            }
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (!isMonitoring) {
+            mSensorManager.unregisterListener(this);
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mSensorManager.unregisterListener(this);
+        if (isMonitoring) {
+            mSensorManager.unregisterListener(this);
+            getActivity().unregisterReceiver(mScreenReceiver);
+        }
         getActivity().unregisterReceiver(mScreenReceiver);
     }
 
@@ -263,16 +275,16 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
             }
             String f = getResources().getString(R.string.monitor_accelerate_value_string);
             mAccelerateTextView.setText(String.format(f, value, maxAccelerateValue, minAccelerateValue));
-            if (mAccelerateDataArrayList.size() > ACCELERATE_DATA_COUNT) {
-                mAccelerateDataArrayList.remove(0);
-            }
-            mAccelerateDataArrayList.add(value);
-            synchronized (isMonitoring) {
+            synchronized (lock) {
+                if (mAccelerateDataArrayList.size() > ACCELERATE_DATA_COUNT) {
+                    mAccelerateDataArrayList.remove(0);
+                }
+                mAccelerateDataArrayList.add(value);
                 mAccelerateAdapter.notifyDataSetChanged();
-            }
-            if (isMonitoring && monitorTime != null) {
-                if (DataAccess.writeVibrationData(monitorTime, accelerateNum, value)) {
-                    accelerateNum++;
+                if (isMonitoring && monitorTime != null) {
+                    if (DataAccess.writeVibrationData(monitorTime, accelerateNum, value)) {
+                        accelerateNum++;
+                    }
                 }
             }
         }
@@ -286,7 +298,7 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
     @Override
     public void onClick(View v) {
         if (mMonitorButton.equals(v)) {
-            synchronized (isMonitoring) {
+            synchronized (lock) {
                 if (!isMonitoring) {
                     ((MainActivity) getActivity()).getTabViewController().hideTabbar();
                     ((MainActivity) getActivity()).getTabViewController().setScrollable(false);
@@ -303,6 +315,10 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
                 mAccelerateDataArrayList.clear();
                 mScreenDataArrayList.clear();
                 mScreenDataArrayList.add(1.f);
+                mScreenXLabels.clear();
+                String time = Utils.getTimeString(new Date(), TIME_PATTERN);
+                mScreenXLabels.add(time);
+
                 DataAccess.writeSrcData(monitorTime, Utils.getTimeString(new Date()), 1);
                 mAccelerateAdapter.notifyDataSetChanged();
                 mScreenAdapter.notifyDataSetChanged();

@@ -1,4 +1,4 @@
-package com.ivan.healthcare.healthcare_android.customobj;
+package com.ivan.healthcare.healthcare_android.local;
 
 import java.util.Calendar;
 

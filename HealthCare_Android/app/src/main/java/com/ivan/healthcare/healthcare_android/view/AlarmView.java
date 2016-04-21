@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.andexert.library.RippleView;
 import com.ivan.healthcare.healthcare_android.R;
-import com.ivan.healthcare.healthcare_android.customobj.Time;
+import com.ivan.healthcare.healthcare_android.local.Time;
 
 /**
  * 闹钟时间以及开启的view

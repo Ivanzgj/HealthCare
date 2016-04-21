@@ -9,7 +9,7 @@ import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 import com.ivan.healthcare.healthcare_android.MainActivity;
 import com.ivan.healthcare.healthcare_android.R;
-import com.ivan.healthcare.healthcare_android.customobj.Time;
+import com.ivan.healthcare.healthcare_android.local.Time;
 import com.ivan.healthcare.healthcare_android.receiver.NotifyReceiver;
 
 /**
