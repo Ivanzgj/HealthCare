@@ -14,7 +14,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/activity_vertical_margin">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -28,18 +28,16 @@
                 android:text="@string/measure_blood_high_pressure"/>
 
             <TextView
-                android:layout_width="@dimen/measure_blood_tv_width"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/measure_blood_pressure_high_tv"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
                 android:textSize="@dimen/textSize_normal"
                 android:gravity="end"
                 android:text="120"/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
@@ -52,16 +50,14 @@
                 android:text="@string/measure_blood_low_pressure"/>
 
             <TextView
-                android:layout_width="@dimen/measure_blood_tv_width"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/measure_blood_pressure_low_tv"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
                 android:textSize="@dimen/textSize_normal"
                 android:gravity="end"
                 android:text="80"/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
