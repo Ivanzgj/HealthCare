@@ -5,7 +5,7 @@ import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.local.Time;
 import com.ivan.healthcare.healthcare_android.local.Constellation;
 import com.ivan.healthcare.healthcare_android.local.User;
-import com.ivan.healthcare.healthcare_android.util.Utils;
+import com.ivan.healthcare.healthcare_android.util.TimeUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -196,7 +196,7 @@ public class DataAccess {
     public static ArrayList<MeasuredDataUnit> getMeasuredData(int year, int month, int dayOfMonth) {
         Calendar cal = Calendar.getInstance();
         cal.set(year, month - 1, dayOfMonth);
-        String dateString = Utils.getDateString(cal.getTime());
+        String dateString = TimeUtils.getDateString(cal.getTime());
         ArrayList<Result> resultList = AppContext.getDB().query().table(Configurations.MEASURE_TABLE)
                                             .field("press_high")
                                             .field("press_low")
@@ -272,7 +272,7 @@ public class DataAccess {
     public static ArrayList<Float> getMeasuredAssessment(int year, int month, int dayOfMonth) {
         Calendar cal = Calendar.getInstance();
         cal.set(year, month - 1, dayOfMonth);
-        String dateString = Utils.getDateString(cal.getTime());
+        String dateString = TimeUtils.getDateString(cal.getTime());
         ArrayList<Result> resultList = AppContext.getDB().query().table(Configurations.MEASURE_TABLE)
                                                         .field("assessment")
                                                         .where("date").equal(dateString)

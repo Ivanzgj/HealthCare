@@ -21,7 +21,7 @@ import com.ivan.healthcare.healthcare_android.view.chart.provider.ColumnChartAda
 import com.ivan.healthcare.healthcare_android.view.chart.provider.LineChartAdapter;
 import com.ivan.healthcare.healthcare_android.database.DataAccess;
 import com.ivan.healthcare.healthcare_android.util.Compat;
-import com.ivan.healthcare.healthcare_android.util.Utils;
+import com.ivan.healthcare.healthcare_android.util.TimeUtils;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -87,7 +87,7 @@ public class ChartActivity extends BaseActivity implements ViewPager.OnPageChang
         Calendar cal = Calendar.getInstance();
         cal.set(year, month, dayOfMonth);
         Toolbar mToolbar = (Toolbar) rootView.findViewById(R.id.chart_toolbar);
-        mToolbar.setTitle(Utils.getDateString(cal.getTime(), "yyyy年MM月dd日"));
+        mToolbar.setTitle(TimeUtils.getDateString(cal.getTime(), "yyyy年MM月dd日"));
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

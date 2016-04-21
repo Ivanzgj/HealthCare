@@ -12,7 +12,7 @@ import java.util.Locale;
  * 常用工具类
  * Created by Ivan on 16/4/14.
  */
-public class Utils {
+public class TimeUtils {
 
     public static String getDateString(Date date) {
         DateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA);

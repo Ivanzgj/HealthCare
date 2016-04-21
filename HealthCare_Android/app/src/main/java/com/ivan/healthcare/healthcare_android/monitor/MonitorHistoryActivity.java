@@ -18,7 +18,7 @@ import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.database.DataAccess;
 import com.ivan.healthcare.healthcare_android.ui.BaseActivity;
 import com.ivan.healthcare.healthcare_android.util.Compat;
-import com.ivan.healthcare.healthcare_android.util.Utils;
+import com.ivan.healthcare.healthcare_android.util.TimeUtils;
 import com.ivan.healthcare.healthcare_android.view.chart.Chart;
 import com.ivan.healthcare.healthcare_android.view.chart.ShadowLineChart;
 import com.ivan.healthcare.healthcare_android.view.chart.provider.LineChartAdapter;
@@ -181,7 +181,7 @@ public class MonitorHistoryActivity extends BaseActivity {
             @Override
             public String getXLabel(int position) {
                 if (position < mScreenXLabels.size()) {
-                    String text = Utils.convertTimeFormat(mScreenXLabels.get(position), "yyyyMMddHHmmss", "yyyy年MM月dd日HH:mm:ss");
+                    String text = TimeUtils.convertTimeFormat(mScreenXLabels.get(position), "yyyyMMddHHmmss", "yyyy年MM月dd日HH:mm:ss");
                     return text.substring(11, text.length());
                 }
                 return "";
@@ -234,7 +234,7 @@ public class MonitorHistoryActivity extends BaseActivity {
                     tv.setTextColor(Compat.getColor(MonitorHistoryActivity.this, R.color.textColorPrimary));
                     tv.setHeight(getResources().getDimensionPixelSize(R.dimen.single_line_list_item_height));
                 }
-                String text = Utils.convertTimeFormat(mTimeArrayList.get(position), "yyyyMMddHHmmss", "yyyy年MM月dd日HH:mm:ss");
+                String text = TimeUtils.convertTimeFormat(mTimeArrayList.get(position), "yyyyMMddHHmmss", "yyyy年MM月dd日HH:mm:ss");
                 tv.setText(text);
                 return tv;
             }
@@ -269,7 +269,7 @@ public class MonitorHistoryActivity extends BaseActivity {
 
         mAccelerateChart.reset();
 
-        String title = Utils.convertTimeFormat(date, "yyyyMMddHHmmss", "yyyy年MM月dd日HH:mm:ss");
+        String title = TimeUtils.convertTimeFormat(date, "yyyyMMddHHmmss", "yyyy年MM月dd日HH:mm:ss");
         mVibrationDateTextView.setText(title);
         mAccelerateDataArrayList = DataAccess.getVibrationData(date);
         mAccelerateAdapter.notifyDataSetChanged();

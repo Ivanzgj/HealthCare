@@ -19,7 +19,7 @@ import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.MainActivity;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.database.DataAccess;
-import com.ivan.healthcare.healthcare_android.util.Utils;
+import com.ivan.healthcare.healthcare_android.util.TimeUtils;
 import com.ivan.healthcare.healthcare_android.view.chart.Chart;
 import com.ivan.healthcare.healthcare_android.view.chart.ShadowLineChart;
 import com.ivan.healthcare.healthcare_android.view.chart.provider.LineChartAdapter;
@@ -82,11 +82,11 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
             }
             synchronized (lock) {
                 mScreenDataArrayList.add(value);
-                String time = Utils.getTimeString(new Date(), TIME_PATTERN);
+                String time = TimeUtils.getTimeString(new Date(), TIME_PATTERN);
                 mScreenXLabels.add(time);
                 mScreenLineChart.scrollToEnd();
                 if (isMonitoring && monitorTime != null) {
-                    DataAccess.writeSrcData(monitorTime, Utils.getTimeString(new Date()), (int) value);
+                    DataAccess.writeSrcData(monitorTime, TimeUtils.getTimeString(new Date()), (int) value);
                 }
             }
         }
@@ -149,7 +149,7 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
 
         mAccelerateTextView = (TextView) rootView.findViewById(R.id.monitor_accelerate_textview);
         TextView mAccelerateDetailTextView = (TextView) rootView.findViewById(R.id.monitor_accelerate_chart_detail);
-        mAccelerateDetailTextView.setText(Utils.getDateString(new Date(), "yyyy-MM-dd"));
+        mAccelerateDetailTextView.setText(TimeUtils.getDateString(new Date(), "yyyy-MM-dd"));
 
         mAccelerateLineChart = (ShadowLineChart) rootView.findViewById(R.id.monitor_accelerate_chart);
 //        mAccelerateLineChart.setBackgroundColor(Compat.getColor(getActivity(), R.color.colorPrimary));
@@ -215,7 +215,7 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
         mScreenDataArrayList = new ArrayList<>();
         mScreenXLabels = new ArrayList<>();
         mScreenDataArrayList.add(1.f);
-        mScreenXLabels.add(Utils.getTimeString(new Date(), TIME_PATTERN));
+        mScreenXLabels.add(TimeUtils.getTimeString(new Date(), TIME_PATTERN));
         mScreenAdapter = new SimpleChartAdapter() {
             @Override
             public int getLineCount() {
@@ -316,10 +316,10 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
                 mScreenDataArrayList.clear();
                 mScreenDataArrayList.add(1.f);
                 mScreenXLabels.clear();
-                String time = Utils.getTimeString(new Date(), TIME_PATTERN);
+                String time = TimeUtils.getTimeString(new Date(), TIME_PATTERN);
                 mScreenXLabels.add(time);
 
-                DataAccess.writeSrcData(monitorTime, Utils.getTimeString(new Date()), 1);
+                DataAccess.writeSrcData(monitorTime, TimeUtils.getTimeString(new Date()), 1);
                 mAccelerateAdapter.notifyDataSetChanged();
                 mScreenAdapter.notifyDataSetChanged();
             }
@@ -331,7 +331,7 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
     }
 
     public void startMonitor() {
-        monitorTime = Utils.getTimeString(new Date());
+        monitorTime = TimeUtils.getTimeString(new Date());
         isMonitoring = true;
     }
 
