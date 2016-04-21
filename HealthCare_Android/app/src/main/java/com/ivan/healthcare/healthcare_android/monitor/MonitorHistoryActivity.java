@@ -99,7 +99,6 @@ public class MonitorHistoryActivity extends BaseActivity {
 
         mSrcChart = (ShadowLineChart) mDrawerLayout.findViewById(R.id.monitor_history_screen_chart);
         mSrcChart.selfAdaptive = false;
-        mSrcChart.setYStep(3);
         ArrayList<Float> yLabels = new ArrayList<>();
         yLabels.add(0.f);
         yLabels.add(1.f);
@@ -261,8 +260,13 @@ public class MonitorHistoryActivity extends BaseActivity {
         mTimeAdapter.notifyDataSetChanged();
 
         if (mTimeArrayList.size() == 0) {
+            mAccelerateChart.setVisibility(View.INVISIBLE);
+            mSrcChart.setVisibility(View.INVISIBLE);
             return;
         }
+
+        mAccelerateChart.setVisibility(View.VISIBLE);
+        mSrcChart.setVisibility(View.VISIBLE);
 
         if (date == null) {
             date = mTimeArrayList.get(0);

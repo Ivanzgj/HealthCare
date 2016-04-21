@@ -109,11 +109,6 @@ public abstract class Chart extends View {
     private final int LEFT_MARGIN = AppContext.dp2px(10);
 
     /**
-     * 默认y轴分格
-     */
-    private int yStep = 10;
-
-    /**
      * 是否自适应调整图表Y轴最大值和分格
      */
     public Boolean selfAdaptive = true;
@@ -383,14 +378,6 @@ public abstract class Chart extends View {
         scrollOffset = 0;
         setAnimateRate(1.f);
         setAnimateType(ANIMATE_NON_FLAG);
-    }
-
-    /**
-     * 设置y轴分多少格
-     * @param step 格数
-     */
-    public void setYStep(int step) {
-        this.yStep = step;
     }
 
     public float getChartHeight() {

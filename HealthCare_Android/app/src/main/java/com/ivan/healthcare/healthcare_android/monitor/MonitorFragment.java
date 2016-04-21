@@ -196,7 +196,6 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
         mScreenLineChart = (ShadowLineChart) rootView.findViewById(R.id.monitor_screen_chart);
 //        mScreenLineChart.setBackgroundColor(Compat.getColor(getActivity(), R.color.colorPrimary));
         mScreenLineChart.selfAdaptive = false;
-        mScreenLineChart.setYStep(3);
         ArrayList<Float> yLabels = new ArrayList<>();
         yLabels.add(0.f);
         yLabels.add(1.f);

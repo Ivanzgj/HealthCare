@@ -98,6 +98,11 @@ public class ShadowLineChart extends Chart {
             return;
         }
 
+        ArrayList<Float> data = mAdapter.getLineData(0);
+        if (data.size() <= 1) {
+            return;
+        }
+
         if (xStepWidth <= 0) {
             float chartWidth = getWidth() - getyLabelWidth();
             int xCount = mAdapter.getXLabelsCount();
@@ -110,8 +115,6 @@ public class ShadowLineChart extends Chart {
 
         paint.setAntiAlias(true);
         path.reset();
-
-        ArrayList<Float> data = mAdapter.getLineData(0);
 
         float chartHeight = getChartHeight();
         float topMargin = getTopMargin();
@@ -181,7 +184,6 @@ public class ShadowLineChart extends Chart {
                 }
             }
 
-            setYStep(10);
             int yStep = 10;
             yLength = maxValue - minValue;
             ArrayList<Float> yLabels = new ArrayList<>();

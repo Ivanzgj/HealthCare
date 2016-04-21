@@ -141,7 +141,6 @@ public class LineChart extends Chart {
 				}
 			}
 
-			setYStep(10);
 			int yStep = 10;
 			maxY = (float) (maxY * 1.1);
 			minY = (float) (minY * 0.9);

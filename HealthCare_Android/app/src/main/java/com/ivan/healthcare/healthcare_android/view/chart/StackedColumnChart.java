@@ -145,7 +145,6 @@ public class StackedColumnChart extends Chart {
 				}
 			}
 
-			setYStep(10);
 			int yStep = 10;
 			maxY = (float) (maxY * 1.1);
 			ArrayList<Float> yLabels = new ArrayList<>();
