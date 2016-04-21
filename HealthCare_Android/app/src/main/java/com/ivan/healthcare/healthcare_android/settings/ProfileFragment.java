@@ -21,6 +21,7 @@ import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.local.Preference;
 import com.ivan.healthcare.healthcare_android.local.User;
+import com.ivan.healthcare.healthcare_android.settings.dialog.LoginDialog;
 import com.ivan.healthcare.healthcare_android.util.DialogBuilder;
 import java.io.File;
 import java.io.FileInputStream;

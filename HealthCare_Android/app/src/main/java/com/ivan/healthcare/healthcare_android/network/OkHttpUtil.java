@@ -26,6 +26,7 @@ public class OkHttpUtil {
 
     private static final int CONNECTION_TIME_OUT_IN_SECONDS = 30;
     private static final String CHARSET_NAME = "UTF-8";
+
     public static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 
     private static OkHttpClient mOkHttpClient = new OkHttpClient();

@@ -1,5 +1,7 @@
 package com.ivan.healthcare.healthcare_android.network;
 
+import android.os.Handler;
+
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.Request;
@@ -15,9 +17,11 @@ import java.util.Map;
 public class BaseStringRequest extends AbsBaseRequest {
 
     private Call call;
+    private Handler mHandler;
 
     public BaseStringRequest() {
         super();
+        mHandler = new Handler();
     }
 
     /**
@@ -31,12 +35,22 @@ public class BaseStringRequest extends AbsBaseRequest {
             OkHttpUtil.enqueue(call, new com.squareup.okhttp.Callback() {
                 @Override
                 public void onFailure(Request request, IOException e) {
-                    callback.onFailure(UNKNOEN_ERROR);
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onFailure(UNKNOWN_ERROR);
+                        }
+                    });
                 }
 
                 @Override
-                public void onResponse(Response response) throws IOException {
-                    callback.onResponse(response);
+                public void onResponse(final Response response) throws IOException {
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onResponse(response);
+                        }
+                    });
                 }
             });
         } catch (IOException e) {
@@ -59,12 +73,22 @@ public class BaseStringRequest extends AbsBaseRequest {
             OkHttpUtil.enqueue(call, new com.squareup.okhttp.Callback() {
                 @Override
                 public void onFailure(Request request, IOException e) {
-                    callback.onFailure(UNKNOEN_ERROR);
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onFailure(UNKNOWN_ERROR);
+                        }
+                    });
                 }
 
                 @Override
-                public void onResponse(Response response) {
-                    callback.onResponse(response);
+                public void onResponse(final Response response) {
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onResponse(response);
+                        }
+                    });
                 }
             });
         } catch (IOException e) {
@@ -130,8 +154,10 @@ public class BaseStringRequest extends AbsBaseRequest {
 
         public BaseStringRequest build() {
             BaseStringRequest request = new BaseStringRequest();
+            params.put("android_version", android.os.Build.VERSION.RELEASE);
+            params.put("device", android.os.Build.MODEL);
             request.setRequestParams(params);
-            request.serRequestUrl(url);
+            request.setRequestUrl(url);
             if (fileType != null) {
                 request.setFileType(fileType);
             }

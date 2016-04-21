@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public abstract class AbsBaseRequest {
 
-    public static final int UNKNOEN_ERROR = 0x31;
+    public static final int UNKNOWN_ERROR = 0x31;
 
     private Map<String, Object> params;
     private String url;
@@ -78,7 +78,7 @@ public abstract class AbsBaseRequest {
      * 设置请求url地址
      * @param url 请求地址字符串
      */
-    public void serRequestUrl(String url) {
+    public void setRequestUrl(String url) {
         this.url = url;
     }
 

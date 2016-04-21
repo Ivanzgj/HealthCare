@@ -123,7 +123,7 @@
     <!-- login dialog -->
     <string name="login_dialog_header_login">登陆</string>
     <string name="login_dialog_header_register">注册</string>
-    <string name="login_dialog_name">用户名</string>
+    <string name="login_dialog_name">邮箱</string>
     <string name="login_dialog_pwd">密码</string>
     <string name="login_dialog_pwd_confirm">确认密码</string>
 

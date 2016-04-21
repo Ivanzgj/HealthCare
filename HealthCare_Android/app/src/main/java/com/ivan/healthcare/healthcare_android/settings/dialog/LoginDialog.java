@@ -1,4 +1,4 @@
-package com.ivan.healthcare.healthcare_android.settings;
+package com.ivan.healthcare.healthcare_android.settings.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -10,9 +10,17 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.local.User;
+import com.ivan.healthcare.healthcare_android.network.AbsBaseRequest;
+import com.ivan.healthcare.healthcare_android.network.BaseStringRequest;
+import com.ivan.healthcare.healthcare_android.util.L;
 import com.ivan.healthcare.healthcare_android.view.material.ButtonFlat;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
 
 /**
  * 登陆/注册对话框
@@ -111,12 +119,49 @@ public class LoginDialog extends Dialog implements View.OnClickListener {
     }
 
     private void login() {
-        User.edit().setUid(10001).setUserName("User_10001").commit();
-        onLoginRegisterCompleteListener.onLoginRegisterComplete(true);
-        dismiss();
+        String email = mUserNameEdit.getText().toString();
+        String pwd = mPwdEdit.getText().toString();
+        if (email.length() == 0 || pwd.length() == 0) {
+            mPwdEdit.setText("");
+            return;
+        }
+
+        BaseStringRequest.Builder builder = new BaseStringRequest.Builder();
+        builder.url(Configurations.REQUEST_URL)
+                .add("email", email)
+                .add("pwd", pwd)
+                .build()
+                .post(new AbsBaseRequest.Callback() {
+                    @Override
+                    public void onResponse(final Response response) {
+                        try {
+                            final String s = response.body().string();
+                            User.edit().setUid(10001).setUserName("User_10001").commit();
+                            onLoginRegisterCompleteListener.onLoginRegisterComplete(true);
+                            dismiss();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(final int errorFlag) {
+                        L.d("test", errorFlag + "");
+                        onLoginRegisterCompleteListener.onFail(true, errorFlag);
+                        dismiss();
+                    }
+                });
     }
 
     private void register() {
+        String email = mUserNameEdit.getText().toString();
+        String pwd1 = mPwdEdit.getText().toString();
+        String pwd2 = mPwdConfirmEdit.getText().toString();
+        if(email.length() == 0 || pwd1.length() == 0 || pwd2.length() == 0 || !pwd1.equals(pwd2)) {
+            mPwdEdit.setText("");
+            mPwdConfirmEdit.setText("");
+            return;
+        }
         dismiss();
     }
 
