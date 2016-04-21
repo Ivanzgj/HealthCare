@@ -243,9 +243,7 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
         String[] array = getResources().getStringArray(R.array.blood_mode_array);
         lv.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.layout_simple_list_item, array));
         final Dialog d = new DialogBuilder(getActivity()).create()
-                .setTitle(R.string.profile_blood_mode_tv)
                 .setCustomView(lv)
-                .setNegative(R.string.cancel)
                 .show();
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -268,9 +266,7 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
         String[] array = getResources().getStringArray(R.array.monitor_mode_array);
         lv.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.layout_simple_list_item, array));
         final Dialog d = new DialogBuilder(getActivity()).create()
-                .setTitle(R.string.profile_monitor_mode_tv)
                 .setCustomView(lv)
-                .setNegative(R.string.cancel)
                 .show();
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -299,9 +295,7 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
         final int[] speeds = getResources().getIntArray(R.array.monitor_speed_int_array);
         lv.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.layout_simple_list_item, array));
         final Dialog d = new DialogBuilder(getActivity()).create()
-                .setTitle(R.string.profile_monitor_gap_tv)
                 .setCustomView(lv)
-                .setNegative(R.string.cancel)
                 .show();
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
