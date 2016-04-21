@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -512,7 +511,7 @@ public class MeasureFragment extends Fragment implements View.OnClickListener {
      * 通过Bundle的getBoolean方法获得。
      * 蓝牙连接状态以BluetoothCommService.CONNECT_STATE为键，
      * 其值为BluetoothCommService.DISCONNECT、
-     * BluetoothCommUtil.CONNCTED、
+     * BluetoothCommUtil.CONNECTED、
      * BluetoothCommUtil.CONNECT_LOST、
      * BluetoothCommUtil.CONNECT_FAIL，
      * 通过Bundle的getInt方法获得。
@@ -553,7 +552,7 @@ public class MeasureFragment extends Fragment implements View.OnClickListener {
                     case BluetoothCommUtil.DISCONNECT:
                         L.d(TAG, "disconnect");
                         break;
-                    case BluetoothCommUtil.CONNCTED:
+                    case BluetoothCommUtil.CONNECTED:
                         L.d(TAG, "connected");
                         break;
                     case BluetoothCommUtil.CONNECT_FAIL:

@@ -20,7 +20,7 @@ import java.io.OutputStream;
 public class BluetoothCommUtil {
 
     public final static int DISCONNECT = 0x30;
-    public final static int CONNCTED = 0x31;
+    public final static int CONNECTED = 0x31;
     public final static int CONNECT_LOST = 0x32;
     public final static int CONNECT_FAIL = 0x33;
 
@@ -30,7 +30,7 @@ public class BluetoothCommUtil {
     /**
      * 标识由mHandler发送的数据是蓝牙连接状态(false)还是蓝牙接收的数据(true)
      */
-    public final static String DATAorSTATE = "dataorstate";
+    public final static String DATAorSTATE = "DATAorSTATE";
 
     private int connectionState = DISCONNECT;
 
@@ -39,7 +39,7 @@ public class BluetoothCommUtil {
 
     private AcceptThread acceptThread;
     private ConnectingThread connectingThread;
-    private TrasfferThread trasfferThread;
+    private TransferThread transferThread;
 
     private Handler mHandler;
 
@@ -53,7 +53,7 @@ public class BluetoothCommUtil {
     /**
      * 获取蓝牙链接状态
      * {@link #DISCONNECT}
-     * {@link #CONNCTED}
+     * {@link #CONNECTED}
      * {@link #CONNECT_LOST}
      * {@link #CONNECT_FAIL}
      * @return 蓝牙状态常量
@@ -62,7 +62,7 @@ public class BluetoothCommUtil {
         return connectionState;
     }
 
-    private void setConnctionState(int state) {
+    private void setConnectionState(int state) {
         connectionState = state;
         Message msg = mHandler.obtainMessage();
         Bundle bundle = new Bundle();
@@ -77,14 +77,14 @@ public class BluetoothCommUtil {
      */
     public synchronized void start() {
         listening = false;
-        setConnctionState(DISCONNECT);
+        setConnectionState(DISCONNECT);
         if (connectingThread != null) {
             connectingThread.cancel();
             connectingThread = null;
         }
-        if (trasfferThread != null) {
-            trasfferThread.cancel();
-            trasfferThread = null;
+        if (transferThread != null) {
+            transferThread.cancel();
+            transferThread = null;
         }
         if (acceptThread == null) {
             acceptThread = new AcceptThread();
@@ -119,12 +119,12 @@ public class BluetoothCommUtil {
      * 与蓝牙设备通信
      */
     private synchronized void trasffer() {
-        if (trasfferThread != null) {
-            trasfferThread.cancel();
-            trasfferThread = null;
+        if (transferThread != null) {
+            transferThread.cancel();
+            transferThread = null;
         }
-        trasfferThread = new TrasfferThread();
-        trasfferThread.start();
+        transferThread = new TransferThread();
+        transferThread.start();
     }
 
     /**
@@ -148,7 +148,7 @@ public class BluetoothCommUtil {
                 trasffer();
             } catch (IOException e) {
                 e.printStackTrace();
-                setConnctionState(CONNECT_FAIL);
+                setConnectionState(CONNECT_FAIL);
             }
         }
 
@@ -181,7 +181,7 @@ public class BluetoothCommUtil {
                 BluetoothSocket clientSocket = mDevice.createRfcommSocketToServiceRecord(Configurations.btUUID);
                 clientSocket.connect();
                 BluetoothCommUtil.this.connectSocket = clientSocket;
-                setConnctionState(CONNCTED);
+                setConnectionState(CONNECTED);
                 trasffer();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -203,12 +203,12 @@ public class BluetoothCommUtil {
     /**
      * 蓝牙传输的线程类
      */
-    private class TrasfferThread extends Thread {
+    private class TransferThread extends Thread {
 
         private InputStream inputStream;
         private OutputStream outputStream;
 
-        public TrasfferThread() {
+        public TransferThread() {
             connectingThread = null;
             if (acceptThread != null) {
                 acceptThread.cancel();
@@ -285,11 +285,11 @@ public class BluetoothCommUtil {
      * @return 是否写入成功
      */
     public boolean write(byte[] msg) {
-        return trasfferThread != null && trasfferThread.write(msg);
+        return transferThread != null && transferThread.write(msg);
     }
 
     private void connectionFailed() {
-        setConnctionState(CONNECT_FAIL);
+        setConnectionState(CONNECT_FAIL);
         if (connectSocket != null) {
             try {
                 connectSocket.close();
@@ -301,7 +301,7 @@ public class BluetoothCommUtil {
     }
 
     private void connectionLost() {
-        setConnctionState(CONNECT_LOST);
+        setConnectionState(CONNECT_LOST);
         if (connectSocket != null) {
             try {
                 connectSocket.close();
@@ -323,8 +323,8 @@ public class BluetoothCommUtil {
             }
             acceptThread = null;
             connectingThread = null;
-            trasfferThread = null;
-            setConnctionState(DISCONNECT);
+            transferThread = null;
+            setConnectionState(DISCONNECT);
         } catch (IOException e) {
             e.printStackTrace();
         }

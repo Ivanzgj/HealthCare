@@ -132,7 +132,7 @@
             android:paddingTop="@dimen/measure_btn_margin_top">
 
             <com.ivan.healthcare.healthcare_android.view.material.ButtonFlat
-                app:ripple_color="@color/onTouchColor"
+                app:ripple_color="@color/colorPrimaryLight"
                 android:layout_width="@dimen/measure_start_btn_width"
                 android:layout_height="@dimen/measure_start_btn_height"
                 android:id="@+id/beep_measure_btn"
