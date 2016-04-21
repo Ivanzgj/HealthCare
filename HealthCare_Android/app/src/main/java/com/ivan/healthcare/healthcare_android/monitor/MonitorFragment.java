@@ -38,7 +38,7 @@ import java.util.concurrent.TimeUnit;
 public class MonitorFragment extends Fragment implements SensorEventListener, View.OnClickListener {
 
     private final int ACCELERATE_DATA_COUNT = 10;
-    private final int SCREEN_DATA_COUNT = 5;
+    private final int SCREEN_DATA_COUNT = 6;
     private final String TIME_PATTERN = "HH:mm:ss";
 
     private TextView mAccelerateTextView;

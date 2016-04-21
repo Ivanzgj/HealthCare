@@ -32,7 +32,8 @@ import java.util.ArrayList;
  */
 public class MonitorHistoryActivity extends BaseActivity {
 
-    private final int SCREEN_DATA_COUNT = 5;
+    private final int ACCELERATE_DATA_COUNT = 15;
+    private final int SCREEN_DATA_COUNT = 6;
 
     private TextView mVibrationDateTextView;
     private TextView mScreenDataTextView;
@@ -88,7 +89,7 @@ public class MonitorHistoryActivity extends BaseActivity {
         mScreenDataTextView = (TextView) mDrawerLayout.findViewById(R.id.monitor_history_screen_chart_date);
 
         mAccelerateChart = (ShadowLineChart) mDrawerLayout.findViewById(R.id.monitor_history_accelerate_chart);
-        mAccelerateChart.setXWidth(AppContext.dp2px(20));
+        mAccelerateChart.setXWidth(AppContext.dp2px(30));
         mAccelerateChart.setYAxisValuesFormatter(new Chart.YAxisValueFormatter() {
             @Override
             public String yValuesString(float v) {
@@ -142,7 +143,7 @@ public class MonitorHistoryActivity extends BaseActivity {
 
             @Override
             public int getXLabelsCount() {
-                return mAccelerateDataArrayList.size();
+                return mAccelerateDataArrayList.size()>ACCELERATE_DATA_COUNT ? mAccelerateDataArrayList.size() : ACCELERATE_DATA_COUNT;
             }
 
             @Override
