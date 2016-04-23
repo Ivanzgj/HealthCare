@@ -1,6 +1,7 @@
 package com.ivan.healthcare.healthcare_android.local;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 /**
  * 闹钟时间类
@@ -12,11 +13,6 @@ public class Time {
     private int minute;
     private int id;
     private boolean on;
-
-    public Time(){
-        hour = 0;
-        minute = 0;
-    }
 
     public Time(int hour, int minute, int id, boolean on) {
         this.hour = hour;
@@ -60,8 +56,13 @@ public class Time {
 
     public long getTime() {
         Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(System.currentTimeMillis());
+        // 这里时区需要设置一下，不然会有8个小时的时间差
+        cal.setTimeZone(TimeZone.getTimeZone("GMT+8"));
         cal.set(Calendar.HOUR_OF_DAY, hour);
         cal.set(Calendar.MINUTE, minute);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
         return cal.getTimeInMillis();
     }
 }

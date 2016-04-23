@@ -54,7 +54,9 @@
             android:name=".monitor.MonitorHistoryActivity"
             android:screenOrientation="portrait"/>
 
-        <receiver android:name=".receiver.NotifyReceiver"/>
+        <receiver
+            android:name=".receiver.NotifyReceiver"
+            android:process=":newinst"/>
 
     </application>
 

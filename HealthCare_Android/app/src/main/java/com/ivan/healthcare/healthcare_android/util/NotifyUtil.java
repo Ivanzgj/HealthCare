@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import com.ivan.healthcare.healthcare_android.MainActivity;
 import com.ivan.healthcare.healthcare_android.R;
@@ -48,7 +49,16 @@ public class NotifyUtil {
         intent.putExtra(ALARM_ID, alarm.getId());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ALARM_PENDING_REQUEST,
                 intent, PendingIntent.FLAG_ONE_SHOT);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, alarm.getTime(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        long firstTime = SystemClock.elapsedRealtime(); // 开机之后到现在的运行时间(包括睡眠时间)
+        long systemTime = System.currentTimeMillis();
+        // 计算现在时间到设定时间的时间差
+        long selectTime = alarm.getTime();
+        if (selectTime < systemTime) {
+            selectTime += AlarmManager.INTERVAL_DAY;
+        }
+        long time = selectTime - systemTime;
+        firstTime += time;
+        am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, firstTime, AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
     /**

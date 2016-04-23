@@ -125,7 +125,7 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
                 int mode = AppContext.getPreference().getInt(Preference.MONITOR_MODE, ProfileFragment.MONITOR_MODE_AUTO);
                 int speed;
                 if (mode == ProfileFragment.MONITOR_MODE_AUTO) {
-                    speed = SensorManager.SENSOR_DELAY_NORMAL;
+                    speed = ProfileFragment.MONITOR_CUSTOM_MODE_DEFAULT_SPEED;
                 } else {
                     speed = AppContext.getPreference().getInt(Preference.MONITOR_SPEED, ProfileFragment.MONITOR_CUSTOM_MODE_DEFAULT_SPEED);
                 }

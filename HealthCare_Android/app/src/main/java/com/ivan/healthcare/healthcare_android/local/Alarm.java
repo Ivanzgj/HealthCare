@@ -28,7 +28,7 @@ public class Alarm {
                 max = alarm.getId();
             }
         }
-        return max;
+        return max==Integer.MIN_VALUE ? 0 : max;
     }
 
     public static boolean updateAlarm(Time alarm) {
