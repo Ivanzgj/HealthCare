@@ -424,7 +424,7 @@ public abstract class Chart extends View {
         mAdapter.chart = this;
     }
 
-    protected void setXWidth(int gridGap) {
+    public void setXWidth(int gridGap) {
         this.gridGap = gridGap;
     }
 

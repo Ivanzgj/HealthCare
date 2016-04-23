@@ -21,19 +21,19 @@ public class Result {
 	}
 	
 	public int getInt(String key) {
-		return (Integer) resultMap.get(key);
+		return (int) resultMap.get(key);
 	}
 	
 	public long getLong(String key) {
-		return (Long) resultMap.get(key);
+		return (long) resultMap.get(key);
 	}
 	
 	public short getShort(String key) {
-		return (Short) resultMap.get(key);
+		return (short) resultMap.get(key);
 	}
 	
 	public float getFloat(String key) {
-		return (Float) resultMap.get(key);
+		return (float) resultMap.get(key);
 	}
 	
 	public String getString(String key) {

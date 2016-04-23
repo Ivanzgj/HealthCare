@@ -33,7 +33,7 @@
                 android:gravity="center"
                 android:textSize="@dimen/textSize_normal"/>
 
-            <com.ivan.healthcare.healthcare_android.view.chart.ShadowLineChart
+            <com.ivan.healthcare.healthcare_android.view.chart.LineChart
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/monitor_history_accelerate_chart"/>
@@ -61,7 +61,7 @@
                 android:gravity="center"
                 android:textSize="@dimen/textSize_normal"/>
 
-            <com.ivan.healthcare.healthcare_android.view.chart.ShadowLineChart
+            <com.ivan.healthcare.healthcare_android.view.chart.LineChart
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/monitor_history_screen_chart"/>
@@ -92,7 +92,6 @@
             android:divider="@drawable/dash_line"
             android:layerType="software"
             android:dividerHeight="2dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:id="@+id/monitor_history_time_listView"/>
 
     </LinearLayout>

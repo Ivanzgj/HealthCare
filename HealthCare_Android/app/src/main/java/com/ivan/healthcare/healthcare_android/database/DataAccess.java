@@ -338,7 +338,11 @@ public class DataAccess {
 
         ArrayList<Float> result = new ArrayList<>();
         for (Result r : results) {
-            result.add(r.getFloat("value"));
+            try {
+                result.add(r.getFloat("value"));
+            } catch (ClassCastException e) {
+                result.add((float) r.getInt("value"));
+            }
         }
         return result;
     }

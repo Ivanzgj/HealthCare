@@ -20,7 +20,7 @@ import com.ivan.healthcare.healthcare_android.ui.BaseActivity;
 import com.ivan.healthcare.healthcare_android.util.Compat;
 import com.ivan.healthcare.healthcare_android.util.TimeUtils;
 import com.ivan.healthcare.healthcare_android.view.chart.Chart;
-import com.ivan.healthcare.healthcare_android.view.chart.ShadowLineChart;
+import com.ivan.healthcare.healthcare_android.view.chart.LineChart;
 import com.ivan.healthcare.healthcare_android.view.chart.provider.LineChartAdapter;
 import com.ivan.healthcare.healthcare_android.view.chart.provider.SimpleChartAdapter;
 import java.text.DecimalFormat;
@@ -37,8 +37,10 @@ public class MonitorHistoryActivity extends BaseActivity {
 
     private TextView mVibrationDateTextView;
     private TextView mScreenDataTextView;
-    private ShadowLineChart mAccelerateChart;
-    private ShadowLineChart mSrcChart;
+
+    private LineChart mAccelerateChart;
+    private LineChart mSrcChart;
+
     private ListView mTimeListView;
 
     private LineChartAdapter mAccelerateAdapter;
@@ -88,8 +90,7 @@ public class MonitorHistoryActivity extends BaseActivity {
         mVibrationDateTextView = (TextView) mDrawerLayout.findViewById(R.id.monitor_history_accelerate_chart_date);
         mScreenDataTextView = (TextView) mDrawerLayout.findViewById(R.id.monitor_history_screen_chart_date);
 
-        mAccelerateChart = (ShadowLineChart) mDrawerLayout.findViewById(R.id.monitor_history_accelerate_chart);
-        mAccelerateChart.setXWidth(AppContext.dp2px(30));
+        mAccelerateChart = (LineChart) mDrawerLayout.findViewById(R.id.monitor_history_accelerate_chart);
         mAccelerateChart.setYAxisValuesFormatter(new Chart.YAxisValueFormatter() {
             @Override
             public String yValuesString(float v) {
@@ -97,7 +98,7 @@ public class MonitorHistoryActivity extends BaseActivity {
             }
         });
 
-        mSrcChart = (ShadowLineChart) mDrawerLayout.findViewById(R.id.monitor_history_screen_chart);
+        mSrcChart = (LineChart) mDrawerLayout.findViewById(R.id.monitor_history_screen_chart);
         mSrcChart.selfAdaptive = false;
         ArrayList<Float> yLabels = new ArrayList<>();
         yLabels.add(0.f);
@@ -113,7 +114,6 @@ public class MonitorHistoryActivity extends BaseActivity {
             }
         });
         mSrcChart.setXWidth(AppContext.dp2px(60));
-        mSrcChart.setDrawPointMiddle(true);
 
         mAccelerateDataArrayList = new ArrayList<>();
         mScreenDataArrayList = new ArrayList<>();
@@ -236,7 +236,7 @@ public class MonitorHistoryActivity extends BaseActivity {
                 }
                 String text = TimeUtils.convertTimeFormat(mTimeArrayList.get(position), "yyyyMMddHHmmss", "yyyy年MM月dd日HH:mm:ss");
                 tv.setText(text);
-                if (text.equals(date)) {
+                if (mTimeArrayList.get(position).equals(date)) {
                     tv.setBackgroundResource(R.color.colorPrimaryLight);
                 } else {
                     tv.setBackgroundResource(R.color.pureWindowBackground);
@@ -277,7 +277,7 @@ public class MonitorHistoryActivity extends BaseActivity {
             date = mTimeArrayList.get(0);
         }
 
-        mAccelerateChart.reset();
+//        mAccelerateChart.reset();
 
         String title = TimeUtils.convertTimeFormat(date, "yyyyMMddHHmmss", "yyyy年MM月dd日HH:mm:ss");
         mVibrationDateTextView.setText(title);
