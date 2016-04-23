@@ -39,9 +39,9 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
 
     private final int BLOOD_MODE_AUTO = 0x31;
     private final int BLOOD_MODE_CUSTOM = 0x32;
-    private final int MONITOR_MODE_AUTO = 0x33;
-    private final int MONITOR_MODE_CUSTOM = 0x34;
-    private final int MONITOR_CUSTOM_MODE_DEFAULT_SPEED  = 500;
+    public static final int MONITOR_MODE_AUTO = 0x33;
+    public static final int MONITOR_MODE_CUSTOM = 0x34;
+    public static final int MONITOR_CUSTOM_MODE_DEFAULT_SPEED  = 500;
 
     private RippleView mPersonCell;
     private RippleView mTimerCell;

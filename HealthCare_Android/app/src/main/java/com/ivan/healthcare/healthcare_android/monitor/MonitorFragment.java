@@ -19,6 +19,8 @@ import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.MainActivity;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.database.DataAccess;
+import com.ivan.healthcare.healthcare_android.local.Preference;
+import com.ivan.healthcare.healthcare_android.settings.ProfileFragment;
 import com.ivan.healthcare.healthcare_android.util.TimeUtils;
 import com.ivan.healthcare.healthcare_android.view.chart.Chart;
 import com.ivan.healthcare.healthcare_android.view.chart.ShadowLineChart;
@@ -120,7 +122,14 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
         if (!isMonitoring) {
             Sensor accelerator = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             if (accelerator != null) {
-                mSensorManager.registerListener(this, accelerator, (int) TimeUnit.MILLISECONDS.toMicros(500));
+                int mode = AppContext.getPreference().getInt(Preference.MONITOR_MODE, ProfileFragment.MONITOR_MODE_AUTO);
+                int speed;
+                if (mode == ProfileFragment.MONITOR_MODE_AUTO) {
+                    speed = SensorManager.SENSOR_DELAY_NORMAL;
+                } else {
+                    speed = AppContext.getPreference().getInt(Preference.MONITOR_SPEED, ProfileFragment.MONITOR_CUSTOM_MODE_DEFAULT_SPEED);
+                }
+                mSensorManager.registerListener(this, accelerator, (int) TimeUnit.MILLISECONDS.toMicros(speed));
             }
         }
     }

@@ -25,19 +25,19 @@
     </string-array>
 
     <string-array name="monitor_speed_array">
-        <item>200ms</item>
         <item>500ms</item>
         <item>1000ms</item>
         <item>1500ms</item>
         <item>2000ms</item>
+        <item>2500ms</item>
     </string-array>
 
     <integer-array name="monitor_speed_int_array">
-        <item>200</item>
         <item>500</item>
         <item>1000</item>
         <item>1500</item>
         <item>2000</item>
+        <item>2500</item>
     </integer-array>
 
 </resources>
