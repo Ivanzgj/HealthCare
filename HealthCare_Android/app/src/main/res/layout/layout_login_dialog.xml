@@ -90,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/login_dialog_name_input"
-                android:inputType="text"
+                android:inputType="textEmailAddress"
                 android:textSize="@dimen/textSize_normal"
                 android:gravity="center_vertical" />
 
@@ -136,7 +136,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/login_dialog_pwd_confirm_input"
                 android:textSize="@dimen/textSize_normal"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:inputType="textPassword"/>
 
         </LinearLayout>
 
@@ -154,13 +155,13 @@
             android:layout_height="@dimen/round_write_rectangle_corner_radius"
             android:background="@color/colorPrimary"/>
 
-        <com.ivan.healthcare.healthcare_android.view.material.ButtonFlat
+        <Button
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_dialog_btn_height"
             android:id="@+id/login_dialog_login_btn"
             android:textSize="@dimen/textSize_appbar"
             android:textColor="@color/textColorPrimary"
-            app:ripple_color="@color/onTouchColor"
+            android:background="@drawable/button_selector"
             android:text="@string/login_dialog_header_login"/>
 
     </FrameLayout>

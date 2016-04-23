@@ -7,20 +7,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.local.User;
-import com.ivan.healthcare.healthcare_android.network.AbsBaseRequest;
-import com.ivan.healthcare.healthcare_android.network.BaseStringRequest;
-import com.ivan.healthcare.healthcare_android.util.L;
 import com.ivan.healthcare.healthcare_android.view.material.ButtonFlat;
-import com.squareup.okhttp.Response;
-
-import java.io.IOException;
 
 /**
  * 登陆/注册对话框
@@ -37,7 +30,7 @@ public class LoginDialog extends Dialog implements View.OnClickListener {
     private EditText mUserNameEdit;
     private EditText mPwdEdit;
     private EditText mPwdConfirmEdit;
-    private ButtonFlat mLoginButton;
+    private Button mLoginButton;
     private LinearLayout mConfirmLayout;
 
     private boolean isLogin;
@@ -78,7 +71,7 @@ public class LoginDialog extends Dialog implements View.OnClickListener {
         mUserNameEdit = (EditText) findViewById(R.id.login_dialog_name_input);
         mPwdEdit = (EditText) findViewById(R.id.login_dialog_pwd_input);
         mPwdConfirmEdit = (EditText) findViewById(R.id.login_dialog_pwd_confirm_input);
-        mLoginButton = (ButtonFlat) findViewById(R.id.login_dialog_login_btn);
+        mLoginButton = (Button) findViewById(R.id.login_dialog_login_btn);
         mConfirmLayout = (LinearLayout) findViewById(R.id.login_dialog_confirm_rel);
 
         mLoginButton.setOnClickListener(this);

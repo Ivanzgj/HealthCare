@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,8 @@ import java.io.InputStream;
  * Created by Ivan on 16/2/3.
  */
 public class ProfileFragment extends Fragment implements RippleView.OnRippleCompleteListener {
+
+    private final int REQUEST_PERSONAL_ACTIVITY = 0x31;
 
     private final int BLOOD_MODE_AUTO = 0x31;
     private final int BLOOD_MODE_CUSTOM = 0x32;
@@ -66,13 +69,13 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         initView(rootView);
+        refreshContents();
         return rootView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        refreshContents();
     }
 
     private void initView(View rootView) {
@@ -148,7 +151,7 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
     private void jumpToPersonal() {
         Intent intent = new Intent();
         intent.setClass(getActivity(), PersonalInfoActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_PERSONAL_ACTIVITY);
     }
 
     private void jumpToTimer() {
@@ -173,6 +176,7 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
                     public void onClick(DialogInterface dialog, int which) {
                         Snackbar.make(rootView, "reset data", Snackbar.LENGTH_SHORT).show();
                         dialog.dismiss();
+                        refreshContents();
                     }
                 })
                 .setNegative(R.string.cancel)
@@ -307,5 +311,14 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
                 d.dismiss();
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_PERSONAL_ACTIVITY) {
+            if (resultCode == AppCompatActivity.RESULT_OK) {
+                refreshContents();
+            }
+        }
     }
 }
