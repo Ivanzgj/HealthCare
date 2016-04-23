@@ -236,6 +236,11 @@ public class MonitorHistoryActivity extends BaseActivity {
                 }
                 String text = TimeUtils.convertTimeFormat(mTimeArrayList.get(position), "yyyyMMddHHmmss", "yyyy年MM月dd日HH:mm:ss");
                 tv.setText(text);
+                if (text.equals(date)) {
+                    tv.setBackgroundResource(R.color.colorPrimaryLight);
+                } else {
+                    tv.setBackgroundResource(R.color.pureWindowBackground);
+                }
                 return tv;
             }
         };

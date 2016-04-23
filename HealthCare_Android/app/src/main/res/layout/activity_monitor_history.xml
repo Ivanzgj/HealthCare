@@ -75,14 +75,13 @@
         android:orientation="vertical"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/pureWindowBackground"
-        android:layout_marginTop="?attr/actionBarSize">
+        android:background="@color/pureWindowBackground">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/monitor_history_srawer_title_height"
+            android:layout_height="?attr/actionBarSize"
             android:textColor="@color/textColorPrimary"
-            android:textSize="@dimen/textSize_appbar"
+            android:textSize="@dimen/textSize_second_title"
             android:text="@string/monitor_history_drawer_title"
             android:gravity="center"
             android:background="@color/colorPrimary"/>
@@ -93,6 +92,7 @@
             android:divider="@drawable/dash_line"
             android:layerType="software"
             android:dividerHeight="2dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:id="@+id/monitor_history_time_listView"/>
 
     </LinearLayout>
