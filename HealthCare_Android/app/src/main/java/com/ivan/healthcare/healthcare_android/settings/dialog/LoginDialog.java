@@ -119,38 +119,42 @@ public class LoginDialog extends Dialog implements View.OnClickListener {
     }
 
     private void login() {
-        String email = mUserNameEdit.getText().toString();
-        String pwd = mPwdEdit.getText().toString();
-        if (email.length() == 0 || pwd.length() == 0) {
-            mPwdEdit.setText("");
-            return;
-        }
+        User.edit().setUid(10001).setUserName("User_10001").commit();
+        onLoginRegisterCompleteListener.onLoginRegisterComplete(true);
+        dismiss();
 
-        BaseStringRequest.Builder builder = new BaseStringRequest.Builder();
-        builder.url(Configurations.REQUEST_URL)
-                .add("email", email)
-                .add("pwd", pwd)
-                .build()
-                .post(new AbsBaseRequest.Callback() {
-                    @Override
-                    public void onResponse(final Response response) {
-                        try {
-                            final String s = response.body().string();
-                            User.edit().setUid(10001).setUserName("User_10001").commit();
-                            onLoginRegisterCompleteListener.onLoginRegisterComplete(true);
-                            dismiss();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(final int errorFlag) {
-                        L.d("test", errorFlag + "");
-                        onLoginRegisterCompleteListener.onFail(true, errorFlag);
-                        dismiss();
-                    }
-                });
+//        String email = mUserNameEdit.getText().toString();
+//        String pwd = mPwdEdit.getText().toString();
+//        if (email.length() == 0 || pwd.length() == 0) {
+//            mPwdEdit.setText("");
+//            return;
+//        }
+//
+//        BaseStringRequest.Builder builder = new BaseStringRequest.Builder();
+//        builder.url(Configurations.REQUEST_URL)
+//                .add("email", email)
+//                .add("pwd", pwd)
+//                .build()
+//                .post(new AbsBaseRequest.Callback() {
+//                    @Override
+//                    public void onResponse(final Response response) {
+//                        try {
+//                            final String s = response.body().string();
+//                            User.edit().setUid(10001).setUserName("User_10001").commit();
+//                            onLoginRegisterCompleteListener.onLoginRegisterComplete(true);
+//                            dismiss();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(final int errorFlag) {
+//                        L.d("test", errorFlag + "");
+//                        onLoginRegisterCompleteListener.onFail(true, errorFlag);
+//                        dismiss();
+//                    }
+//                });
     }
 
     private void register() {

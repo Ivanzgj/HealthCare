@@ -97,8 +97,25 @@ public class User {
 
     }
 
-    public static void logout(UserLogListener l) {
+    public static void logout() {
+        uid = -1;
+        userName = DEFAULT_USER_NAME_PREFIX + uid;
+        age = -1;
+        sex = UserSex.Undefine;
+        constellation = Constellation.ConstellationEnum.Undefine;
+        birthday = "";
+        email = "";
+        address = "";
+        introduction = "";
+        todayMeasureTimes = 0;
+        totalMeasureTimes = 0;
+        totalMeasureAssessment = 0;
 
+        DataAccess.updateUserInfo();
+        DataAccess.clearAlarmTable();
+        DataAccess.clearMeasureTable();
+        DataAccess.clearSrcTable();
+        DataAccess.clearVibrationTable();
     }
 
     public static interface UserLogListener {

@@ -95,6 +95,7 @@
     <string name="personal_sex_male">男</string>
     <string name="personal_sex_female">女</string>
     <string name="personal_sex_alien">外星人</string>
+    <string name="personal_logout_tips">登出账号将会清空本地所有记录（包括临时账号的记录），该账号的云端记录没有影响。是否确定登出账号？</string>
 
     <!-- alarm activity -->
     <string name="alarm_title">闹钟设置</string>

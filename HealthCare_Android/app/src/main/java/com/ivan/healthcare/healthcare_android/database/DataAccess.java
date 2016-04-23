@@ -400,4 +400,24 @@ public class DataAccess {
 //        return result;
 //    }
 
+    public static void clearMeasureTable() {
+        AppContext.getDB().query().table(Configurations.MEASURE_TABLE)
+                .delete();
+    }
+
+    public static void clearAlarmTable() {
+        AppContext.getDB().query().table(Configurations.ALARM_TABLE)
+                .delete();
+    }
+
+    public static void clearVibrationTable() {
+        AppContext.getDB().query().table(Configurations.VIBRATION_TABLE)
+                .delete();
+    }
+
+    public static void clearSrcTable() {
+        AppContext.getDB().query().table(Configurations.SRC_TABLE)
+                .delete();
+    }
+
 }

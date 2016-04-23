@@ -3,6 +3,7 @@ package com.ivan.healthcare.healthcare_android.settings;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -316,7 +317,19 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void logout() {
-
+        new DialogBuilder(this).create()
+                .setTitle(R.string.tips)
+                .setContent(R.string.personal_logout_tips)
+                .setPositive(R.string.ok)
+                .setNegative(R.string.cancel)
+                .setOnPositiveClickListener(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        User.logout();
+                        finish();
+                    }
+                })
+                .show();
     }
 
     private void changePwd() {
