@@ -128,6 +128,12 @@
     <string name="login_dialog_pwd">密码</string>
     <string name="login_dialog_pwd_confirm">确认密码</string>
 
+    <!-- change pwd dialog -->
+    <string name="change_pwd_dialog_title">修改密码</string>
+    <string name="change_pwd_dialog_initial_pwd">原始密码</string>
+    <string name="change_pwd_dialog_new_pwd">新密码</string>
+    <string name="change_pwd_dialog_confirm_pwd">确认密码</string>
+
     <!-- monitor history -->
     <string name="monitor_history_title">监控历史数据</string>
     <string name="monitor_history_drawer_title">监&#160;控&#160;历&#160;史</string>

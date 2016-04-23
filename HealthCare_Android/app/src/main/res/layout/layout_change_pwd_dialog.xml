@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/login_dialog_width"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/round_white_bordered_rectangle">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/single_line_list_item_height"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/textSize_appbar"
+        android:text="@string/change_pwd_dialog_title"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_dialog_input_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/login_dialog_input_title_width"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/textSize_normal"
+                android:gravity="center_vertical"
+                android:text="@string/change_pwd_dialog_initial_pwd"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/change_pwd_dialog_initial_pwd_input"
+                android:inputType="textPassword"
+                android:textSize="@dimen/textSize_normal"
+                android:gravity="center_vertical" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_dialog_input_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/login_dialog_input_title_width"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/textSize_normal"
+                android:gravity="center_vertical"
+                android:text="@string/change_pwd_dialog_new_pwd"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/change_pwd_dialog_new_pwd_input"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/textSize_normal"
+                android:inputType="textPassword" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_dialog_input_height"
+            android:id="@+id/login_dialog_confirm_rel"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/login_dialog_input_title_width"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/textSize_normal"
+                android:gravity="center_vertical"
+                android:text="@string/change_pwd_dialog_confirm_pwd"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/change_pwd_dialog_pwd_confirm_input"
+                android:textSize="@dimen/textSize_normal"
+                android:gravity="center_vertical"
+                android:inputType="textPassword"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/login_dialog_btn_height"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/change_pwd_dialog_ok_btn"
+            android:textSize="@dimen/textSize_second_title"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/button_selector"
+            android:gravity="center"
+            android:text="@string/ok"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/change_pwd_dialog_cancel_btn"
+            android:textSize="@dimen/textSize_second_title"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/button_selector"
+            android:gravity="center"
+            android:text="@string/cancel"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -31,6 +31,7 @@ import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.local.Constellation;
 import com.ivan.healthcare.healthcare_android.local.User;
+import com.ivan.healthcare.healthcare_android.settings.dialog.ChangePwdDialog;
 import com.ivan.healthcare.healthcare_android.ui.BaseActivity;
 import com.ivan.healthcare.healthcare_android.util.Compat;
 import com.ivan.healthcare.healthcare_android.util.DialogBuilder;
@@ -335,7 +336,8 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void changePwd() {
-
+        ChangePwdDialog dialog = new ChangePwdDialog(this);
+        dialog.show();
     }
 
     @Override
