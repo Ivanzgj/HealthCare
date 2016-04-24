@@ -1,6 +1,7 @@
 package com.ivan.healthcare.healthcare_android.settings.dialog;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -10,13 +11,23 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.local.User;
+import com.ivan.healthcare.healthcare_android.network.AbsBaseRequest;
+import com.ivan.healthcare.healthcare_android.network.BaseStringRequest;
+import com.ivan.healthcare.healthcare_android.network.bean.LoginBean;
+import com.ivan.healthcare.healthcare_android.util.DialogBuilder;
+import com.ivan.healthcare.healthcare_android.util.L;
+
 
 /**
  * 登陆/注册对话框
  * Created by Ivan on 16/4/19.
  */
+@SuppressWarnings("unchecked")
 public class LoginDialog extends Dialog implements View.OnClickListener {
 
     private Context context;
@@ -110,42 +121,53 @@ public class LoginDialog extends Dialog implements View.OnClickListener {
     }
 
     private void login() {
-        User.edit().setUid(10001).setUserName("User_10001").commit();
-        onLoginRegisterCompleteListener.onLoginRegisterComplete(true);
-        dismiss();
 
-//        String email = mUserNameEdit.getText().toString();
-//        String pwd = mPwdEdit.getText().toString();
-//        if (email.length() == 0 || pwd.length() == 0) {
-//            mPwdEdit.setText("");
-//            return;
-//        }
-//
-//        BaseStringRequest.Builder builder = new BaseStringRequest.Builder();
-//        builder.url(Configurations.REQUEST_URL)
-//                .add("email", email)
-//                .add("pwd", pwd)
-//                .build()
-//                .post(new AbsBaseRequest.Callback() {
-//                    @Override
-//                    public void onResponse(final Response response) {
-//                        try {
-//                            final String s = response.body().string();
-//                            User.edit().setUid(10001).setUserName("User_10001").commit();
-//                            onLoginRegisterCompleteListener.onLoginRegisterComplete(true);
-//                            dismiss();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(final int errorFlag) {
-//                        L.d("test", errorFlag + "");
-//                        onLoginRegisterCompleteListener.onFail(true, errorFlag);
-//                        dismiss();
-//                    }
-//                });
+        String email = mUserNameEdit.getText().toString();
+        String pwd = mPwdEdit.getText().toString();
+        if (email.length() == 0 || pwd.length() == 0) {
+            mPwdEdit.setText("");
+            return;
+        }
+
+        final ProgressDialog dialog = new DialogBuilder(context)
+                .createProgress(R.string.login_dialog_header_login,
+                        context.getResources().getString(R.string.login_ing_message),
+                        false);
+        dismiss();
+        dialog.show();
+
+        BaseStringRequest.Builder builder = new BaseStringRequest.Builder();
+        builder.url(Configurations.USER_URL)
+                .add("action", "login")
+                .add("account", email)
+                .add("pwd", pwd)
+                .build()
+                .post(new AbsBaseRequest.Callback() {
+                    @Override
+                    public void onResponse(final String response) {
+                        try {
+                            Gson gson = new Gson();
+                            LoginBean bean = gson.fromJson(response, LoginBean.class);
+                            User.edit().setUid(Integer.valueOf(bean.getUid())).setUserName(bean.getName()).commit();
+                            onLoginRegisterCompleteListener.onLoginRegisterComplete(true);
+                            dialog.dismiss();
+                        } catch (ClassCastException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(final int errorFlag, String error) {
+                        L.d("test", errorFlag + "");
+                        onLoginRegisterCompleteListener.onFail(true, errorFlag);
+                        dialog.dismiss();
+                        new DialogBuilder(context).create()
+                                .setTitle(R.string.tips)
+                                .setContent(error)
+                                .setPositive(R.string.ok)
+                                .show();
+                    }
+                });
     }
 
     private void register() {
@@ -157,7 +179,46 @@ public class LoginDialog extends Dialog implements View.OnClickListener {
             mPwdConfirmEdit.setText("");
             return;
         }
+
+        final ProgressDialog dialog = new DialogBuilder(context)
+                .createProgress(R.string.login_dialog_header_login,
+                        context.getResources().getString(R.string.login_ing_message),
+                        false);
         dismiss();
+        dialog.show();
+
+        BaseStringRequest.Builder builder = new BaseStringRequest.Builder();
+        builder.url(Configurations.USER_URL)
+                .add("action", "register")
+                .add("account", email)
+                .add("pwd", pwd1)
+                .build()
+                .post(new AbsBaseRequest.Callback() {
+                    @Override
+                    public void onResponse(final String response) {
+                        try {
+                            Gson gson = new Gson();
+                            LoginBean bean = gson.fromJson(response, LoginBean.class);
+                            User.edit().setUid(Integer.valueOf(bean.getUid())).setUserName(bean.getName()).commit();
+                            onLoginRegisterCompleteListener.onLoginRegisterComplete(false);
+                            dialog.dismiss();
+                        } catch (ClassCastException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(final int errorFlag, String error) {
+                        L.d("test", errorFlag + "");
+                        onLoginRegisterCompleteListener.onFail(false, errorFlag);
+                        dialog.dismiss();
+                        new DialogBuilder(context).create()
+                                .setTitle(R.string.tips)
+                                .setContent(error)
+                                .setPositive(R.string.ok)
+                                .show();
+                    }
+                });
     }
 
     public void setOnLoginRegisterCompleteListener(OnLoginRegisterCompleteListener l) {

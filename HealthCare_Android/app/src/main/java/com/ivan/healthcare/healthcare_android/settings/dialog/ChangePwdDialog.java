@@ -14,7 +14,6 @@ import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.local.User;
 import com.ivan.healthcare.healthcare_android.network.AbsBaseRequest;
 import com.ivan.healthcare.healthcare_android.network.BaseStringRequest;
-import com.squareup.okhttp.Response;
 
 /**
  * change password dialog
@@ -84,12 +83,12 @@ public class ChangePwdDialog extends Dialog implements View.OnClickListener {
                 .build()
                 .post(new AbsBaseRequest.Callback() {
                     @Override
-                    public void onResponse(Response response) {
+                    public void onResponse(String response) {
                         dismiss();
                     }
 
                     @Override
-                    public void onFailure(int errorFlag) {
+                    public void onFailure(int errorFlag, String error) {
                         dismiss();
                     }
                 });

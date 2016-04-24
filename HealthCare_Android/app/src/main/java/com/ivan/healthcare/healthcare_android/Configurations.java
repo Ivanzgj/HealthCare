@@ -23,7 +23,8 @@ public class Configurations {
     /**
      * 网络请求基址
      */
-    public static final String REQUEST_URL = "http://192.168.88.100/User.php";
+    public static final String REQUEST_URL = "http://149r930t26.51mypc.cn:13810";
+    public static final String USER_URL = "/user.php";
     /**
      * 蓝牙UUID
      */

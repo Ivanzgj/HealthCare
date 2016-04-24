@@ -1,7 +1,6 @@
 package com.ivan.healthcare.healthcare_android.network;
 
 import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.Response;
 import java.io.IOException;
 import java.util.Map;
 
@@ -100,13 +99,13 @@ public abstract class AbsBaseRequest {
          * 响应请求结果
          * @param response okHttp网络请求的结果
          */
-        public abstract void onResponse(final Response response);
+        public abstract void onResponse(final String response);
 
         /**
          * 失败处理
          * @param errorFlag 失败标识
          */
-        public abstract void onFailure(final int errorFlag);
+        public abstract void onFailure(final int errorFlag, final String error);
     }
 
 }

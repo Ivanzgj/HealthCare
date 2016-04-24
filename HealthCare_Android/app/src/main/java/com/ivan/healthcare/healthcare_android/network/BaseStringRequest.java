@@ -2,6 +2,9 @@ package com.ivan.healthcare.healthcare_android.network;
 
 import android.os.Handler;
 
+import com.google.gson.Gson;
+import com.ivan.healthcare.healthcare_android.Configurations;
+import com.ivan.healthcare.healthcare_android.network.bean.BaseBean;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.Request;
@@ -38,7 +41,7 @@ public class BaseStringRequest extends AbsBaseRequest {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            callback.onFailure(UNKNOWN_ERROR);
+                            callback.onFailure(UNKNOWN_ERROR, "Unknown Error");
                         }
                     });
                 }
@@ -48,7 +51,19 @@ public class BaseStringRequest extends AbsBaseRequest {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            callback.onResponse(response);
+                            try {
+                                String s = response.body().string();
+                                Gson gson = new Gson();
+                                BaseBean bean = gson.fromJson(s, BaseBean.class);
+                                if (bean.getError() != null) {
+                                    callback.onFailure(bean.getErrorCode(), bean.getError());
+                                } else {
+                                    callback.onResponse(s);
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                callback.onFailure(UNKNOWN_ERROR, "Unknown Error");
+                            }
                         }
                     });
                 }
@@ -76,7 +91,7 @@ public class BaseStringRequest extends AbsBaseRequest {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            callback.onFailure(UNKNOWN_ERROR);
+                            callback.onFailure(UNKNOWN_ERROR, "Unknown Error");
                         }
                     });
                 }
@@ -86,7 +101,19 @@ public class BaseStringRequest extends AbsBaseRequest {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            callback.onResponse(response);
+                            try {
+                                String s = response.body().string();
+                                Gson gson = new Gson();
+                                BaseBean bean = gson.fromJson(s, BaseBean.class);
+                                if (bean != null && bean.getError() != null) {
+                                    callback.onFailure(bean.getErrorCode(), bean.getError());
+                                } else {
+                                    callback.onResponse(s);
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                callback.onFailure(UNKNOWN_ERROR, "Unknown Error");
+                            }
                         }
                     });
                 }
@@ -131,7 +158,7 @@ public class BaseStringRequest extends AbsBaseRequest {
         }
 
         public Builder url(String url) {
-            this.url = url;
+            this.url = Configurations.REQUEST_URL + url;
             return this;
         }
 

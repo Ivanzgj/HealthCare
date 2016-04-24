@@ -56,7 +56,7 @@
 
         <receiver
             android:name=".receiver.NotifyReceiver"
-            android:process=":newinst"/>
+            android:process=":remote"/>
 
     </application>
 

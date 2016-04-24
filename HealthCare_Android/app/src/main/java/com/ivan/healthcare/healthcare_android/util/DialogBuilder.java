@@ -2,6 +2,7 @@ package com.ivan.healthcare.healthcare_android.util;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.View;
@@ -135,5 +136,15 @@ public class DialogBuilder {
         d.show();
         Compat.fixDialogStyle(d);
         return d;
+    }
+
+    public ProgressDialog createProgress(int title, String message, boolean cancellable) {
+        ProgressDialog dialog = new ProgressDialog(context);
+        dialog.setTitle(title);
+        if (message != null) {
+            dialog.setMessage(message);
+        }
+        dialog.setCancelable(cancellable);
+        return dialog;
     }
 }

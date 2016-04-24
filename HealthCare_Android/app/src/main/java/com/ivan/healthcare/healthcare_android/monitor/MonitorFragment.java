@@ -119,27 +119,27 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
     @Override
     public void onResume() {
         super.onResume();
-        if (!isMonitoring) {
-            Sensor accelerator = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-            if (accelerator != null) {
-                int mode = AppContext.getPreference().getInt(Preference.MONITOR_MODE, ProfileFragment.MONITOR_MODE_AUTO);
-                int speed;
-                if (mode == ProfileFragment.MONITOR_MODE_AUTO) {
-                    speed = ProfileFragment.MONITOR_CUSTOM_MODE_DEFAULT_SPEED;
-                } else {
-                    speed = AppContext.getPreference().getInt(Preference.MONITOR_SPEED, ProfileFragment.MONITOR_CUSTOM_MODE_DEFAULT_SPEED);
-                }
-                mSensorManager.registerListener(this, accelerator, (int) TimeUnit.MILLISECONDS.toMicros(speed));
-            }
-        }
+//        if (!isMonitoring) {
+//            Sensor accelerator = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+//            if (accelerator != null) {
+//                int mode = AppContext.getPreference().getInt(Preference.MONITOR_MODE, ProfileFragment.MONITOR_MODE_AUTO);
+//                int speed;
+//                if (mode == ProfileFragment.MONITOR_MODE_AUTO) {
+//                    speed = ProfileFragment.MONITOR_CUSTOM_MODE_DEFAULT_SPEED;
+//                } else {
+//                    speed = AppContext.getPreference().getInt(Preference.MONITOR_SPEED, ProfileFragment.MONITOR_CUSTOM_MODE_DEFAULT_SPEED);
+//                }
+//                mSensorManager.registerListener(this, accelerator, (int) TimeUnit.MILLISECONDS.toMicros(speed));
+//            }
+//        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (!isMonitoring) {
-            mSensorManager.unregisterListener(this);
-        }
+//        if (!isMonitoring) {
+//            mSensorManager.unregisterListener(this);
+//        }
     }
 
     @Override
