@@ -352,11 +352,7 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
                     @Override
                     public void onFailure(int errorFlag, String error) {
                         dialog.dismiss();
-                        new DialogBuilder(PersonalInfoActivity.this).create()
-                                .setTitle(R.string.tips)
-                                .setContent(R.string.personal_upload_fail_message)
-                                .setPositive(R.string.ok)
-                                .show();
+                        Snackbar.make(rootView, error, Snackbar.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -422,24 +418,42 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onRefresh() {
-        new BaseStringRequest.Builder()
-                .url(Configurations.USER_URL)
-                .add("action", "info")
-                .add("uid", User.uid)
-                .build()
-                .post(new AbsBaseRequest.Callback() {
-                    @Override
-                    public void onResponse(String response) {
-                        mSwipeRefreshLayout.setRefreshing(false);
-                        Snackbar.make(rootView, R.string.personal_refresh_success_message, Snackbar.LENGTH_SHORT).show();
-                    }
 
-                    @Override
-                    public void onFailure(int errorFlag, String error) {
-                        mSwipeRefreshLayout.setRefreshing(false);
-                        Snackbar.make(rootView, R.string.personal_refresh_fail_message, Snackbar.LENGTH_SHORT).show();
-                    }
-                });
+        final BaseStringRequest request = new BaseStringRequest.Builder()
+                                                    .url(Configurations.USER_URL)
+                                                    .add("action", "info")
+                                                    .add("uid", User.uid)
+                                                    .build();
+
+        final ProgressDialog dialog = new DialogBuilder(this)
+                .createProgress(R.string.tips, getResources().getString(R.string.personal_refresh_ing_message), false);
+        dialog.setButton(DialogInterface.BUTTON_POSITIVE, getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                try {
+                    request.cancel();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        dialog.show();
+
+        request.post(new AbsBaseRequest.Callback() {
+            @Override
+            public void onResponse(String response) {
+                dialog.dismiss();
+                mSwipeRefreshLayout.setRefreshing(false);
+                Snackbar.make(rootView, R.string.personal_refresh_success_message, Snackbar.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(int errorFlag, String error) {
+                dialog.dismiss();
+                mSwipeRefreshLayout.setRefreshing(false);
+                Snackbar.make(rootView, R.string.personal_refresh_fail_message, Snackbar.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

@@ -101,6 +101,7 @@
     <string name="personal_upload_ing_message">正在上传，请稍等~</string>
     <string name="personal_refresh_success_message">刷新成功~</string>
     <string name="personal_refresh_fail_message">刷新失败/(ㄒoㄒ)/~~</string>
+    <string name="personal_refresh_ing_message">正在跟服务器MM索要您的最新信息，请稍候啦~</string>
 
     <!-- alarm activity -->
     <string name="alarm_title">闹钟设置</string>
