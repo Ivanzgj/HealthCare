@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -30,6 +31,12 @@ public class ChangePwdDialog extends Dialog implements View.OnClickListener {
     private TextView mCancelButton;
 
     private Context context;
+
+    private OnChangeListener onChangeListener;
+
+    public void setOnChangeListener(OnChangeListener l) {
+        onChangeListener = l;
+    }
 
     public ChangePwdDialog(Context context) {
         super(context);
@@ -94,17 +101,19 @@ public class ChangePwdDialog extends Dialog implements View.OnClickListener {
                 .post(new AbsBaseRequest.Callback() {
                     @Override
                     public void onResponse(String response) {
-                        
+                        dialog.dismiss();
+                        onChangeListener.onSuccess();
                     }
 
                     @Override
                     public void onFailure(int errorFlag, String error) {
-                        new DialogBuilder(context).create()
-                                .setTitle(R.string.tips)
-                                .setContent(error)
-                                .setPositive(R.string.ok)
-                                .show();
+                        onChangeListener.onFail(errorFlag, error);
                     }
                 });
+    }
+
+    public interface OnChangeListener {
+        void onSuccess();
+        void onFail(int errorFlag, String error);
     }
 }

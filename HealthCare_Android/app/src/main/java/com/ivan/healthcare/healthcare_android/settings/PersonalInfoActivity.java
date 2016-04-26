@@ -2,6 +2,7 @@ package com.ivan.healthcare.healthcare_android.settings;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -31,6 +33,8 @@ import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.local.Constellation;
 import com.ivan.healthcare.healthcare_android.local.User;
+import com.ivan.healthcare.healthcare_android.network.AbsBaseRequest;
+import com.ivan.healthcare.healthcare_android.network.BaseStringRequest;
 import com.ivan.healthcare.healthcare_android.settings.dialog.ChangePwdDialog;
 import com.ivan.healthcare.healthcare_android.ui.BaseActivity;
 import com.ivan.healthcare.healthcare_android.util.Compat;
@@ -306,16 +310,55 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void upload() {
-        User.edit()
-                .setUserName(mNameEdit.getText().toString())
-                .setAge(mAgeTextView.getText().length()==0?0:Integer.valueOf(mAgeTextView.getText().toString()))
-                .setBirthday(mBirthTextView.getText().toString())
-                .setSex((User.UserSex) mSexTextView.getTag())
-                .setConstellation((Constellation.ConstellationEnum) mConstellationTextView.getTag())
-                .setEmail(mEmailEdit.getText().toString())
-                .setAddress(mLocationEdit.getText().toString())
-                .setIntroduction(mIntroEdit.getText().toString())
-                .commit();
+        final ProgressDialog dialog = new DialogBuilder(this)
+                .createProgress(R.string.tips, getResources().getString(R.string.personal_upload_ing_message), false);
+        dialog.show();
+
+        int sex = 2;
+        if (mSexTextView.getTag() == User.UserSex.USER_MALE) {
+            sex = 0;
+        } else if (mSexTextView.getTag() == User.UserSex.USER_FEMALE) {
+            sex = 1;
+        }
+        BaseStringRequest.Builder builder = new BaseStringRequest.Builder();
+        builder.url(Configurations.USER_URL)
+                .add("action", "upload")
+                .add("name", mNameEdit.getText().toString())
+                .add("sex", sex)
+                .add("age", mAgeTextView.getText().length() == 0 ? 0 : Integer.valueOf(mAgeTextView.getText().toString()))
+                .add("birth", mBirthTextView.getText().toString())
+                .add("constellation", Constellation.getConstellationInt((Constellation.ConstellationEnum) mConstellationTextView.getTag()))
+                .add("email", mEmailEdit.getText().toString())
+                .add("address", mLocationEdit.getText().toString())
+                .add("introduction", mIntroEdit.getText().toString())
+                .build()
+                .post(new AbsBaseRequest.Callback() {
+                    @Override
+                    public void onResponse(String response) {
+                        User.edit()
+                                .setUserName(mNameEdit.getText().toString())
+                                .setAge(mAgeTextView.getText().length() == 0 ? 0 : Integer.valueOf(mAgeTextView.getText().toString()))
+                                .setBirthday(mBirthTextView.getText().toString())
+                                .setSex((User.UserSex) mSexTextView.getTag())
+                                .setConstellation((Constellation.ConstellationEnum) mConstellationTextView.getTag())
+                                .setEmail(mEmailEdit.getText().toString())
+                                .setAddress(mLocationEdit.getText().toString())
+                                .setIntroduction(mIntroEdit.getText().toString())
+                                .commit();
+                        dialog.dismiss();
+                        Snackbar.make(rootView, R.string.personal_upload_success_message, Snackbar.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(int errorFlag, String error) {
+                        dialog.dismiss();
+                        new DialogBuilder(PersonalInfoActivity.this).create()
+                                .setTitle(R.string.tips)
+                                .setContent(R.string.personal_upload_fail_message)
+                                .setPositive(R.string.ok)
+                                .show();
+                    }
+                });
     }
 
     private void logout() {
@@ -337,6 +380,18 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
 
     private void changePwd() {
         ChangePwdDialog dialog = new ChangePwdDialog(this);
+        dialog.setOnChangeListener(new ChangePwdDialog.OnChangeListener() {
+
+            @Override
+            public void onSuccess() {
+                Snackbar.make(rootView, R.string.change_pwd_dialog_success_message, Snackbar.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFail(int errorFlag, String error) {
+                Snackbar.make(rootView, R.string.change_pwd_dialog_fail_message, Snackbar.LENGTH_SHORT).show();
+            }
+        });
         dialog.show();
     }
 
@@ -367,12 +422,24 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onRefresh() {
-        mSwipeRefreshLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        }, 5000);
+        new BaseStringRequest.Builder()
+                .url(Configurations.USER_URL)
+                .add("action", "info")
+                .add("uid", User.uid)
+                .build()
+                .post(new AbsBaseRequest.Callback() {
+                    @Override
+                    public void onResponse(String response) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        Snackbar.make(rootView, R.string.personal_refresh_success_message, Snackbar.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(int errorFlag, String error) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        Snackbar.make(rootView, R.string.personal_refresh_fail_message, Snackbar.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @Override
@@ -382,7 +449,6 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
 
         } else if (mChangePwdView.equals(rippleView)) {
             changePwd();
-
         }
     }
 }

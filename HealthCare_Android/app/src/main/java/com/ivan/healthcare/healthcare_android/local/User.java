@@ -93,10 +93,6 @@ public class User {
         constellation = Constellation.getConstellationEnum(constellationInt);
     }
 
-    public static void login(String account, String pwd, UserLogListener l) {
-
-    }
-
     public static void logout() {
         uid = -1;
         userName = DEFAULT_USER_NAME_PREFIX + uid;
@@ -112,16 +108,11 @@ public class User {
         totalMeasureAssessment = 0;
 
         DataAccess.updateUserInfo();
-        DataAccess.clearAlarmTable();
         DataAccess.clearMeasureTable();
         DataAccess.clearSrcTable();
         DataAccess.clearVibrationTable();
     }
 
-    public static interface UserLogListener {
-        void onSuccess();
-        void onFail(int errorFlag);
-    }
 
     /**
      * User编辑类
