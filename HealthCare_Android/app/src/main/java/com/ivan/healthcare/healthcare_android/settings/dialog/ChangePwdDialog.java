@@ -1,6 +1,7 @@
 package com.ivan.healthcare.healthcare_android.settings.dialog;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -14,6 +15,7 @@ import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.local.User;
 import com.ivan.healthcare.healthcare_android.network.AbsBaseRequest;
 import com.ivan.healthcare.healthcare_android.network.BaseStringRequest;
+import com.ivan.healthcare.healthcare_android.util.DialogBuilder;
 
 /**
  * change password dialog
@@ -27,8 +29,11 @@ public class ChangePwdDialog extends Dialog implements View.OnClickListener {
     private TextView mOkButton;
     private TextView mCancelButton;
 
+    private Context context;
+
     public ChangePwdDialog(Context context) {
         super(context);
+        this.context = context;
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
@@ -75,6 +80,11 @@ public class ChangePwdDialog extends Dialog implements View.OnClickListener {
             return;
         }
 
+        final ProgressDialog dialog = new DialogBuilder(context)
+                .createProgress(R.string.tips, context.getResources().getString(R.string.change_pwd_dialog_ing_message), false);
+        dismiss();
+        dialog.show();
+
         BaseStringRequest.Builder builder  = new BaseStringRequest.Builder();
         builder.url(Configurations.REQUEST_URL)
                 .add("uid", User.uid)
@@ -84,12 +94,16 @@ public class ChangePwdDialog extends Dialog implements View.OnClickListener {
                 .post(new AbsBaseRequest.Callback() {
                     @Override
                     public void onResponse(String response) {
-                        dismiss();
+                        
                     }
 
                     @Override
                     public void onFailure(int errorFlag, String error) {
-                        dismiss();
+                        new DialogBuilder(context).create()
+                                .setTitle(R.string.tips)
+                                .setContent(error)
+                                .setPositive(R.string.ok)
+                                .show();
                     }
                 });
     }

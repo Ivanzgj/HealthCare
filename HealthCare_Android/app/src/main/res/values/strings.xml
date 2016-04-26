@@ -135,6 +135,7 @@
     <string name="change_pwd_dialog_initial_pwd">原始密码</string>
     <string name="change_pwd_dialog_new_pwd">新密码</string>
     <string name="change_pwd_dialog_confirm_pwd">确认密码</string>
+    <string name="change_pwd_dialog_ing_message">正在与服务器MM申请修改密码，请耐心等待~</string>
 
     <!-- monitor history -->
     <string name="monitor_history_title">监控历史数据</string>
