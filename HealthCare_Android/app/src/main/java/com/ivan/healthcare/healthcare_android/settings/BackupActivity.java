@@ -7,11 +7,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import com.andexert.library.RippleView;
+import com.google.gson.Gson;
 import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.database.DataAccess;
 import com.ivan.healthcare.healthcare_android.network.AbsBaseRequest;
 import com.ivan.healthcare.healthcare_android.network.BaseStringRequest;
+import com.ivan.healthcare.healthcare_android.network.bean.MeasureDataBean;
 import com.ivan.healthcare.healthcare_android.ui.BaseActivity;
 import com.ivan.healthcare.healthcare_android.util.DialogBuilder;
 
@@ -74,7 +76,7 @@ public class BackupActivity extends BaseActivity implements RippleView.OnRippleC
         if (mUploadView.equals(rippleView)) {
             upload();
         } else if (mSyncView.equals(rippleView)) {
-            Snackbar.make(rootView, "sync", Snackbar.LENGTH_SHORT).show();
+            sync();
         } else if (mClearView.equals(rippleView)) {
             Snackbar.make(rootView, "clear", Snackbar.LENGTH_SHORT).show();
         }
@@ -83,7 +85,7 @@ public class BackupActivity extends BaseActivity implements RippleView.OnRippleC
     private void upload() {
         final ProgressDialog dialog = new DialogBuilder(this)
                 .createProgress(R.string.login_dialog_header_register,
-                        getResources().getString(R.string.backup_ing_message),
+                        getResources().getString(R.string.backup_backup_ing_message),
                         false);
         dialog.show();
 
@@ -124,13 +126,43 @@ public class BackupActivity extends BaseActivity implements RippleView.OnRippleC
                     @Override
                     public void onResponse(String response) {
                         dialog.dismiss();
-                        Snackbar.make(rootView, R.string.upload_success_message, Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(rootView, R.string.backup_upload_success_message, Snackbar.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onFailure(int errorFlag, String error) {
                         dialog.dismiss();
-                        Snackbar.make(rootView, R.string.upload_fail_message, Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(rootView, R.string.backup_upload_fail_message, Snackbar.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void sync() {
+        final ProgressDialog dialog = new DialogBuilder(this)
+                .createProgress(R.string.login_dialog_header_register,
+                        getResources().getString(R.string.backup_sync_ing_message),
+                        false);
+        dialog.show();
+
+        new BaseStringRequest.Builder()
+                .url(Configurations.SYNC_URL)
+                .add("action", "download")
+                .add("time", "0")
+                .build()
+                .post(new AbsBaseRequest.Callback() {
+                    @Override
+                    public void onResponse(String response) {
+                        dialog.dismiss();
+                        Gson gson = new Gson();
+                        MeasureDataBean bean = gson.fromJson(response, MeasureDataBean.class);
+                        ArrayList<MeasureDataBean.DataUnit> dataList = (ArrayList<MeasureDataBean.DataUnit>) bean.getData();
+                        Snackbar.make(rootView, R.string.backup_sync_success_message, Snackbar.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(int errorFlag, String error) {
+                        dialog.dismiss();
+                        Snackbar.make(rootView, R.string.backup_sync_fail_message, Snackbar.LENGTH_SHORT).show();
                     }
                 });
     }
