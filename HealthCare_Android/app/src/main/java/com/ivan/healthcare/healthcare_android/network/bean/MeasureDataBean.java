@@ -10,9 +10,18 @@ public class MeasureDataBean extends BaseBean{
 
     public static class DataUnit {
 
+        private String time;
         private String acc_data;
         private String src_time;
-        private StringBuilder src_status;
+        private String src_status;
+
+        public String getTime() {
+            return time;
+        }
+
+        public void setTime(String time) {
+            this.time = time;
+        }
 
         public String getAcc_data() {
             return acc_data;
@@ -22,7 +31,7 @@ public class MeasureDataBean extends BaseBean{
             return src_time;
         }
 
-        public StringBuilder getSrc_status() {
+        public String getSrc_status() {
             return src_status;
         }
 
@@ -34,7 +43,7 @@ public class MeasureDataBean extends BaseBean{
             this.src_time = src_time;
         }
 
-        public void setSrc_status(StringBuilder src_status) {
+        public void setSrc_status(String src_status) {
             this.src_status = src_status;
         }
     }

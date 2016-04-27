@@ -156,6 +156,7 @@ public class BackupActivity extends BaseActivity implements RippleView.OnRippleC
                         Gson gson = new Gson();
                         MeasureDataBean bean = gson.fromJson(response, MeasureDataBean.class);
                         ArrayList<MeasureDataBean.DataUnit> dataList = (ArrayList<MeasureDataBean.DataUnit>) bean.getData();
+                        sync(dataList);
                         Snackbar.make(rootView, R.string.backup_sync_success_message, Snackbar.LENGTH_SHORT).show();
                     }
 
@@ -165,6 +166,25 @@ public class BackupActivity extends BaseActivity implements RippleView.OnRippleC
                         Snackbar.make(rootView, R.string.backup_sync_fail_message, Snackbar.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private void sync(ArrayList<MeasureDataBean.DataUnit> dataList) {
+        for (MeasureDataBean.DataUnit unit : dataList) {
+            String time = unit.getTime();
+            String accString = unit.getAcc_data();
+            String srcTimeString = unit.getSrc_time();
+            String srcString = unit.getSrc_status();
+            String[] accData = accString.split("|");
+            String[] srcTime = srcTimeString.split("|");
+            String[] srcData = srcString.split("|");
+            for (int i = 0; i < accData.length; i++) {
+                float data = Float.valueOf(accData[i]);
+                DataAccess.writeVibrationData(time, i, data);
+                int status = Integer.valueOf(srcData[i]);
+                String recTime = srcTime[i];
+                DataAccess.writeSrcData(time, recTime, status);
+            }
+        }
     }
 
 }

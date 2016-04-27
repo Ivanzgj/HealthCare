@@ -298,13 +298,21 @@ public class DataAccess {
      * @return 写入是否成功
      */
     public static boolean writeVibrationData(String time, int position, float value) {
-        int result = AppContext.getDB().query()
+        ArrayList<Result> results = AppContext.getDB().query()
                 .table(Configurations.VIBRATION_TABLE)
-                .add("time", time)
-                .add("position", position)
-                .add("value", value)
-                .insert();
-        return result != 0;
+                .field("value")
+                .where("time").equal(time)
+                .list();
+        if (results.size() == 0) {
+            int result = AppContext.getDB().query()
+                    .table(Configurations.VIBRATION_TABLE)
+                    .add("time", time)
+                    .add("position", position)
+                    .add("value", value)
+                    .insert();
+            return result != 0;
+        }
+        return false;
     }
 
     /**
@@ -315,13 +323,21 @@ public class DataAccess {
      * @return 写入是否成功
      */
     public static boolean writeSrcData(String time, String rec_time, int on) {
-        int result = AppContext.getDB().query()
+        ArrayList<Result> results = AppContext.getDB().query()
                 .table(Configurations.SRC_TABLE)
-                .add("measure_time", time)
-                .add("rec_time", rec_time)
-                .add("src_on", on)
-                .insert();
-        return result != 0;
+                .field("src_on")
+                .where("measure_time").equal(time)
+                .list();
+        if (results.size() == 0) {
+            int result = AppContext.getDB().query()
+                    .table(Configurations.SRC_TABLE)
+                    .add("measure_time", time)
+                    .add("rec_time", rec_time)
+                    .add("src_on", on)
+                    .insert();
+            return result != 0;
+        }
+        return false;
     }
 
     /**
