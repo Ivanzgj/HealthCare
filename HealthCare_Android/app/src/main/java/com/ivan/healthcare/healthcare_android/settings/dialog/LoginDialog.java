@@ -207,8 +207,8 @@ public class LoginDialog extends Dialog implements View.OnClickListener {
         }
 
         final ProgressDialog dialog = new DialogBuilder(context)
-                .createProgress(R.string.login_dialog_header_login,
-                        context.getResources().getString(R.string.login_ing_message),
+                .createProgress(R.string.login_dialog_header_register,
+                        context.getResources().getString(R.string.register_ing_message),
                         false);
         dismiss();
         dialog.show();

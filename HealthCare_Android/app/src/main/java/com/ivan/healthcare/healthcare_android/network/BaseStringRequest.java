@@ -4,6 +4,7 @@ import android.os.Handler;
 
 import com.google.gson.Gson;
 import com.ivan.healthcare.healthcare_android.Configurations;
+import com.ivan.healthcare.healthcare_android.local.User;
 import com.ivan.healthcare.healthcare_android.network.bean.BaseBean;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.MediaType;
@@ -105,7 +106,7 @@ public class BaseStringRequest extends AbsBaseRequest {
                                 String s = response.body().string();
                                 Gson gson = new Gson();
                                 BaseBean bean = gson.fromJson(s, BaseBean.class);
-                                if (bean != null && bean.getError() != null) {
+                                if (bean == null || bean.getError() != null) {
                                     callback.onFailure(bean.getErrorCode(), bean.getError());
                                 } else {
                                     callback.onResponse(s);
@@ -183,6 +184,7 @@ public class BaseStringRequest extends AbsBaseRequest {
             BaseStringRequest request = new BaseStringRequest();
             params.put("android_version", android.os.Build.VERSION.RELEASE);
             params.put("device", android.os.Build.MODEL);
+            params.put("uid", User.uid);
             request.setRequestParams(params);
             request.setRequestUrl(url);
             if (fileType != null) {

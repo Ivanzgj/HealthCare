@@ -331,6 +331,9 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
                 .add("email", mEmailEdit.getText().toString())
                 .add("address", mLocationEdit.getText().toString())
                 .add("introduction", mIntroEdit.getText().toString())
+                .add("measure_today_times", mTodayTimesTextView.getText())
+                .add("measure_total_times", mTotalTimesTextView.getText())
+                .add("measure_total_assessment", mAssessTextView.getText())
                 .build()
                 .post(new AbsBaseRequest.Callback() {
                     @Override
@@ -422,34 +425,17 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
         final BaseStringRequest request = new BaseStringRequest.Builder()
                                                     .url(Configurations.USER_URL)
                                                     .add("action", "info")
-                                                    .add("uid", User.uid)
                                                     .build();
-
-        final ProgressDialog dialog = new DialogBuilder(this)
-                .createProgress(R.string.tips, getResources().getString(R.string.personal_refresh_ing_message), false);
-        dialog.setButton(DialogInterface.BUTTON_POSITIVE, getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                try {
-                    request.cancel();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        dialog.show();
 
         request.post(new AbsBaseRequest.Callback() {
             @Override
             public void onResponse(String response) {
-                dialog.dismiss();
                 mSwipeRefreshLayout.setRefreshing(false);
                 Snackbar.make(rootView, R.string.personal_refresh_success_message, Snackbar.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(int errorFlag, String error) {
-                dialog.dismiss();
                 mSwipeRefreshLayout.setRefreshing(false);
                 Snackbar.make(rootView, R.string.personal_refresh_fail_message, Snackbar.LENGTH_SHORT).show();
             }

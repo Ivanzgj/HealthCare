@@ -93,10 +93,10 @@ public class ChangePwdDialog extends Dialog implements View.OnClickListener {
         dialog.show();
 
         BaseStringRequest.Builder builder  = new BaseStringRequest.Builder();
-        builder.url(Configurations.REQUEST_URL)
-                .add("uid", User.uid)
-                .add("old_pwd", oldPwd)
-                .add("new_pwd", newPwd)
+        builder.url(Configurations.USER_URL)
+                .add("action", "modify")
+                .add("oldPwd", oldPwd)
+                .add("newPwd", newPwd)
                 .build()
                 .post(new AbsBaseRequest.Callback() {
                     @Override
@@ -107,6 +107,7 @@ public class ChangePwdDialog extends Dialog implements View.OnClickListener {
 
                     @Override
                     public void onFailure(int errorFlag, String error) {
+                        dialog.dismiss();
                         onChangeListener.onFail(errorFlag, error);
                     }
                 });
