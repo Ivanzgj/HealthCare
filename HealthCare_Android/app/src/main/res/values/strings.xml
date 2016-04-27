@@ -115,6 +115,9 @@
     <string name="backup_sync">同步数据</string>
     <string name="backup_clear">清空本地缓存</string>
     <string name="backup_title">数据同步</string>
+    <string name="backup_ing_message">正在将本地数据提交给服务器MM，请耐心等待哦~</string>
+    <string name="upload_fail_message">备份失败</string>
+    <string name="upload_success_message">备份成功</string>
 
     <!-- crop activity -->
     <string name="crop_title">头像裁剪</string>
