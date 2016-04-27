@@ -385,12 +385,20 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
 
             @Override
             public void onSuccess() {
-                Snackbar.make(rootView, R.string.change_pwd_dialog_success_message, Snackbar.LENGTH_SHORT).show();
+                new DialogBuilder(PersonalInfoActivity.this).create()
+                        .setTitle(R.string.tips)
+                        .setContent(R.string.change_pwd_dialog_success_message)
+                        .setPositive(R.string.ok)
+                        .show();
             }
 
             @Override
             public void onFail(int errorFlag, String error) {
-                Snackbar.make(rootView, R.string.change_pwd_dialog_fail_message, Snackbar.LENGTH_SHORT).show();
+                new DialogBuilder(PersonalInfoActivity.this).create()
+                        .setTitle(R.string.tips)
+                        .setContent(R.string.change_pwd_dialog_fail_message)
+                        .setPositive(R.string.ok)
+                        .show();
             }
         });
         dialog.show();

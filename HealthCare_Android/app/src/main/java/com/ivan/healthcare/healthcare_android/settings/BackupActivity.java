@@ -16,6 +16,8 @@ import com.ivan.healthcare.healthcare_android.ui.BaseActivity;
 import com.ivan.healthcare.healthcare_android.util.DialogBuilder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -86,7 +88,7 @@ public class BackupActivity extends BaseActivity implements RippleView.OnRippleC
         dialog.show();
 
         ArrayList<String> timeList = DataAccess.getHistoryMonitorVibrationTime();
-        final ArrayList<BaseStringRequest> requestList = new ArrayList<>();
+        final ArrayList<Map<String, String>> uploadList = new ArrayList<>();
 
         for (String time : timeList) {
             ArrayList<Float> accData = DataAccess.getVibrationData(time);
@@ -102,41 +104,35 @@ public class BackupActivity extends BaseActivity implements RippleView.OnRippleC
                 srcTimeString.append(unit.recTime+"|");
                 srcString.append(unit.srcOn+"|");
             }
-            srcTimeString.deleteCharAt(srcTimeString.length()-1);
+            srcTimeString.deleteCharAt(srcTimeString.length() - 1);
             srcString.deleteCharAt(srcString.length() - 1);
-            BaseStringRequest request = new BaseStringRequest.Builder()
-                                                .url(Configurations.SYNC_URL)
-                                                .add("action", "upload")
-                                                .add("time", time)
-                                                .add("acc_data", accString.toString())
-                                                .add("src_time", srcString.toString())
-                                                .add("src_status", srcString.toString())
-                                                .build();
-            requestList.add(request);
+
+            HashMap<String, String> map = new HashMap<>();
+            map.put("time", time);
+            map.put("acc_data", accString.toString());
+            map.put("src_time", srcTimeString.toString());
+            map.put("src_status", srcString.toString());
+            uploadList.add(map);
         }
 
-        if (requestList.size() != 0) {
-            final AbsBaseRequest.Callback callback = new AbsBaseRequest.Callback() {
-                @Override
-                public void onResponse(String response) {
-                    requestList.remove(0);
-                    if (requestList.size() == 0) {
+        new BaseStringRequest.Builder()
+                .url(Configurations.SYNC_URL)
+                .add("action", "upload")
+                .add("data", uploadList)
+                .build()
+                .post(new AbsBaseRequest.Callback() {
+                    @Override
+                    public void onResponse(String response) {
                         dialog.dismiss();
                         Snackbar.make(rootView, R.string.upload_success_message, Snackbar.LENGTH_SHORT).show();
-                    } else {
-                        requestList.get(0).post(this);
                     }
-                }
 
-                @Override
-                public void onFailure(int errorFlag, String error) {
-                    dialog.dismiss();
-                    requestList.clear();
-                    Snackbar.make(rootView, R.string.upload_fail_message, Snackbar.LENGTH_SHORT).show();
-                }
-            };
-            requestList.get(0).post(callback);
-        }
+                    @Override
+                    public void onFailure(int errorFlag, String error) {
+                        dialog.dismiss();
+                        Snackbar.make(rootView, R.string.upload_fail_message, Snackbar.LENGTH_SHORT).show();
+                    }
+                });
     }
 
 }

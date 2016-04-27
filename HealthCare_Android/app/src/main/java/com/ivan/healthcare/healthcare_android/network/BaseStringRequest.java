@@ -106,7 +106,9 @@ public class BaseStringRequest extends AbsBaseRequest {
                                 String s = response.body().string();
                                 Gson gson = new Gson();
                                 BaseBean bean = gson.fromJson(s, BaseBean.class);
-                                if (bean == null || bean.getError() != null) {
+                                if (bean == null) {
+                                    callback.onFailure(UNKNOWN_ERROR, "Unknown Error");
+                                } else if (bean.getError() != null) {
                                     callback.onFailure(bean.getErrorCode(), bean.getError());
                                 } else {
                                     callback.onResponse(s);

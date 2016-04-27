@@ -1,5 +1,6 @@
 package com.ivan.healthcare.healthcare_android.network;
 
+import com.google.gson.Gson;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
@@ -16,6 +17,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -28,6 +30,7 @@ public class OkHttpUtil {
     private static final String CHARSET_NAME = "UTF-8";
 
     public static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     private static OkHttpClient mOkHttpClient = new OkHttpClient();
 
@@ -42,15 +45,23 @@ public class OkHttpUtil {
      * @return 根据请求url和请求参数够构造的request对象
      */
     private static Request makeRequest(String url, Map<String,Object> map) {
+        Gson gson = new Gson();
         FormEncodingBuilder builder = new FormEncodingBuilder();
         for (String key : map.keySet()) {
-            builder.add(key, map.get(key).toString());
+            Object obj = map.get(key);
+            if (obj instanceof Integer || obj instanceof Float
+                    || obj instanceof Long || obj instanceof Short || obj instanceof String) {
+                builder.add(key, obj.toString());
+            } else {
+                String json = gson.toJson(obj);
+                builder.add(key, json);
+            }
         }
         RequestBody requestBody = builder.build();
         return new Request.Builder()
-                                    .url(url)
-                                    .post(requestBody)
-                                    .build();
+                            .url(url)
+                            .post(requestBody)
+                            .build();
     }
 
     /**
