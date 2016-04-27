@@ -1,6 +1,7 @@
 package com.ivan.healthcare.healthcare_android.local;
 
 import com.ivan.healthcare.healthcare_android.database.DataAccess;
+import com.ivan.healthcare.healthcare_android.network.bean.UserInfoBean;
 
 /**
  * 用户信息类
@@ -111,6 +112,31 @@ public class User {
         DataAccess.clearMeasureTable();
         DataAccess.clearSrcTable();
         DataAccess.clearVibrationTable();
+    }
+
+    public static void syncUserInfo(UserInfoBean bean) {
+        User.UserSex sex;
+        if (bean.getSex() == 0) {
+            sex = User.UserSex.USER_MALE;
+        } else if (bean.getSex() == 1) {
+            sex = User.UserSex.USER_FEMALE;
+        } else {
+            sex = User.UserSex.USER_ALIEN;
+        }
+        edit()
+            .setUid(bean.getUid()!=null?Integer.valueOf(bean.getUid()):uid)
+            .setUserName(bean.getName())
+            .setAge(bean.getAge())
+            .setSex(sex)
+            .setBirthday(bean.getBirth())
+            .setConstellation(Constellation.getConstellationEnum(bean.getConstellation()))
+            .setAddress(bean.getAddress())
+            .setEmail(bean.getEmail())
+            .setIntroduction(bean.getIntroduction())
+            .setTodayMeasureTimes(bean.getMeasure_today_times())
+            .setTotalMeasureTimes(bean.getMeasure_total_times())
+            .setTotalMeasureAssessment(bean.getMeasure_total_assessment())
+            .commit();
     }
 
 

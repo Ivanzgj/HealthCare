@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.R;
-import com.ivan.healthcare.healthcare_android.local.Constellation;
 import com.ivan.healthcare.healthcare_android.local.User;
 import com.ivan.healthcare.healthcare_android.network.AbsBaseRequest;
 import com.ivan.healthcare.healthcare_android.network.BaseStringRequest;
@@ -149,7 +148,7 @@ public class LoginDialog extends Dialog implements View.OnClickListener {
                         try {
                             Gson gson = new Gson();
                             UserInfoBean bean = gson.fromJson(response, UserInfoBean.class);
-                            syncUserInfo(bean);
+                            User.syncUserInfo(bean);
                             onLoginRegisterCompleteListener.onLoginRegisterComplete(true);
                             dialog.dismiss();
                         } catch (ClassCastException e) {
@@ -169,31 +168,6 @@ public class LoginDialog extends Dialog implements View.OnClickListener {
                                 .show();
                     }
                 });
-    }
-
-    private void syncUserInfo(UserInfoBean bean) {
-        User.UserSex sex;
-        if (bean.getSex() == 0) {
-            sex = User.UserSex.USER_MALE;
-        } else if (bean.getSex() == 1) {
-            sex = User.UserSex.USER_FEMALE;
-        } else {
-            sex = User.UserSex.USER_ALIEN;
-        }
-        User.edit()
-                .setUid(Integer.valueOf(bean.getUid()))
-                .setUserName(bean.getName())
-                .setAge(bean.getAge())
-                .setSex(sex)
-                .setBirthday(bean.getBirth())
-                .setConstellation(Constellation.getConstellationEnum(bean.getConstellation()))
-                .setAddress(bean.getAddress())
-                .setEmail(bean.getEmail())
-                .setIntroduction(bean.getIntroduction())
-                .setTodayMeasureTimes(bean.getMeasure_today_times())
-                .setTotalMeasureTimes(bean.getMeasure_total_times())
-                .setTotalMeasureAssessment(bean.getMeasure_total_assessment())
-                .commit();
     }
 
     private void register() {
@@ -225,7 +199,7 @@ public class LoginDialog extends Dialog implements View.OnClickListener {
                         try {
                             Gson gson = new Gson();
                             UserInfoBean bean = gson.fromJson(response, UserInfoBean.class);
-                            syncUserInfo(bean);
+                            User.syncUserInfo(bean);
                             onLoginRegisterCompleteListener.onLoginRegisterComplete(false);
                             dialog.dismiss();
                         } catch (ClassCastException e) {

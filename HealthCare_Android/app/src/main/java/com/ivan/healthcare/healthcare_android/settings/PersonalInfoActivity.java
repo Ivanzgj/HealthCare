@@ -28,6 +28,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.andexert.library.RippleView;
+import com.google.gson.Gson;
 import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.R;
@@ -35,6 +36,7 @@ import com.ivan.healthcare.healthcare_android.local.Constellation;
 import com.ivan.healthcare.healthcare_android.local.User;
 import com.ivan.healthcare.healthcare_android.network.AbsBaseRequest;
 import com.ivan.healthcare.healthcare_android.network.BaseStringRequest;
+import com.ivan.healthcare.healthcare_android.network.bean.UserInfoBean;
 import com.ivan.healthcare.healthcare_android.settings.dialog.ChangePwdDialog;
 import com.ivan.healthcare.healthcare_android.ui.BaseActivity;
 import com.ivan.healthcare.healthcare_android.util.Compat;
@@ -431,6 +433,10 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onResponse(String response) {
                 mSwipeRefreshLayout.setRefreshing(false);
+                Gson gson = new Gson();
+                UserInfoBean bean = gson.fromJson(response, UserInfoBean.class);
+                User.syncUserInfo(bean);
+                refreshContents();
                 Snackbar.make(rootView, R.string.personal_refresh_success_message, Snackbar.LENGTH_SHORT).show();
             }
 
