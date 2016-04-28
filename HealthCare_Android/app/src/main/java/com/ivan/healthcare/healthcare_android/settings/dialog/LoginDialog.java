@@ -19,6 +19,7 @@ import com.ivan.healthcare.healthcare_android.local.User;
 import com.ivan.healthcare.healthcare_android.network.AbsBaseRequest;
 import com.ivan.healthcare.healthcare_android.network.BaseStringRequest;
 import com.ivan.healthcare.healthcare_android.network.bean.UserInfoBean;
+import com.ivan.healthcare.healthcare_android.settings.sync.Sync;
 import com.ivan.healthcare.healthcare_android.util.DialogBuilder;
 import com.ivan.healthcare.healthcare_android.util.L;
 
@@ -149,6 +150,7 @@ public class LoginDialog extends Dialog implements View.OnClickListener {
                             Gson gson = new Gson();
                             UserInfoBean bean = gson.fromJson(response, UserInfoBean.class);
                             User.syncUserInfo(bean);
+                            Sync.sync(context, null);
                             onLoginRegisterCompleteListener.onLoginRegisterComplete(true);
                             dialog.dismiss();
                         } catch (ClassCastException e) {
