@@ -1,7 +1,23 @@
 package com.ivan.healthcare.healthcare_android.local;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.database.DataAccess;
+import com.ivan.healthcare.healthcare_android.network.BaseStringRequest;
 import com.ivan.healthcare.healthcare_android.network.bean.UserInfoBean;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * 用户信息类
@@ -114,7 +130,7 @@ public class User {
         DataAccess.clearVibrationTable();
     }
 
-    public static void syncUserInfo(UserInfoBean bean) {
+    public static void syncUserInfo(UserInfoBean bean, Context context) {
         User.UserSex sex;
         if (bean.getSex() == 0) {
             sex = User.UserSex.USER_MALE;
@@ -123,6 +139,7 @@ public class User {
         } else {
             sex = User.UserSex.USER_ALIEN;
         }
+
         edit()
             .setUid(bean.getUid()!=null?Integer.valueOf(bean.getUid()):uid)
             .setUserName(bean.getName())
@@ -138,7 +155,6 @@ public class User {
             .setTotalMeasureAssessment(bean.getMeasure_total_assessment())
             .commit();
     }
-
 
     /**
      * User编辑类

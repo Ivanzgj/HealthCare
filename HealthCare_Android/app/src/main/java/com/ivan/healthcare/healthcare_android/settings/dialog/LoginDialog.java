@@ -47,7 +47,7 @@ public class LoginDialog extends Dialog implements View.OnClickListener {
 
     private OnLoginRegisterCompleteListener onLoginRegisterCompleteListener = new OnLoginRegisterCompleteListener() {
         @Override
-        public void onLoginRegisterComplete(boolean isLogin) {
+        public void onLoginRegisterComplete(boolean isLogin, UserInfoBean bean) {
 
         }
 
@@ -149,9 +149,9 @@ public class LoginDialog extends Dialog implements View.OnClickListener {
                         try {
                             Gson gson = new Gson();
                             UserInfoBean bean = gson.fromJson(response, UserInfoBean.class);
-                            User.syncUserInfo(bean);
+                            User.syncUserInfo(bean, context);
                             Sync.sync(context, null);
-                            onLoginRegisterCompleteListener.onLoginRegisterComplete(true);
+                            onLoginRegisterCompleteListener.onLoginRegisterComplete(true, bean);
                             dialog.dismiss();
                         } catch (ClassCastException e) {
                             e.printStackTrace();
@@ -201,8 +201,8 @@ public class LoginDialog extends Dialog implements View.OnClickListener {
                         try {
                             Gson gson = new Gson();
                             UserInfoBean bean = gson.fromJson(response, UserInfoBean.class);
-                            User.syncUserInfo(bean);
-                            onLoginRegisterCompleteListener.onLoginRegisterComplete(false);
+                            User.syncUserInfo(bean, context);
+                            onLoginRegisterCompleteListener.onLoginRegisterComplete(false, bean);
                             dialog.dismiss();
                         } catch (ClassCastException e) {
                             e.printStackTrace();
@@ -228,7 +228,7 @@ public class LoginDialog extends Dialog implements View.OnClickListener {
     }
 
     public interface OnLoginRegisterCompleteListener {
-        void onLoginRegisterComplete(boolean isLogin);
+        void onLoginRegisterComplete(boolean isLogin, UserInfoBean bean);
         void onFail(boolean isLogin, int errorFlag);
     }
 }

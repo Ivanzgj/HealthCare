@@ -3,9 +3,9 @@ package com.ivan.healthcare.healthcare_android.settings;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -23,10 +23,18 @@ import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.database.DataAccess;
 import com.ivan.healthcare.healthcare_android.local.Preference;
 import com.ivan.healthcare.healthcare_android.local.User;
+import com.ivan.healthcare.healthcare_android.network.BaseStringRequest;
+import com.ivan.healthcare.healthcare_android.network.bean.UserInfoBean;
 import com.ivan.healthcare.healthcare_android.settings.dialog.LoginDialog;
 import com.ivan.healthcare.healthcare_android.util.DialogBuilder;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -59,8 +67,6 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
     private TextView mMonitorModeTextView;
     private TextView mMonitorSpeedTextView;
 
-    private View rootView;
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -68,7 +74,7 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         initView(rootView);
         refreshContents();
         return rootView;
@@ -226,8 +232,8 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
         LoginDialog loginDialog = new LoginDialog(getActivity(), true);
         loginDialog.setOnLoginRegisterCompleteListener(new LoginDialog.OnLoginRegisterCompleteListener() {
             @Override
-            public void onLoginRegisterComplete(boolean isLogin) {
-                refreshContents();
+            public void onLoginRegisterComplete(boolean isLogin, UserInfoBean bean) {
+                retrieveAvatar(bean.getAvatar());
             }
 
             @Override
@@ -236,6 +242,50 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
             }
         });
         loginDialog.show();
+    }
+
+    private void retrieveAvatar(String url) {
+        if (url == null || url.length() == 0) {
+            return;
+        }
+        new BaseStringRequest.Builder()
+                .url(url)
+                .build()
+                .input(new Callback() {
+                    @Override
+                    public void onFailure(Request request, IOException e) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                refreshContents();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onResponse(Response response) throws IOException {
+                        final InputStream is = response.body().byteStream();
+                        String home = getActivity().getFilesDir().getAbsolutePath();
+                        File avatarFile = new File(home + Configurations.AVATAR_FILE_PATH);
+                        if (!avatarFile.exists()) {
+                            if (!avatarFile.createNewFile()) {
+                                return;
+                            }
+                        }
+                        Bitmap bm = BitmapFactory.decodeStream(is);
+                        BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(avatarFile));
+                        bm.compress(Bitmap.CompressFormat.PNG, 100, os);  //图片存成png格式。
+                        os.close();
+                        is.close();
+                        bm.recycle();
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                refreshContents();
+                            }
+                        });
+                    }
+                });
     }
 
     private void setBloodMode() {

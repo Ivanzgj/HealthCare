@@ -36,15 +36,24 @@ import com.ivan.healthcare.healthcare_android.local.Constellation;
 import com.ivan.healthcare.healthcare_android.local.User;
 import com.ivan.healthcare.healthcare_android.network.AbsBaseRequest;
 import com.ivan.healthcare.healthcare_android.network.BaseStringRequest;
+import com.ivan.healthcare.healthcare_android.network.OkHttpUtil;
 import com.ivan.healthcare.healthcare_android.network.bean.UserInfoBean;
 import com.ivan.healthcare.healthcare_android.settings.dialog.ChangePwdDialog;
 import com.ivan.healthcare.healthcare_android.ui.BaseActivity;
 import com.ivan.healthcare.healthcare_android.util.Compat;
 import com.ivan.healthcare.healthcare_android.util.DialogBuilder;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Calendar;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -79,7 +88,6 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
     private View clickMask;
     private RelativeLayout mLogoutRel;
 
-    private MenuItem uploadMenuItem;
     private final static int UPLOAD_MENU_ITEM_ID = 0x01;
 
     private View currentFocusedView;
@@ -221,9 +229,7 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        uploadMenuItem = menu.add(0, UPLOAD_MENU_ITEM_ID, 0, R.string.personal_save);
-//        uploadMenuItem.setEnabled(false);
-        uploadMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        menu.add(0, UPLOAD_MENU_ITEM_ID, 0, R.string.personal_save).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -231,6 +237,7 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                setResult(AppCompatActivity.RESULT_OK);
                 finish();
                 break;
             case UPLOAD_MENU_ITEM_ID:
@@ -322,6 +329,7 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
         } else if (mSexTextView.getTag() == User.UserSex.USER_FEMALE) {
             sex = 1;
         }
+
         BaseStringRequest.Builder builder = new BaseStringRequest.Builder();
         builder.url(Configurations.USER_URL)
                 .add("action", "upload")
@@ -335,8 +343,15 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
                 .add("introduction", mIntroEdit.getText().toString())
                 .add("measure_today_times", mTodayTimesTextView.getText())
                 .add("measure_total_times", mTotalTimesTextView.getText())
-                .add("measure_total_assessment", mAssessTextView.getText())
-                .build()
+                .add("measure_total_assessment", mAssessTextView.getText());
+
+        String home = getFilesDir().getAbsolutePath();
+        File avatarFile = new File(home + Configurations.AVATAR_FILE_PATH);
+        if (avatarFile.exists()) {
+            builder.add("avatar", avatarFile, OkHttpUtil.MEDIA_TYPE_PNG);
+        }
+
+        builder.build()
                 .post(new AbsBaseRequest.Callback() {
                     @Override
                     public void onResponse(String response) {
@@ -372,6 +387,11 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         User.logout();
+                        String home = getFilesDir().getAbsolutePath();
+                        File avatarFile = new File(home + Configurations.AVATAR_FILE_PATH);
+                        if (avatarFile.exists()) {
+                            avatarFile.delete();
+                        }
                         setResult(AppCompatActivity.RESULT_OK);
                         finish();
                     }
@@ -443,8 +463,8 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
                 mSwipeRefreshLayout.setRefreshing(false);
                 Gson gson = new Gson();
                 UserInfoBean bean = gson.fromJson(response, UserInfoBean.class);
-                User.syncUserInfo(bean);
-                refreshContents();
+                User.syncUserInfo(bean, PersonalInfoActivity.this);
+                retrieveAvatar(bean.getAvatar());
                 Snackbar.make(rootView, R.string.personal_refresh_success_message, Snackbar.LENGTH_SHORT).show();
             }
 
@@ -464,5 +484,49 @@ public class PersonalInfoActivity extends BaseActivity implements View.OnClickLi
         } else if (mChangePwdView.equals(rippleView)) {
             changePwd();
         }
+    }
+
+    private void retrieveAvatar(String url) {
+        if (url == null || url.length() == 0) {
+            return;
+        }
+        new BaseStringRequest.Builder()
+                .url(url)
+                .build()
+                .input(new Callback() {
+                    @Override
+                    public void onFailure(Request request, IOException e) {
+                        PersonalInfoActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                refreshContents();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onResponse(Response response) throws IOException {
+                        final InputStream is = response.body().byteStream();
+                        String home = getFilesDir().getAbsolutePath();
+                        File avatarFile = new File(home + Configurations.AVATAR_FILE_PATH);
+                        if (!avatarFile.exists()) {
+                            if (!avatarFile.createNewFile()) {
+                                return;
+                            }
+                        }
+                        Bitmap bm = BitmapFactory.decodeStream(is);
+                        BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(avatarFile));
+                        bm.compress(Bitmap.CompressFormat.PNG, 100, os);  //图片存成png格式。
+                        os.close();
+                        is.close();
+                        bm.recycle();
+                        PersonalInfoActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                refreshContents();
+                            }
+                        });
+                    }
+                });
     }
 }

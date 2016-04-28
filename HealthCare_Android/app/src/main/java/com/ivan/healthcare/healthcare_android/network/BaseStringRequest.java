@@ -129,6 +129,19 @@ public class BaseStringRequest extends AbsBaseRequest {
         }
     }
 
+    public void input(com.squareup.okhttp.Callback callback) {
+        try {
+            if (getFileType() == null) {
+                call = OkHttpUtil.post(getURL(), getParams());
+            } else {
+                call = OkHttpUtil.postMultiPart(getURL(), getParams(), getFileType());
+            }
+            OkHttpUtil.enqueue(call, callback);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * 同步post请求，切忌在UI线程调用
      * @return 请求结果的字符串，请求失败则会返回null

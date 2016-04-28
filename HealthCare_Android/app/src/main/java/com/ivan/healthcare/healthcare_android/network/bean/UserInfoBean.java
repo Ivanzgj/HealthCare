@@ -19,6 +19,8 @@ public class UserInfoBean extends BaseBean {
     private int measure_total_times;
     private int measure_total_assessment;
 
+    private String avatar;
+
     public String getUid() {
         return uid;
     }
@@ -113,5 +115,13 @@ public class UserInfoBean extends BaseBean {
 
     public void setMeasure_total_assessment(int measure_total_assessment) {
         this.measure_total_assessment = measure_total_assessment;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

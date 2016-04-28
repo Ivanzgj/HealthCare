@@ -17,7 +17,6 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -30,7 +29,6 @@ public class OkHttpUtil {
     private static final String CHARSET_NAME = "UTF-8";
 
     public static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
-    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     private static OkHttpClient mOkHttpClient = new OkHttpClient();
 
