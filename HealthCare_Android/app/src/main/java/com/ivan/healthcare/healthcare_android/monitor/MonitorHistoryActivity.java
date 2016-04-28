@@ -1,5 +1,6 @@
 package com.ivan.healthcare.healthcare_android.monitor;
 
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.database.DataAccess;
+import com.ivan.healthcare.healthcare_android.local.Preference;
+import com.ivan.healthcare.healthcare_android.settings.ProfileFragment;
 import com.ivan.healthcare.healthcare_android.ui.BaseActivity;
 import com.ivan.healthcare.healthcare_android.util.Compat;
 import com.ivan.healthcare.healthcare_android.util.TimeUtils;
@@ -32,20 +35,23 @@ import java.util.ArrayList;
  */
 public class MonitorHistoryActivity extends BaseActivity {
 
+    private final int STATUS_MAX = 10;
     private final int ACCELERATE_DATA_COUNT = 15;
     private final int SCREEN_DATA_COUNT = 6;
 
+    private TextView mStatusTextView;
     private TextView mVibrationDateTextView;
     private TextView mScreenDataTextView;
 
+    private LineChart mStatusChart;
     private LineChart mAccelerateChart;
     private LineChart mSrcChart;
 
-    private ListView mTimeListView;
-
+    private LineChartAdapter mStatusAdapter;
     private LineChartAdapter mAccelerateAdapter;
     private LineChartAdapter mSrcAdapter;
 
+    private ArrayList<Float> mStatusArrayList;
     private ArrayList<String> mTimeArrayList;
     private BaseAdapter mTimeAdapter;
     private ArrayList<Float> mAccelerateDataArrayList;
@@ -58,9 +64,17 @@ public class MonitorHistoryActivity extends BaseActivity {
 
     private String date;
 
+    private int speed;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int mode = AppContext.getPreference().getInt(Preference.MONITOR_MODE, ProfileFragment.MONITOR_MODE_AUTO);
+        if (mode == ProfileFragment.MONITOR_MODE_AUTO) {
+            speed = ProfileFragment.MONITOR_CUSTOM_MODE_DEFAULT_SPEED;
+        } else {
+            speed = AppContext.getPreference().getInt(Preference.MONITOR_SPEED, ProfileFragment.MONITOR_CUSTOM_MODE_DEFAULT_SPEED);
+        }
         initView();
         refreshContent();
     }
@@ -87,8 +101,44 @@ public class MonitorHistoryActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        mStatusTextView = (TextView) mDrawerLayout.findViewById(R.id.monitor_history_status_chart_date);
         mVibrationDateTextView = (TextView) mDrawerLayout.findViewById(R.id.monitor_history_accelerate_chart_date);
         mScreenDataTextView = (TextView) mDrawerLayout.findViewById(R.id.monitor_history_screen_chart_date);
+
+        mStatusChart = (LineChart) mDrawerLayout.findViewById(R.id.monitor_history_status_chart);
+        mStatusChart.selfAdaptive = false;
+        ArrayList<Float> statusYLabels = new ArrayList<>();
+        for (int i = 0; i <= STATUS_MAX; i++) {
+            statusYLabels.add((float) i);
+        }
+        mStatusChart.setYLabels(statusYLabels);
+
+        mStatusArrayList = new ArrayList<>();
+        mStatusAdapter = new SimpleChartAdapter() {
+            @Override
+            public int getLineCount() {
+                return 1;
+            }
+
+            @Override
+            public ArrayList<Float> getLineData(int index) {
+                return mStatusArrayList;
+            }
+
+            @Override
+            public int getLineColorId(int index) {
+                return R.color.colorPrimary;
+            }
+
+            @Override
+            public String getXLabel(int position) {
+                if (date != null) {
+                    return TimeUtils.add(date, speed * position).substring(8);
+                }
+                return super.getXLabel(position);
+            }
+        };
+        mStatusChart.setAdapter(mStatusAdapter);
 
         mAccelerateChart = (LineChart) mDrawerLayout.findViewById(R.id.monitor_history_accelerate_chart);
         mAccelerateChart.setYAxisValuesFormatter(new Chart.YAxisValueFormatter() {
@@ -100,11 +150,11 @@ public class MonitorHistoryActivity extends BaseActivity {
 
         mSrcChart = (LineChart) mDrawerLayout.findViewById(R.id.monitor_history_screen_chart);
         mSrcChart.selfAdaptive = false;
-        ArrayList<Float> yLabels = new ArrayList<>();
-        yLabels.add(0.f);
-        yLabels.add(1.f);
-        yLabels.add(2.f);
-        mSrcChart.setYLabels(yLabels);
+        ArrayList<Float> srcYLabels = new ArrayList<>();
+        srcYLabels.add(0.f);
+        srcYLabels.add(1.f);
+        srcYLabels.add(2.f);
+        mSrcChart.setYLabels(srcYLabels);
         mSrcChart.setYAxisValuesFormatter(new Chart.YAxisValueFormatter() {
             @Override
             public String yValuesString(float v) {
@@ -131,13 +181,8 @@ public class MonitorHistoryActivity extends BaseActivity {
             }
 
             @Override
-            public int getLineColor(int index) {
+            public int getLineColorId(int index) {
                 return R.color.colorPrimary;
-            }
-
-            @Override
-            public int getShadowColor(int position) {
-                return R.color.colorPrimaryLight;
             }
 
             @Override
@@ -164,13 +209,8 @@ public class MonitorHistoryActivity extends BaseActivity {
             }
 
             @Override
-            public int getLineColor(int index) {
+            public int getLineColorId(int index) {
                 return R.color.colorPrimary;
-            }
-
-            @Override
-            public int getShadowColor(int position) {
-                return R.color.colorPrimaryLight;
             }
 
             @Override
@@ -205,7 +245,7 @@ public class MonitorHistoryActivity extends BaseActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         mTimeArrayList = new ArrayList<>();
-        mTimeListView = (ListView) mDrawerLayout.findViewById(R.id.monitor_history_time_listView);
+        ListView mTimeListView = (ListView) mDrawerLayout.findViewById(R.id.monitor_history_time_listView);
         mTimeAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
@@ -265,11 +305,13 @@ public class MonitorHistoryActivity extends BaseActivity {
         mTimeAdapter.notifyDataSetChanged();
 
         if (mTimeArrayList.size() == 0) {
+            mStatusChart.setVisibility(View.INVISIBLE);
             mAccelerateChart.setVisibility(View.INVISIBLE);
             mSrcChart.setVisibility(View.INVISIBLE);
             return;
         }
 
+        mStatusChart.setVisibility(View.VISIBLE);
         mAccelerateChart.setVisibility(View.VISIBLE);
         mSrcChart.setVisibility(View.VISIBLE);
 
@@ -280,10 +322,13 @@ public class MonitorHistoryActivity extends BaseActivity {
 //        mAccelerateChart.reset();
 
         String title = TimeUtils.convertTimeFormat(date, "yyyyMMddHHmmss", "yyyy年MM月dd日HH:mm:ss");
+
+        // 获取振动数据
         mVibrationDateTextView.setText(title);
         mAccelerateDataArrayList = DataAccess.getVibrationData(date);
         mAccelerateAdapter.notifyDataSetChanged();
 
+        // 获取屏幕控制数据
         mScreenDataTextView.setText(title);
         ArrayList<DataAccess.SrcDataUnit> srcData = DataAccess.getSrcData(date);
         mScreenDataArrayList.clear();
@@ -293,5 +338,49 @@ public class MonitorHistoryActivity extends BaseActivity {
             mScreenXLabels.add(data.recTime);
         }
         mSrcAdapter.notifyDataSetChanged();
+
+        // 计算监控状态
+        mStatusTextView.setText(title);
+        float std = SensorManager.GRAVITY_EARTH;
+        String srcTime = null;
+        String nextTime = null;
+        int next = 2;
+        int srcOn = 2;
+        if (srcData.size() > 1) {
+            srcTime = srcData.get(0).recTime;
+            nextTime = srcData.get(1).recTime;
+        }
+        for (int i = 0; i < mAccelerateDataArrayList.size(); i++) {
+            float acc = mAccelerateDataArrayList.get(i);
+            String time = TimeUtils.add(date, speed * i);
+            if (srcTime == null || (time.compareTo(nextTime) < 0 && srcOn != 2)) {
+                if (acc >= std-2 && acc <= std+2) {
+                    mStatusArrayList.add(STATUS_MAX*0.2f);
+                } else if (acc >= std-6 && acc <= std+6) {
+                    mStatusArrayList.add(STATUS_MAX*0.5f);
+                } else {
+                    mStatusArrayList.add(STATUS_MAX*0.7f);
+                }
+            } else if (time.compareTo(nextTime) < 0 && srcOn == 2) {
+                mStatusArrayList.add((float) STATUS_MAX);
+            } else if (time.compareTo(nextTime) >= 0) {
+                srcTime = nextTime;
+                nextTime = srcData.get(next).recTime;
+                srcOn = srcData.get(next-1).srcOn;
+                next++;
+                if (srcOn != 2) {
+                    if (acc >= std-2 && acc <= std+2) {
+                        mStatusArrayList.add(STATUS_MAX*0.2f);
+                    } else if (acc >= std-6 && acc <= std+6) {
+                        mStatusArrayList.add(STATUS_MAX*0.5f);
+                    } else {
+                        mStatusArrayList.add(STATUS_MAX*0.7f);
+                    }
+                } else {
+                    mStatusArrayList.add((float) STATUS_MAX);
+                }
+            }
+        }
+        mStatusAdapter.notifyDataSetChanged();
     }
 }

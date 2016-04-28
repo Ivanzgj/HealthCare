@@ -158,5 +158,6 @@
     <!-- monitor history -->
     <string name="monitor_history_title">监控历史数据</string>
     <string name="monitor_history_drawer_title">监&#160;控&#160;历&#160;史</string>
+    <string name="monitor_history_status_chart_title">状&#160;态&#160;统&#160;计&#160;图</string>
 
 </resources>

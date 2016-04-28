@@ -42,7 +42,7 @@ public class LineChart extends Chart {
 		}
 
 		@Override
-		public int getLineColor(int index) {
+		public int getLineColorId(int index) {
 			return 0;
 		}
 
@@ -161,7 +161,7 @@ public class LineChart extends Chart {
 			// 画点
 			paint.setStyle(Paint.Style.FILL);
 			paint.setStrokeWidth(0);
-			paint.setColor(Compat.getColor(context, mAdapter.getLineColor(k)));
+			paint.setColor(Compat.getColor(context, mAdapter.getLineColorId(k)));
 
 			ArrayList<Float> yData = mAdapter.getLineData(k);
 			int count = yData.size();
@@ -192,7 +192,7 @@ public class LineChart extends Chart {
 			// 画点
 			paint.setStyle(Paint.Style.FILL);
 			paint.setStrokeWidth(0);
-			paint.setColor(Compat.getColor(context, mAdapter.getLineColor(k)));
+			paint.setColor(Compat.getColor(context, mAdapter.getLineColorId(k)));
 
 			ArrayList<Float> yData = mAdapter.getLineData(k);
 			int count = yData.size();
@@ -222,7 +222,7 @@ public class LineChart extends Chart {
 			// 画点
 			paint.setStyle(Paint.Style.FILL);
 			paint.setStrokeWidth(0);
-			paint.setColor(Compat.getColor(context, mAdapter.getLineColor(k)));
+			paint.setColor(Compat.getColor(context, mAdapter.getLineColorId(k)));
 
 			ArrayList<Float> yData = mAdapter.getLineData(k);
 			int yCount = yData.size();

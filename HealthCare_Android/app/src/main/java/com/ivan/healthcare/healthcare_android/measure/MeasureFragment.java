@@ -253,7 +253,7 @@ public class MeasureFragment extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public int getLineColor(int index) {
+            public int getLineColorId(int index) {
                 return R.color.chart_cyan;
             }
 

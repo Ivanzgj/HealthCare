@@ -33,7 +33,7 @@ public class ShadowLineChart extends Chart {
         }
 
         @Override
-        public int getLineColor(int index) {
+        public int getLineColorId(int index) {
             return 0;
         }
 
@@ -138,7 +138,7 @@ public class ShadowLineChart extends Chart {
 //            drawLine(canvas, paint, i, data.get(i), i+1, data.get(i+1), true);
         }
 
-        int lineColor = mAdapter.getLineColor(0);
+        int lineColor = mAdapter.getLineColorId(0);
         int shadowColor = mAdapter.getShadowColor(0);
 
         paint.setStrokeWidth(LINE_WIDTH);

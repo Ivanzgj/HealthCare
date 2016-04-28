@@ -109,6 +109,7 @@
 
     <!-- monitor history -->
     <dimen name="monitor_history_drawer_width">224dp</dimen>
-    <dimen name="monitor_history_srawer_title_height">48dp</dimen>
+    <dimen name="monitor_history_drawer_title_height">48dp</dimen>
+    <dimen name="monitor_history_chart_height">168dp</dimen>
 
 </resources>

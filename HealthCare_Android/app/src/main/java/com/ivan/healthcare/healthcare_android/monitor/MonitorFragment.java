@@ -181,7 +181,7 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
             }
 
             @Override
-            public int getLineColor(int index) {
+            public int getLineColorId(int index) {
                 return R.color.colorPrimary;
             }
 
@@ -236,7 +236,7 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
             }
 
             @Override
-            public int getLineColor(int index) {
+            public int getLineColorId(int index) {
                 return R.color.colorPrimary;
             }
 

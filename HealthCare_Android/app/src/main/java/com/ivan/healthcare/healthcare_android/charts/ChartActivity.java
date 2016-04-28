@@ -256,7 +256,7 @@ public class ChartActivity extends BaseActivity implements ViewPager.OnPageChang
             }
 
             @Override
-            public int getLineColor(int index) {
+            public int getLineColorId(int index) {
                 return R.color.chart_cyan;
             }
 
@@ -327,7 +327,7 @@ public class ChartActivity extends BaseActivity implements ViewPager.OnPageChang
             }
 
             @Override
-            public int getLineColor(int index) {
+            public int getLineColorId(int index) {
                 if (index == 0) return R.color.chart_cyan;
                 if (index == 1) return R.color.chart_green;
                 return R.color.chart_amber;

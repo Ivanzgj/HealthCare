@@ -1,10 +1,9 @@
 package com.ivan.healthcare.healthcare_android.util;
 
 import java.text.DateFormat;
-import java.text.FieldPosition;
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -46,6 +45,21 @@ public class TimeUtils {
 
     public static String convertTimeFormat(String date, String oldPattern, String newPattern) {
         return getDateString(getDate(date, oldPattern), newPattern);
+    }
+
+    public static String add(String date, int millis) {
+        DateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA);
+        try {
+            Date d = formatter.parse(date);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(d);
+            cal.add(Calendar.MILLISECOND, millis);
+            d = cal.getTime();
+            return formatter.format(d);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return date;
+        }
     }
 
 }

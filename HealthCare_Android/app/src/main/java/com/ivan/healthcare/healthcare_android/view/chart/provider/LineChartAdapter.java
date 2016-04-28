@@ -10,7 +10,7 @@ public abstract class LineChartAdapter extends ChartAdapter {
 
     public abstract int getLineCount();
     public abstract ArrayList<Float> getLineData(int index);
-    public abstract int getLineColor(int index);
+    public abstract int getLineColorId(int index);
 
     public int getShadowColor(int position) {
         return android.support.design.R.color.abc_color_highlight_material;

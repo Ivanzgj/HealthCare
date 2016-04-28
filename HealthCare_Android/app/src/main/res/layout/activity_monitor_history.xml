@@ -7,66 +7,104 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <include layout="@layout/layout_toolbar"
             android:id="@+id/monitor_history_toolbar"/>
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginTop="@dimen/activity_vertical_margin">
+            android:layout_height="match_parent">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="@dimen/textSize_second_title"
-                android:text="@string/monitor_accelerate_chart_title"/>
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/monitor_history_accelerate_chart_date"
-                android:gravity="center"
-                android:textSize="@dimen/textSize_normal"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/activity_vertical_margin">
 
-            <com.ivan.healthcare.healthcare_android.view.chart.LineChart
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/monitor_history_accelerate_chart"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="@dimen/textSize_second_title"
+                        android:text="@string/monitor_history_status_chart_title"/>
 
-        </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/monitor_history_status_chart_date"
+                        android:gravity="center"
+                        android:textSize="@dimen/textSize_normal"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            android:layout_weight="1">
+                    <com.ivan.healthcare.healthcare_android.view.chart.LineChart
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/monitor_history_chart_height"
+                        android:id="@+id/monitor_history_status_chart"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="@dimen/textSize_second_title"
-                android:text="@string/monitor_screen_chart_title"
-                android:layout_marginTop="@dimen/activity_vertical_margin"/>
+                </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/monitor_history_screen_chart_date"
-                android:gravity="center"
-                android:textSize="@dimen/textSize_normal"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/activity_vertical_margin">
 
-            <com.ivan.healthcare.healthcare_android.view.chart.LineChart
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/monitor_history_screen_chart"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="@dimen/textSize_second_title"
+                        android:text="@string/monitor_accelerate_chart_title"/>
 
-        </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/monitor_history_accelerate_chart_date"
+                        android:gravity="center"
+                        android:textSize="@dimen/textSize_normal"/>
+
+                    <com.ivan.healthcare.healthcare_android.view.chart.LineChart
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/monitor_history_chart_height"
+                        android:id="@+id/monitor_history_accelerate_chart"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="@dimen/textSize_second_title"
+                        android:text="@string/monitor_screen_chart_title"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/monitor_history_screen_chart_date"
+                        android:gravity="center"
+                        android:textSize="@dimen/textSize_normal"/>
+
+                    <com.ivan.healthcare.healthcare_android.view.chart.LineChart
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/monitor_history_chart_height"
+                        android:id="@+id/monitor_history_screen_chart"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </LinearLayout>
 
