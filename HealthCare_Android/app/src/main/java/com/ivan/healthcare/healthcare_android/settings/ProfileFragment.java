@@ -20,6 +20,7 @@ import com.andexert.library.RippleView;
 import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.R;
+import com.ivan.healthcare.healthcare_android.database.DataAccess;
 import com.ivan.healthcare.healthcare_android.local.Preference;
 import com.ivan.healthcare.healthcare_android.local.User;
 import com.ivan.healthcare.healthcare_android.settings.dialog.LoginDialog;
@@ -174,18 +175,13 @@ public class ProfileFragment extends Fragment implements RippleView.OnRippleComp
                 .setOnPositiveClickListener(new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Snackbar.make(rootView, "reset data", Snackbar.LENGTH_SHORT).show();
+                        DataAccess.clearVibrationTable();
+                        DataAccess.clearSrcTable();
                         dialog.dismiss();
                         refreshContents();
                     }
                 })
                 .setNegative(R.string.cancel)
-                .setOnNegaitiveClickListener(new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
                 .show();
     }
 

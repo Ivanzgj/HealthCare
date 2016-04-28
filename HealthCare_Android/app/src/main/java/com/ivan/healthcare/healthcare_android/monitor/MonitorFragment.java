@@ -322,12 +322,12 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
                 }
                 mAccelerateDataArrayList.clear();
                 mScreenDataArrayList.clear();
-                mScreenDataArrayList.add(1.f);
+                mScreenDataArrayList.add(2.f);
                 mScreenXLabels.clear();
                 String time = TimeUtils.getTimeString(new Date(), TIME_PATTERN);
                 mScreenXLabels.add(time);
 
-                DataAccess.writeSrcData(monitorTime, TimeUtils.getTimeString(new Date()), 1);
+                DataAccess.writeSrcData(monitorTime, TimeUtils.getTimeString(new Date()), 2);
                 mAccelerateAdapter.notifyDataSetChanged();
                 mScreenAdapter.notifyDataSetChanged();
             }

@@ -39,9 +39,11 @@ public class Sync {
         for (String time : timeList) {
             ArrayList<Float> accData = DataAccess.getVibrationData(time);
             ArrayList<DataAccess.SrcDataUnit> srcData = DataAccess.getSrcData(time);
+
             StringBuilder accString = new StringBuilder();
             StringBuilder srcTimeString = new StringBuilder();
             StringBuilder srcString = new StringBuilder();
+
             for (float data : accData) {
                 accString.append(data).append("|");
             }
@@ -129,12 +131,14 @@ public class Sync {
             String accString = unit.getAcc_data();
             String srcTimeString = unit.getSrc_time();
             String srcString = unit.getSrc_status();
-            String[] accData = accString.split("|");
-            String[] srcTime = srcTimeString.split("|");
-            String[] srcData = srcString.split("|");
+            String[] accData = accString.split("\\|");
+            String[] srcTime = srcTimeString.split("\\|");
+            String[] srcData = srcString.split("\\|");
             for (int i = 0; i < accData.length; i++) {
                 float data = Float.valueOf(accData[i]);
                 DataAccess.writeVibrationData(time, i, data);
+            }
+            for (int i = 0; i < srcData.length; i++) {
                 int status = Integer.valueOf(srcData[i]);
                 String recTime = srcTime[i];
                 DataAccess.writeSrcData(time, recTime, status);
@@ -163,7 +167,7 @@ public class Sync {
     private static void _clear(Context context, final View rootView) {
         final ProgressDialog dialog = new DialogBuilder(context)
                 .createProgress(R.string.tips,
-                        context.getResources().getString(R.string.backup_sync_ing_message),
+                        context.getResources().getString(R.string.backup_clear_ing_message),
                         false);
         dialog.show();
 
@@ -179,7 +183,7 @@ public class Sync {
                         DataAccess.clearVibrationTable();
                         dialog.dismiss();
                         if (rootView != null) {
-                            Snackbar.make(rootView, R.string.backup_sync_success_message, Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(rootView, R.string.backup_clear_success_message, Snackbar.LENGTH_SHORT).show();
                         }
                     }
 
@@ -187,7 +191,7 @@ public class Sync {
                     public void onFailure(int errorFlag, String error) {
                         dialog.dismiss();
                         if (rootView != null) {
-                            Snackbar.make(rootView, R.string.backup_sync_success_message, Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(rootView, R.string.backup_clear_fail_message, Snackbar.LENGTH_SHORT).show();
                         }
                     }
                 });

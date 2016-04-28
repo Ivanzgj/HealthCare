@@ -54,6 +54,7 @@ public class BaseStringRequest extends AbsBaseRequest {
                         public void run() {
                             try {
                                 String s = response.body().string();
+                                response.body().close();
                                 Gson gson = new Gson();
                                 BaseBean bean = gson.fromJson(s, BaseBean.class);
                                 if (bean.getError() != null) {
@@ -99,11 +100,13 @@ public class BaseStringRequest extends AbsBaseRequest {
 
                 @Override
                 public void onResponse(final Response response) {
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                String s = response.body().string();
+                    try {
+                        final String s = response.body().string();
+                        response.body().close();
+
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
                                 Gson gson = new Gson();
                                 BaseBean bean = gson.fromJson(s, BaseBean.class);
                                 if (bean == null) {
@@ -113,12 +116,12 @@ public class BaseStringRequest extends AbsBaseRequest {
                                 } else {
                                     callback.onResponse(s);
                                 }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                callback.onFailure(UNKNOWN_ERROR, "Unknown Error");
                             }
-                        }
-                    });
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        callback.onFailure(UNKNOWN_ERROR, "Unknown Error");
+                    }
                 }
             });
         } catch (IOException e) {

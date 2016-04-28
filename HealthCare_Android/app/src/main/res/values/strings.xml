@@ -68,7 +68,7 @@
     <string name="profile_timer_indicater">点此进入闹钟设置</string>
     <string name="profile_upload_tv">数据同步</string>
     <string name="profile_upload_indicater">点此进入数据同步设置</string>
-    <string name="profile_reset_tv">重置数据</string>
+    <string name="profile_reset_tv">清空本地缓存</string>
     <string name="profile_reset_indicater">点此进入数据重置设置</string>
     <string name="profile_title">设置</string>
     <string name="profile_login">登陆&#160;|&#160;注册</string>
@@ -91,7 +91,7 @@
     <string name="personal_save">保存</string>
     <string name="personal_logout">注销账号</string>
     <string name="personal_change_pwd">修改密码</string>
-    <string name="personal_reset_message">重置数据将会将本地和服务器上的所有个人数据清空，包括您的历史测量数据，个人信息，以及云端上的所有医疗研究基础数据（如果有的话）。是否确定重置数据？</string>
+    <string name="personal_reset_message">清空本地缓存将会将本地的所有个人测量数据清空，但是服务器上的数据会保留。是否确定重置数据？</string>
     <string name="personal_sex_male">男</string>
     <string name="personal_sex_female">女</string>
     <string name="personal_sex_alien">外星人</string>
@@ -113,7 +113,7 @@
     <!-- backup activity -->
     <string name="backup_backup">上传数据</string>
     <string name="backup_sync">同步数据</string>
-    <string name="backup_clear">清空本地缓存</string>
+    <string name="backup_clear">重置数据</string>
     <string name="backup_title">数据同步</string>
     <string name="backup_backup_ing_message">正在将本地数据提交给服务器MM，请耐心等待哦~</string>
     <string name="backup_upload_fail_message">备份失败</string>

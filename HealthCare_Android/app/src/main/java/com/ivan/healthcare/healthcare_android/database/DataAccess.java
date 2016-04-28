@@ -302,6 +302,7 @@ public class DataAccess {
                 .table(Configurations.VIBRATION_TABLE)
                 .field("value")
                 .where("time").equal(time)
+                .where("position").equal(position)
                 .list();
         if (results.size() == 0) {
             int result = AppContext.getDB().query()
@@ -327,6 +328,7 @@ public class DataAccess {
                 .table(Configurations.SRC_TABLE)
                 .field("src_on")
                 .where("measure_time").equal(time)
+                .where("rec_time").equal(rec_time)
                 .list();
         if (results.size() == 0) {
             int result = AppContext.getDB().query()
