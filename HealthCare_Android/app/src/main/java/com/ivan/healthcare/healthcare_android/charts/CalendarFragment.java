@@ -80,7 +80,7 @@ public class CalendarFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         InfoBean bean = new Gson().fromJson(response, InfoBean.class);
-                        mSuggestWebView.loadData(bean.getInfo(), "text/html", "utf-8");
+                        mSuggestWebView.loadDataWithBaseURL(null, bean.getInfo(), "text/html", "utf-8", null);
                     }
 
                     @Override
