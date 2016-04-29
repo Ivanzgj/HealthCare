@@ -363,6 +363,8 @@ public class MonitorHistoryActivity extends BaseActivity {
             float acc = mAccelerateDataArrayList.get(i);
             String time = TimeUtils.add(date, speed * i);
             if (srcTime == null || (nextTime != null && time.compareTo(nextTime) < 0 && srcOn != 2)) {
+                // 无屏幕亮灭数据或者time时间以后的屏幕都不是已解锁状态，
+                // 则按照振动数据计算状态
                 if (acc >= std-2 && acc <= std+2) {
                     mStatusArrayList.add(STATUS_MAX*0.2f);
                 } else if (acc >= std-6 && acc <= std+6) {
@@ -371,8 +373,11 @@ public class MonitorHistoryActivity extends BaseActivity {
                     mStatusArrayList.add(STATUS_MAX*0.7f);
                 }
             } else if (nextTime != null && time.compareTo(nextTime) < 0 && srcOn == 2) {
+                // 屏幕此时处于已解锁状态，
                 mStatusArrayList.add((float) STATUS_MAX);
             } else if (nextTime != null && time.compareTo(nextTime) >= 0) {
+                // time时候已越过下一个屏幕控制时间，
+                // 则更新当前屏幕控制时间和下一个屏幕控制时间
                 srcTime = nextTime;
                 srcOn = srcData.get(next-1).srcOn;
                 if (next < srcData.size()) {
@@ -381,6 +386,7 @@ public class MonitorHistoryActivity extends BaseActivity {
                 } else {
                     nextTime = null;
                 }
+                // 如果当前屏幕控制状态不是已解锁，则按照振动数据计算状态
                 if (srcOn != 2) {
                     if (acc >= std-2 && acc <= std+2) {
                         mStatusArrayList.add(STATUS_MAX*0.2f);
