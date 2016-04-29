@@ -26,6 +26,7 @@ public class Configurations {
     public static final String REQUEST_URL = "http://149r930t26.51mypc.cn:13810";
     public static final String USER_URL = "/user.php";
     public static final String SYNC_URL = "/sync.php";
+    public static final String INFO_URL = "/info.php";
     /**
      * 蓝牙UUID
      */

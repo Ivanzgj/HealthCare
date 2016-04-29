@@ -9,8 +9,13 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 
+import com.google.gson.Gson;
+import com.ivan.healthcare.healthcare_android.Configurations;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.charts.ChartActivity;
+import com.ivan.healthcare.healthcare_android.network.AbsBaseRequest;
+import com.ivan.healthcare.healthcare_android.network.BaseStringRequest;
+import com.ivan.healthcare.healthcare_android.network.bean.InfoBean;
 import com.ivan.healthcare.healthcare_android.util.Compat;
 import com.ivan.healthcare.healthcare_android.view.CalendarView.CalendarTheme;
 import com.ivan.healthcare.healthcare_android.view.CalendarView.CalendarView;
@@ -34,6 +39,7 @@ public class CalendarFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        loadNotification();
     }
 
     @Override
@@ -63,6 +69,25 @@ public class CalendarFragment extends Fragment {
         mSuggestWebView = (WebView) rootView.findViewById(R.id.suggestwebview);
         mSuggestWebView.getSettings().setDefaultTextEncodingName("utf-8") ;
 //        mSuggestWebView.setBackgroundColor(Compat.getColor(getActivity(), R.color.colorPrimaryDark)); // 设置背景色
+    }
+
+    private void loadNotification() {
+        new BaseStringRequest.Builder()
+                .url(Configurations.INFO_URL)
+                .add("action", "info")
+                .build()
+                .post(new AbsBaseRequest.Callback() {
+                    @Override
+                    public void onResponse(String response) {
+                        InfoBean bean = new Gson().fromJson(response, InfoBean.class);
+                        mSuggestWebView.loadData(bean.getInfo(), "text/html", "utf-8");
+                    }
+
+                    @Override
+                    public void onFailure(int errorFlag, String error) {
+
+                    }
+                });
     }
 
 }
