@@ -105,7 +105,9 @@ public class MonitorHistoryActivity extends BaseActivity {
         mVibrationDateTextView = (TextView) mDrawerLayout.findViewById(R.id.monitor_history_accelerate_chart_date);
         mScreenDataTextView = (TextView) mDrawerLayout.findViewById(R.id.monitor_history_screen_chart_date);
 
+        // 状态统计图
         mStatusChart = (LineChart) mDrawerLayout.findViewById(R.id.monitor_history_status_chart);
+        mStatusChart.setXWidth(AppContext.dp2px(50));
         mStatusChart.selfAdaptive = false;
         ArrayList<Float> statusYLabels = new ArrayList<>();
         for (int i = 0; i <= STATUS_MAX; i++) {
@@ -133,13 +135,16 @@ public class MonitorHistoryActivity extends BaseActivity {
             @Override
             public String getXLabel(int position) {
                 if (date != null) {
-                    return TimeUtils.add(date, speed * position).substring(8);
+                    String d = TimeUtils.add(date, speed * position);
+                    d = TimeUtils.convertTimeFormat(d, "yyyyMMddHHmmss", "yyyyMMddHH:mm:ss");
+                    return d.substring(8);
                 }
                 return super.getXLabel(position);
             }
         };
         mStatusChart.setAdapter(mStatusAdapter);
 
+        // 振动数据图
         mAccelerateChart = (LineChart) mDrawerLayout.findViewById(R.id.monitor_history_accelerate_chart);
         mAccelerateChart.setYAxisValuesFormatter(new Chart.YAxisValueFormatter() {
             @Override
@@ -148,6 +153,7 @@ public class MonitorHistoryActivity extends BaseActivity {
             }
         });
 
+        // 屏幕控制图
         mSrcChart = (LineChart) mDrawerLayout.findViewById(R.id.monitor_history_screen_chart);
         mSrcChart.selfAdaptive = false;
         ArrayList<Float> srcYLabels = new ArrayList<>();
@@ -169,6 +175,7 @@ public class MonitorHistoryActivity extends BaseActivity {
         mScreenDataArrayList = new ArrayList<>();
         mScreenXLabels = new ArrayList<>();
 
+        // 振动数据源
         mAccelerateAdapter = new SimpleChartAdapter() {
             @Override
             public int getLineCount() {
@@ -197,6 +204,7 @@ public class MonitorHistoryActivity extends BaseActivity {
         };
         mAccelerateChart.setAdapter(mAccelerateAdapter);
 
+        // 屏幕控制数据源
         mSrcAdapter = new SimpleChartAdapter() {
             @Override
             public int getLineCount() {
@@ -229,6 +237,7 @@ public class MonitorHistoryActivity extends BaseActivity {
         };
         mSrcChart.setAdapter(mSrcAdapter);
 
+        // drawer
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.main_drawer_open, R.string.main_drawer_close) {
             @Override
             public void onDrawerClosed(View drawerView) {
@@ -353,7 +362,7 @@ public class MonitorHistoryActivity extends BaseActivity {
         for (int i = 0; i < mAccelerateDataArrayList.size(); i++) {
             float acc = mAccelerateDataArrayList.get(i);
             String time = TimeUtils.add(date, speed * i);
-            if (srcTime == null || (time.compareTo(nextTime) < 0 && srcOn != 2)) {
+            if (srcTime == null || (nextTime != null && time.compareTo(nextTime) < 0 && srcOn != 2)) {
                 if (acc >= std-2 && acc <= std+2) {
                     mStatusArrayList.add(STATUS_MAX*0.2f);
                 } else if (acc >= std-6 && acc <= std+6) {
@@ -361,13 +370,17 @@ public class MonitorHistoryActivity extends BaseActivity {
                 } else {
                     mStatusArrayList.add(STATUS_MAX*0.7f);
                 }
-            } else if (time.compareTo(nextTime) < 0 && srcOn == 2) {
+            } else if (nextTime != null && time.compareTo(nextTime) < 0 && srcOn == 2) {
                 mStatusArrayList.add((float) STATUS_MAX);
-            } else if (time.compareTo(nextTime) >= 0) {
+            } else if (nextTime != null && time.compareTo(nextTime) >= 0) {
                 srcTime = nextTime;
-                nextTime = srcData.get(next).recTime;
                 srcOn = srcData.get(next-1).srcOn;
-                next++;
+                if (next < srcData.size()) {
+                    nextTime = srcData.get(next).recTime;
+                    next++;
+                } else {
+                    nextTime = null;
+                }
                 if (srcOn != 2) {
                     if (acc >= std-2 && acc <= std+2) {
                         mStatusArrayList.add(STATUS_MAX*0.2f);
