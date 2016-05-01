@@ -1,24 +1,48 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.model.application'
 
-android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
-    defaultConfig {
-        applicationId "com.ivan.healthcare.healthcare_android"
-        minSdkVersion 14
-        targetSdkVersion 23
-        versionCode 1
-        versionName '1.0'
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+model {
+    android {
+        compileSdkVersion = 23
+        buildToolsVersion = "23.0.2"
+
+        defaultConfig {
+            applicationId "com.ivan.healthcare.healthcare_android"
+            minSdkVersion.apiLevel  14  // Unable to load class com.android.build.gradle.managed.ProductFlavor_Impl
+            targetSdkVersion.apiLevel 23
+            versionCode 1
+            versionName "1.0"
         }
     }
-    productFlavors {
+    android.buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles.add(file('proguard-rules.pro'))
+            ndk {
+                debuggable true
+            }
+        }
+    }
+    android.ndk {
+        moduleName "HCUtil"
+        CFlags.add("-DCUSTOM_DEFINE")
+        cppFlags.add("-DCUSTOM_DEFINE")
+        ldFlags.add("-L/custom/lib/path")
+        ldLibs.add("log")
+        stl "stlport_static"
+    }
+    android.productFlavors {
+        create("arm7") {
+            ndk.abiFilters.add("armeabi-v7a")
+        }
+        create("armeabi") {
+            ndk.abiFilters.add("armeabi")
+        }
+        create("x86") {
+            ndk.abiFilters.add("x86")
+        }
     }
 }
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
