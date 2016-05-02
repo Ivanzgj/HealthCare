@@ -7,7 +7,7 @@ model {
 
         defaultConfig {
             applicationId "com.ivan.healthcare.healthcare_android"
-            minSdkVersion.apiLevel  14  // Unable to load class com.android.build.gradle.managed.ProductFlavor_Impl
+            minSdkVersion.apiLevel  14
             targetSdkVersion.apiLevel 23
             versionCode 1
             versionName "1.0"
