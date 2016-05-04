@@ -29,6 +29,9 @@
 ## 未完成功能
 ##### 与蓝牙设备通信
 
+## PHP服务器端代码托管地址
+https://github.com/Ivanzgj/HealthCare_PHP
+
 ## 现在
 ##### 论文。。。
 
