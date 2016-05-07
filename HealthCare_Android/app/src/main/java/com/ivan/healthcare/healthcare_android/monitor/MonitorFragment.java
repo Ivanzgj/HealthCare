@@ -64,6 +64,8 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
     private Boolean isMonitoring = false;
     private String monitorTime = null;
     private int accelerateNum = 0;
+    private int vibSum = 0;
+    private long startTimeMillis;
 
     private final Object lock = new Object();
 
@@ -119,27 +121,11 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
     @Override
     public void onResume() {
         super.onResume();
-//        if (!isMonitoring) {
-//            Sensor accelerator = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-//            if (accelerator != null) {
-//                int mode = AppContext.getPreference().getInt(Preference.MONITOR_MODE, ProfileFragment.MONITOR_MODE_AUTO);
-//                int speed;
-//                if (mode == ProfileFragment.MONITOR_MODE_AUTO) {
-//                    speed = ProfileFragment.MONITOR_CUSTOM_MODE_DEFAULT_SPEED;
-//                } else {
-//                    speed = AppContext.getPreference().getInt(Preference.MONITOR_SPEED, ProfileFragment.MONITOR_CUSTOM_MODE_DEFAULT_SPEED);
-//                }
-//                mSensorManager.registerListener(this, accelerator, (int) TimeUnit.MILLISECONDS.toMicros(speed));
-//            }
-//        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        if (!isMonitoring) {
-//            mSensorManager.unregisterListener(this);
-//        }
     }
 
     @Override
@@ -275,6 +261,7 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
 
             String accelerate = formatter.format(Math.sqrt(xLateral * xLateral + yLateral * yLateral + zLateral * zLateral));
             float value = Float.valueOf(accelerate);
+
             if (value > maxAccelerateValue) {
                 maxAccelerateValue = value;
             }
@@ -290,8 +277,16 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
                 mAccelerateDataArrayList.add(value);
                 mAccelerateAdapter.notifyDataSetChanged();
                 if (isMonitoring && monitorTime != null) {
-                    if (DataAccess.writeVibrationData(monitorTime, accelerateNum, value)) {
-                        accelerateNum++;
+                    long curTimeMillis = new Date().getTime();
+                    if (curTimeMillis - startTimeMillis > 59*1000) {
+                        if (DataAccess.writeVibrationData(monitorTime, accelerateNum, vibSum)) {
+                            accelerateNum++;
+                        }
+                        startTimeMillis = curTimeMillis;
+                        vibSum = 0;
+                    } else {
+                        float d = Math.abs(value - SensorManager.GRAVITY_EARTH);
+                        vibSum += (d>0.6 ? (d-0.6) : 0);
                     }
                 }
             }
@@ -341,12 +336,27 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
     public void startMonitor() {
         monitorTime = TimeUtils.getTimeString(new Date());
         isMonitoring = true;
+
+        Sensor accelerator = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        if (accelerator != null) {
+            startTimeMillis = new Date().getTime();
+            int mode = AppContext.getPreference().getInt(Preference.MONITOR_MODE, ProfileFragment.MONITOR_MODE_AUTO);
+            int speed;
+            if (mode == ProfileFragment.MONITOR_MODE_AUTO) {
+                speed = ProfileFragment.MONITOR_CUSTOM_MODE_DEFAULT_SPEED;
+            } else {
+                speed = AppContext.getPreference().getInt(Preference.MONITOR_SPEED, ProfileFragment.MONITOR_CUSTOM_MODE_DEFAULT_SPEED);
+            }
+            mSensorManager.registerListener(this, accelerator, (int) TimeUnit.MILLISECONDS.toMicros(speed));
+        }
     }
 
     public void stopMonitor() {
         monitorTime = null;
         accelerateNum = 0;
         isMonitoring = false;
+
+        mSensorManager.unregisterListener(this);
     }
 
 }

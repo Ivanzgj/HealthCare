@@ -1,6 +1,5 @@
 package com.ivan.healthcare.healthcare_android.monitor;
 
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,8 +16,6 @@ import android.widget.TextView;
 import com.ivan.healthcare.healthcare_android.AppContext;
 import com.ivan.healthcare.healthcare_android.R;
 import com.ivan.healthcare.healthcare_android.database.DataAccess;
-import com.ivan.healthcare.healthcare_android.local.Preference;
-import com.ivan.healthcare.healthcare_android.settings.ProfileFragment;
 import com.ivan.healthcare.healthcare_android.ui.BaseActivity;
 import com.ivan.healthcare.healthcare_android.util.Compat;
 import com.ivan.healthcare.healthcare_android.util.TimeUtils;
@@ -64,17 +61,9 @@ public class MonitorHistoryActivity extends BaseActivity {
 
     private String date;
 
-    private int speed;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int mode = AppContext.getPreference().getInt(Preference.MONITOR_MODE, ProfileFragment.MONITOR_MODE_AUTO);
-        if (mode == ProfileFragment.MONITOR_MODE_AUTO) {
-            speed = ProfileFragment.MONITOR_CUSTOM_MODE_DEFAULT_SPEED;
-        } else {
-            speed = AppContext.getPreference().getInt(Preference.MONITOR_SPEED, ProfileFragment.MONITOR_CUSTOM_MODE_DEFAULT_SPEED);
-        }
         initView();
         refreshContent();
     }
@@ -135,7 +124,7 @@ public class MonitorHistoryActivity extends BaseActivity {
             @Override
             public String getXLabel(int position) {
                 if (date != null) {
-                    String d = TimeUtils.add(date, speed * position);
+                    String d = TimeUtils.add(date, 60 * 1000 * position);
                     d = TimeUtils.convertTimeFormat(d, "yyyyMMddHHmmss", "yyyyMMddHH:mm:ss");
                     return d.substring(8);
                 }
@@ -350,7 +339,6 @@ public class MonitorHistoryActivity extends BaseActivity {
 
         // 计算监控状态
         mStatusTextView.setText(title);
-        float std = SensorManager.GRAVITY_EARTH;
         String srcTime = null;
         String nextTime = null;
         int next = 2;
@@ -359,18 +347,28 @@ public class MonitorHistoryActivity extends BaseActivity {
             srcTime = srcData.get(0).recTime;
             nextTime = srcData.get(1).recTime;
         }
-        for (int i = 0; i < mAccelerateDataArrayList.size(); i++) {
-            float acc = mAccelerateDataArrayList.get(i);
-            String time = TimeUtils.add(date, speed * i);
+        mStatusArrayList.add((float) STATUS_MAX);
+        mStatusArrayList.add((float) STATUS_MAX);
+        mStatusArrayList.add((float) STATUS_MAX);
+        mStatusArrayList.add((float) STATUS_MAX);
+        for (int i = 4; i < mAccelerateDataArrayList.size()-2; i++) {
+            float acc0 = mAccelerateDataArrayList.get(i);
+            float acct1 = mAccelerateDataArrayList.get(i-1);
+            float acct2 = mAccelerateDataArrayList.get(i-2);
+            float acct3 = mAccelerateDataArrayList.get(i-3);
+            float acct4 = mAccelerateDataArrayList.get(i-4);
+            float acc1 = mAccelerateDataArrayList.get(i+1);
+            float acc2 = mAccelerateDataArrayList.get(i+2);
+            float acc = 0.01f*(0.01f*acct4+0.015f*acct3+0.028f*acct2+0.031f*acct1+0.085f*acc0+0.015f*acc1+0.010f*acc2);
+
+            String time = TimeUtils.add(date, 60 * 1000 * i);
             if (srcTime == null || (nextTime != null && time.compareTo(nextTime) < 0 && srcOn != 2)) {
                 // 无屏幕亮灭数据或者time时间以后的屏幕都不是已解锁状态，
                 // 则按照振动数据计算状态
-                if (acc >= std-2 && acc <= std+2) {
-                    mStatusArrayList.add(STATUS_MAX*0.2f);
-                } else if (acc >= std-6 && acc <= std+6) {
-                    mStatusArrayList.add(STATUS_MAX*0.5f);
+                if (acc >= 1) {
+                    mStatusArrayList.add((float) STATUS_MAX);
                 } else {
-                    mStatusArrayList.add(STATUS_MAX*0.7f);
+                    mStatusArrayList.add(STATUS_MAX*acc);
                 }
             } else if (nextTime != null && time.compareTo(nextTime) < 0 && srcOn == 2) {
                 // 屏幕此时处于已解锁状态，
@@ -388,12 +386,10 @@ public class MonitorHistoryActivity extends BaseActivity {
                 }
                 // 如果当前屏幕控制状态不是已解锁，则按照振动数据计算状态
                 if (srcOn != 2) {
-                    if (acc >= std-2 && acc <= std+2) {
-                        mStatusArrayList.add(STATUS_MAX*0.2f);
-                    } else if (acc >= std-6 && acc <= std+6) {
-                        mStatusArrayList.add(STATUS_MAX*0.5f);
+                    if (acc >= 1) {
+                        mStatusArrayList.add((float) STATUS_MAX);
                     } else {
-                        mStatusArrayList.add(STATUS_MAX*0.7f);
+                        mStatusArrayList.add(STATUS_MAX*acc);
                     }
                 } else {
                     mStatusArrayList.add((float) STATUS_MAX);
