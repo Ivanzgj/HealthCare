@@ -64,7 +64,7 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
     private Boolean isMonitoring = false;
     private String monitorTime = null;
     private int accelerateNum = 0;
-    private int vibSum = 0;
+    private float vibSum = 0.f;
     private long startTimeMillis;
 
     private final Object lock = new Object();
@@ -278,15 +278,15 @@ public class MonitorFragment extends Fragment implements SensorEventListener, Vi
                 mAccelerateAdapter.notifyDataSetChanged();
                 if (isMonitoring && monitorTime != null) {
                     long curTimeMillis = new Date().getTime();
-                    if (curTimeMillis - startTimeMillis > 59*1000) {
+                    if (curTimeMillis - startTimeMillis > 60*1000-500) {
                         if (DataAccess.writeVibrationData(monitorTime, accelerateNum, vibSum)) {
                             accelerateNum++;
                         }
                         startTimeMillis = curTimeMillis;
-                        vibSum = 0;
+                        vibSum = 0.f;
                     } else {
                         float d = Math.abs(value - SensorManager.GRAVITY_EARTH);
-                        vibSum += (d>0.6 ? (d-0.6) : 0);
+                        vibSum += (d>0.2 ? (d-0.2) : 0.f);
                     }
                 }
             }
