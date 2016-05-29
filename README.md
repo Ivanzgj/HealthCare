@@ -28,7 +28,3 @@
 
 ## PHP服务器端代码托管地址
 https://github.com/Ivanzgj/HealthCare_PHP
-
-## 现在
-##### 论文。。。
-
